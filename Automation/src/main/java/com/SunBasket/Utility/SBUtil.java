@@ -140,15 +140,16 @@ public class SBUtil extends DriverScript{
         }
 	}
 	
-	/*** Take Screenshot ***/   // -- Working fine, Need to update dynamic name for screenshots.
+	/*** Take Screenshot ***/ 
 	public static void getScreenshot(){		
-		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy_h.m.s");
+		String filePath = new File("Screenshots_Failed").getAbsolutePath();
+    	String fileSeperator = System.getProperty("file.separator");
+		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy _ h.m.s");
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            File trg = new File("/Users/vasavi.uppada/Documents/workspace/SunBasketAutomation/Screenshot_Failed/"+"SS_" + dateFormat.format(date) + ".png");
+            File trg = new File(filePath + fileSeperator + "SS_" + dateFormat.format(date) + ".png");
             FileUtils.copyFile(src, trg);
-
         }catch(Exception e){
             //if it fails to take screenshot then this block will execute
             System.out.println("Failure to take screenshot "+e);
@@ -156,22 +157,19 @@ public class SBUtil extends DriverScript{
         }
 	}
 	
-	//*** Get Screenshot ***//  //-- working fine
+	/*** Get Screenshot ***/  //-- working fine
     public static void takeScreenshot(String methodName) throws Exception 
     {
-		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy_h.m.s");
-        Date date = new Date();
+		String filePath = new File("Screenshots_Failed").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
+		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy _ h.m.s");
+        Date date = new Date();
         try{
-        	File file = new File("Screenshots" + fileSeperator + "Results");
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-
-            File trg = new File("/Users/vasavi.uppada/Documents/workspace/SunBasketAutomation/Screenshot_Failed/" + "Screenshot_" + methodName + "_" + dateFormat.format(date) + ".png");
+            File trg = new File(filePath +fileSeperator + "SS_" + methodName + "_" + dateFormat.format(date) + ".png");           
             FileUtils.copyFile(src, trg);
-
         }catch(Exception e){
             System.out.println("Failure to take screenshot "+e);
-
         }
      }
 

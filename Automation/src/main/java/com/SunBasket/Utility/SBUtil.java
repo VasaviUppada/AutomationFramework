@@ -50,6 +50,16 @@ public class SBUtil extends DriverScript{
 		}
 	}
 	
+	/*** Verify Attribute ***/
+	public static boolean verifyAttributeValue(WebElement webElement, String attribute, String expected){
+		if(expected.equalsIgnoreCase(webElement.getAttribute(attribute))){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	/*** Verify Text present or not ***/
 	public static boolean verifyText(WebElement webElement, String expected){
 		if(expected.equalsIgnoreCase(webElement.getText())){

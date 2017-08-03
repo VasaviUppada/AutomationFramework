@@ -1,5 +1,7 @@
 package com.SunBasket.Utility;
 
+import java.net.URL;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
@@ -28,14 +30,15 @@ public class BaseTest extends DriverScript{
 	@BeforeTest
 	public void setUp(String browser){
 		initializeBrowser(browser);
-		driver.navigate().to(Config.url.base_url);
+		driver.navigate().to(Config.Url.base_url);
 	}
 	
 	@BeforeTest
 	public void setUp(){
 		initializeBrowser();
-		driver.navigate().to(Config.url.base_url);
+		driver.navigate().to(Config.Url.base_url);
 	}
+
 	
 	@AfterTest
 	public void tearDown(){

@@ -1,5 +1,8 @@
 package com.SunBasket.Pages;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -16,25 +19,28 @@ public class SunBasketGetStartedPage extends BasePage{
 	
 	/*** Web Elements ***/
 
+	@FindBy(xpath = "//div[@id='page-content']//a[1]")
+	public WebElement label_OrderTodayAndGet35;
+	
 	@FindBy(xpath = "//div[@id='sign-up-form']//h2[text()='Get Started']")
 	public WebElement header_GetStarted;
 	
 	@FindBy(xpath = "//*[@id='sign-up-form']//p[@class='subhead']")
 	public WebElement text_SeasonalIngredientsAndDeliciousRecipesDeliveredWeekly;
 	
-	@FindBy(id = "#firstName")
+	@FindBy(xpath = "//*[@id='firstName']")
 	public WebElement textfield_FirstName;
 	
-	@FindBy(id = "#lastName")
+	@FindBy(xpath = "//*[@id='lastName']")
 	public WebElement textfield_LastName;
 	
-	@FindBy(id = "#email")
+	@FindBy(xpath = "//*[@id='email']")
 	public WebElement textfield_EmailAddress;
 	
-	@FindBy(id = "#password")
+	@FindBy(xpath = "//*[@id='password']")
 	public WebElement textfield_ChooseAPassword;
 	
-	@FindBy(id = "#zip")
+	@FindBy(xpath = "//*[@id='zip']")
 	public WebElement textfield_ZipCode;
 	
 	@FindBy(xpath = "//form[@id='userJoinForm']/fieldset/div[5]/div/div/button")
@@ -68,6 +74,23 @@ public class SunBasketGetStartedPage extends BasePage{
 	public void action_VerifyBrokenLinks(List<WebElement> allLinks){
 		SBUtil.verifyBrokenLinks(allLinks);
 	}
+	
+	public void action_VerifyText(WebElement element, String expected){
+		SBUtil.verifyText(element, expected);
+	}
+	
+	public void action_GetStarted(){
+		DateFormat dateFormat = new SimpleDateFormat("ddmmyyyyhms");
+        Date date = new Date();
+		textfield_FirstName.sendKeys("TestFirst");
+		textfield_LastName.sendKeys("TestLast");
+		textfield_EmailAddress.sendKeys("test" + dateFormat.format(date) + "@test.com");
+		textfield_ChooseAPassword.sendKeys("ReplacePassword123");
+		textfield_ZipCode.sendKeys("94588");
+		button_Continue.click();
+	}
+	
+	
 	
 	
 }

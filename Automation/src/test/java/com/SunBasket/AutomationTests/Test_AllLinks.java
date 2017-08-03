@@ -13,14 +13,14 @@ import com.SunBasket.Utility.BaseTest;
 public class Test_AllLinks extends BaseTest{
 	
 	@Test
-	public void AllLinks_HomePage(){
+	public void AllLinks_SunBasketHomePage(){
 		SunBasketHomePage sunBasketHomePage = new SunBasketHomePage();
 		sunBasketHomePage.waitForPageToLoad();		
 		sunBasketHomePage.action_VerifyBrokenLinks(sunBasketHomePage.link_allLinks);
 	}
 	
 	@Test
-	public void AllLinks_GetStartedPage(){
+	public void AllLinks_SunBasketGetStartedPage(){
 		SunBasketHomePage sunBasketHomePage = new SunBasketHomePage();
 		sunBasketHomePage.waitForPageToLoad();		
 		sunBasketHomePage.button_GetStarted.click();
@@ -30,7 +30,7 @@ public class Test_AllLinks extends BaseTest{
 	}
 	
 	@Test
-	public void AllLinks_SignInPage(){
+	public void AllLinks_SunBasketSignInPage(){
 		SunBasketHomePage sunBasketHomePage = new SunBasketHomePage();
 		sunBasketHomePage.waitForPageToLoad();
 		sunBasketHomePage.link_SignIn.click();
@@ -40,7 +40,7 @@ public class Test_AllLinks extends BaseTest{
 	}
 	
 	@Test
-	public void AllLinks_MyMenuPage(){
+	public void AllLinks_SunBasketMyMenuPage(){
 		SunBasketHomePage sunBasketHomePage = new SunBasketHomePage();
 		sunBasketHomePage.waitForPageToLoad();
 		sunBasketHomePage.link_SignIn.click();
@@ -53,7 +53,7 @@ public class Test_AllLinks extends BaseTest{
 	}
 	
 	@Test
-	public void AllLinks_SchedulePage(){
+	public void AllLinks_SunBasketSchedulePage(){
 		SunBasketHomePage sunBasketHomePage = new SunBasketHomePage();
 		sunBasketHomePage.waitForPageToLoad();
 		sunBasketHomePage.link_SignIn.click();
@@ -69,7 +69,7 @@ public class Test_AllLinks extends BaseTest{
 	}
 	
 	@Test
-	public void AllLinks_TheSunTimesPage(){
+	public void AllLinks_SunBasketTheSunTimesPage(){
 		SunBasketHomePage sunBasketHomePage = new SunBasketHomePage();
 		sunBasketHomePage.waitForPageToLoad();
 		sunBasketHomePage.link_SignIn.click();
@@ -83,5 +83,19 @@ public class Test_AllLinks extends BaseTest{
 		sunBasketTheSunTimesPage.waitForPageToLoad();
 		sunBasketTheSunTimesPage.action_VerifyBrokenLinks(sunBasketTheSunTimesPage.link_allLinks);
 	}
+	
+	@Test
+	public void AllLinks_SunBasketPromoPage(){
+		
+	}
 
+	@Test
+	public void AllLinks_SunBasketBuildYourOrderPage(){
+		// allLinks element not created yet.
+	}
+	
+	@Test
+	public void AllLinks_SunBasketConfirmYourMealsPage(){
+		// allLinks element not created yet.
+	}
 }

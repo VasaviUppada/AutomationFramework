@@ -76,7 +76,6 @@ public class DriverScript {
 		driver.manage().window().setSize(maximizedScreenSize);
 		}
 
-
 	public static void close(){
 		System.out.println("Closing Browser!");
 		driver.close();

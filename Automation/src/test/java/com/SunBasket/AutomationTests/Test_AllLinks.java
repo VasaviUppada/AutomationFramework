@@ -64,7 +64,8 @@ public class Test_AllLinks extends BaseTest{
 		sunBasketMyMenuPage.waitForPageToLoad();
 		sunBasketMyMenuPage.tab_Schedule.click();
 		SunBasketSchedulePage sunBasketSchedulePage = new SunBasketSchedulePage();
-		sunBasketSchedulePage.waitForPageToLoad();		
+		sunBasketSchedulePage.waitForPageToLoad();
+		sunBasketSchedulePage.action_VerifyBrokenLinks(sunBasketSchedulePage.link_allLinks);
 	}
 	
 	@Test

@@ -31,6 +31,12 @@ public class BaseTest extends DriverScript{
 		driver.navigate().to(Config.url.base_url);
 	}
 	
+	@BeforeTest
+	public void setUp(){
+		initializeBrowser();
+		driver.navigate().to(Config.url.base_url);
+	}
+	
 	@AfterTest
 	public void tearDown(){
 		close();

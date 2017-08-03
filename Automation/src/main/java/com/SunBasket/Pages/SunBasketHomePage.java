@@ -33,10 +33,10 @@ public class SunBasketHomePage extends BasePage{
 	@FindBy(xpath = "//*[@id='nav-logged-out']//li[@class='hidden-xs']/a[@class='logout-link nav-btn']")
 	public WebElement link_SignIn;
 	
-	@FindBy(xpath = "gged-out']//li[@class='hidden-xs']/a[@class='btn-join btn btn-join-scrolled']")
+	@FindBy(xpath = "//*[@class='nav navbar-nav navbar-right hidden-xs']//a[@class='btn-join btn']")
 	public WebElement button_GetStarted;
 	
-	@FindBy(tagName = "a")
+	@FindBy(xpath = "//*[@href]|//a")
 	public List<WebElement> link_allLinks;
 	
 	

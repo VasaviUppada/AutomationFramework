@@ -58,7 +58,7 @@ public class SunBasketGetStartedPage extends BasePage{
 	@FindBy(xpath = "//*[@id='join-about-info']//h4[text()='Convenient delivery to your door']")
 	public WebElement text_ConvenientDeliveryToYourDoor;
 	
-	@FindBy(tagName = "a")
+	@FindBy(xpath = "//*[@href]|//a")
 	public List<WebElement> link_allLinks;
 	
 	

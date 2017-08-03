@@ -13,6 +13,8 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 
+import com.SunBasket.Config.Config;
+
 //import com.SunBasket.Config.Config;
 
 public class DriverScript {
@@ -46,6 +48,45 @@ public class DriverScript {
 				}
 			}
 			else if(browser.equalsIgnoreCase("safari")){
+				driver = new SafariDriver();
+			}
+		}
+		
+//		driver.manage().window().maximize();   // not working
+		
+		maximizeScreen(driver);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().deleteAllCookies();
+	}
+	
+	public static void initializeBrowser(){
+		if(driver == null){
+			System.out.println("Initializing Driver : " + Config.Browser.browser);
+			String os = System.getProperty("os.name").toLowerCase();
+			if(Config.Browser.browser.equalsIgnoreCase("firefox")){
+				if(os.contains("mac")){
+					System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"/geckodriver");
+				}
+				else{
+					System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"\\geckodriver.exe");
+				}				
+				ProfilesIni profile = new ProfilesIni();
+				FirefoxProfile myprofile = profile.getProfile("default");
+				DesiredCapabilities dc = DesiredCapabilities.firefox();
+				dc.setCapability(FirefoxDriver.PROFILE, myprofile);
+				dc.setCapability("marionette", true);
+				driver = new FirefoxDriver(dc);
+			}
+			else if(Config.Browser.browser.equalsIgnoreCase("chrome")){
+				driver = new ChromeDriver();
+				if(os.contains("mac")){
+					System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/chromedriver");
+				}
+				else{
+					System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\chromedriver.exe");
+				}
+			}
+			else if(Config.Browser.browser.equalsIgnoreCase("safari")){
 				driver = new SafariDriver();
 			}
 		}

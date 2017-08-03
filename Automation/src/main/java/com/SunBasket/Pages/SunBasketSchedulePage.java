@@ -16,7 +16,7 @@ public class SunBasketSchedulePage extends BasePage{
 	}
 	
 	
-	@FindBy(tagName = "a")
+	@FindBy(xpath = "//*[@href]|//a")
 	public List<WebElement> link_allLinks;
 	
 	//*** Action Methods ***//

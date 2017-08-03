@@ -15,7 +15,7 @@ public class SunBasketTheSunTimesPage extends BasePage{
 		super(driver);
 	}	
 	
-	@FindBy(tagName = "a")
+	@FindBy(xpath = "//*[@href]|//a")
 	public List<WebElement> link_allLinks;
 	
 	//*** Action Methods ***//

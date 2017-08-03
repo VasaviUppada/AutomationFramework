@@ -37,7 +37,7 @@ public class SunBasketSignInPage extends BasePage{
 	@FindBy(xpath = "//input[@class='btn btn-primary float-right btn-continue'][@value='Sign In']")
 	public WebElement button_SignIn;
 		
-	@FindBy(tagName = "a")
+	@FindBy(xpath = "//*[@href]|//a")
 	public List<WebElement> link_allLinks;
 	
 	

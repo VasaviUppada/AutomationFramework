@@ -80,7 +80,7 @@ public class SunBasketMyMenuPage extends BasePage{
 	@FindBy(id = "saveMenuButton")
 	public WebElement button_Save;
 	
-	@FindBy(tagName = "a")
+	@FindBy(xpath = "//*[@href]|//a")
 	public List<WebElement> link_allLinks;
 	
 	@FindBy(xpath = "//*[@id='survey']")

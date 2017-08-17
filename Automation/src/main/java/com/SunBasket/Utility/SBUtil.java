@@ -6,24 +6,33 @@ import static org.testng.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.handler.FindElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.SunBasket.Config.Config;
 
 import junit.framework.Assert;
 
@@ -39,6 +48,94 @@ public class SBUtil extends DriverScript{
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}	
 	
+	/*** Explicit Wait - titleIs ***/ 
+	public static void waitForPageTitle(String pageTitle){
+		WebDriverWait wait=new WebDriverWait(driver, 60);
+		wait.until(ExpectedConditions.titleIs(pageTitle));
+	}
+	
+	/*** Explicit Wait - titleContains ***/ 
+	public static void waitForPageTitleContains(String titleContains){
+		WebDriverWait wait=new WebDriverWait(driver, 40);
+		wait.until(ExpectedConditions.titleContains(titleContains));
+	}
+	
+	/*** Explicit Wait - textToBePresentInElement ***/ 
+	public static void waitForTextToBePresentInElement(WebElement textToBePresentInElement, String expectedText){
+		WebDriverWait wait=new WebDriverWait(driver, 40);
+		wait.until(ExpectedConditions.textToBePresentInElement(textToBePresentInElement, expectedText));
+	}
+
+	/*** Explicit Wait - elementToBeClickable ***/ 
+	public static void waitForElementToBeClickable(WebElement elementToBeClickable){
+		WebDriverWait wait=new WebDriverWait(driver, 40);
+		wait.until(ExpectedConditions.elementToBeClickable(elementToBeClickable));
+	}
+	
+	/*** Explicit Wait - explicitWait_Wait for Windows to be appeared ***/ 
+	public static void wait_WindowsToAppear(int noofWindows){
+		WebDriverWait wait=new WebDriverWait(driver, 40);
+		wait.until(ExpectedConditions.numberOfWindowsToBe(noofWindows));
+	}
+	
+	/*** Explicit Wait - presenceOfElementLocated - To check whether element is present in DOM or not ***/ 
+    public static WebElement waitForElement(By locator) {
+    	WebDriverWait wait = new WebDriverWait(driver, 40);
+    	return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+	
+	/*** Click on an element using Java Script Executor ***/
+	public static void clickwithJavaScriptExecutor(WebElement button) throws Exception {
+		try {
+			waitForElementToBeClickable(button);
+			if (button.isDisplayed()) {
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
+				System.out.println("Clicked on element using java script...");
+			} else {
+				System.out.println("Unable to click on element");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			System.out.println("Element was not found in DOM "+ e.getStackTrace());
+		} catch (Exception e) {
+			System.out.println("Unable to click on element "+ e.getStackTrace());
+		}
+	}
+	
+	/*** Click on an element using Java Script Executor ***/
+	public static void sendKeyswithJavaScriptExecutor(WebElement textBox, String textToPass) throws Exception {
+		try {
+			waitForElementToBeClickable(textBox);
+			if (textBox.isDisplayed()) {
+				String script = "arguments[0].value=" + textToPass + ";";
+				((JavascriptExecutor) driver).executeScript(script, textBox);
+				System.out.println("Sent value to element using java script...");
+			} else {
+				System.out.println("Unable to click on element");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			System.out.println("Element was not found in DOM "+ e.getStackTrace());
+		} catch (Exception e) {
+			System.out.println("Unable to send value to element "+ e.getStackTrace());
+		}
+	}
+	
+	/*** Scroll to view an element using Java Script Executor ***/
+	public static void scrollToViewWithJavaScriptExecutor(WebElement element) throws Exception {
+		try {
+			waitForElementToBeClickable(element);
+			if (element.isDisplayed()) {
+				((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();");
+				System.out.println("Scrolling page to view element using java script...");
+			} else {
+				System.out.println("Unable to click on element");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			System.out.println("Element was not found in DOM "+ e.getStackTrace());
+		} catch (Exception e) {
+			System.out.println("Unable to scroll to view element "+ e.getStackTrace());
+		}
+	}
+	
 	/*** select Checkbox ***/
 	public static void checkboxSelect(WebElement chkbox){
 		if(chkbox.isSelected()){
@@ -52,31 +149,31 @@ public class SBUtil extends DriverScript{
 	
 	/*** Verify Attribute ***/
 	public static boolean verifyAttributeValue(WebElement webElement, String attribute, String expected){
-		if(expected.equalsIgnoreCase(webElement.getAttribute(attribute))){
-			return true;
-		}
-		else{
-			return false;
-		}
+		try {
+        	return expected.equalsIgnoreCase(webElement.getAttribute(attribute));
+		} catch (Exception e) {
+			e.getStackTrace();
+        	return false;
+		}		
 	}
 	
-	/*** Verify Text present or not ***/
-	public static boolean verifyText(WebElement webElement, String expected){
-		if(expected.equalsIgnoreCase(webElement.getText())){
-			return true;
-		}
-		else{
-			return false;
+	/*** Verify Text present or not ***/	//-- working fine
+	public static boolean verifyText(WebElement actual, String expected){ 
+		try {
+        	return expected.equalsIgnoreCase(actual.getText());
+		} catch (Exception e) {
+			e.getStackTrace();
+        	return false;
 		}
 	}	
 
-	/*** Verify whether element contains the Text ***/
-	public static void containsText(WebElement actual, String expected){
-		try{
-			assertTrue(actual.getText().contains(expected));
-		}
-		catch(Error e){
+	/*** Verify whether element contains the Text ***/	//-- working fine
+	public static boolean containsText(WebElement actual, String expected){ 
+		try {
+        	return actual.getText().contains(expected);
+		} catch (Exception e) {
 			e.getStackTrace();
+        	return false;
 		}
 	}
 
@@ -86,20 +183,16 @@ public class SBUtil extends DriverScript{
 	}
 	
 	/*** Verify whether Element present or not ***/
-	@SuppressWarnings("finally")
 	public static boolean isTextPresent(String expected)	
 	{
-        boolean b = false;
         try{
-        	b = driver.getPageSource().contains(expected);
+        	boolean b = driver.getPageSource().contains(expected);
         	return b;
         }
         catch (Exception e){
-        	System.out.println(e.getMessage());
-        }     
-        finally{
-        	return b;
-        }    
+        	System.out.println(e.getMessage()); 
+        	return false;
+        }
 	}
 		
 //		String actual = webElement.getText();
@@ -117,19 +210,57 @@ public class SBUtil extends DriverScript{
 //		return null ;
 //		}
 
-	/*** Get all Links on a Page & verify Broken or not ***/
+	/*** Verify Broken Links ***/		//-- Working fine
 	public static void verifyBrokenLinks(List<WebElement> allLinks){
+		System.out.println("Total Links : " + allLinks.size());
+        String url = "";
+        HttpURLConnection huc = null;
+        int respCode = 200;
+        Iterator<WebElement> it = allLinks.iterator();
+        while(it.hasNext()){
+        	url = it.next().getAttribute("href");
+        	if(url == null || url.isEmpty()){
+        	System.err.println("Null URL : " + url +" : URL is either not configured for anchor tag or it is empty");
+   	        continue;
+        	}
+//            if(!url.startsWith(Config.Url.base_url)){
+//                System.err.println("Skipped _ URL belongs to another domain : " + url);
+//                continue;
+//            }
+            try {
+                huc = (HttpURLConnection)(new URL(url).openConnection());               
+                huc.setRequestMethod("HEAD");               
+                huc.connect();             
+                respCode = huc.getResponseCode();               
+                if(respCode >= 400){
+                    System.err.println("Broken URL : " + url + " - " + respCode + " : "+ huc.getResponseMessage());
+                }
+                else{
+                    System.out.println("Success URL : " + url + " - " + respCode + " : "+ huc.getResponseMessage());
+                }
+                    
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+	}
+
+	/*** Get all Links on a Page & verify Broken or not ***/		// Working fine... Currently not using
+	public static void verifyBroken(List<WebElement> allLinks){
 		System.out.println("Total Links : " + allLinks.size());
 		for(int i=0; i<allLinks.size(); i++){
 			WebElement link = allLinks.get(i);
 			String urlLink = link.getAttribute("href");
 //			System.out.println("All URL _ getAttribute : " + url);
-			verifyLinks(urlLink);
+			verifyLinkResponse(urlLink);
 		}
 	}
 	
-	/*** Verify Links on Page ***/
-	public static void verifyLinks(String linkUrl)	 
+	/*** Verify Links response on Page ***/
+	public static void verifyLinkResponse(String linkUrl)	 
 	{	
 		try 
         {
@@ -139,22 +270,30 @@ public class SBUtil extends DriverScript{
            httpURLConnect.connect();          
            if(httpURLConnect.getResponseCode()==200)
            {
-               System.out.println(linkUrl+" - "+httpURLConnect.getResponseMessage());
+               System.out.println("Success Link : " + linkUrl+" - " + httpURLConnect.getResponseMessage());
            }
-           if(httpURLConnect.getResponseCode()==HttpURLConnection.HTTP_NOT_FOUND)  
+           else if(httpURLConnect.getResponseCode()>=400){
+        	   System.out.println("Broken Link : " + linkUrl+" - " + httpURLConnect.getResponseMessage());
+           }
+           else if(httpURLConnect.getResponseCode()==HttpURLConnection.HTTP_NOT_FOUND)  
            {
-               System.out.println(linkUrl+" - "+httpURLConnect.getResponseMessage() + " - "+ HttpURLConnection.HTTP_NOT_FOUND);
+               System.out.println(linkUrl+" - " + httpURLConnect.getResponseMessage() + " - "+ HttpURLConnection.HTTP_NOT_FOUND);
            }
+        } catch (MalformedURLException e) {
+        	System.out.println("Exception Link_getBytes : " + linkUrl);
+            e.printStackTrace();
+		} catch (IOException e) {
+            e.printStackTrace();
         } catch (Exception e) {
-           
+        	e.getMessage();
         }
 	}
 	
-	/*** Take Screenshot ***/ 
+	/*** Take Screenshot ***/ 	//-- working fine
 	public static void getScreenshot(){		
 		String filePath = new File("Screenshots_Failed").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
-		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy _ h.m.s");
+		DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy _ h.m.s");
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -172,7 +311,7 @@ public class SBUtil extends DriverScript{
     {
 		String filePath = new File("Screenshots_Failed").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
-		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy _ h.m.s");
+		DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy _ h.m.s");
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -184,115 +323,137 @@ public class SBUtil extends DriverScript{
      }
 
 	
-	
-	// unable to get values using option.getText()
-	/*** Get all options from Dropdown list on a Page ***/  
-	
-	public static void getDropdownList(List<WebElement> dropdownList, WebElement dropdown){
-    	System.out.println(" Size : " + dropdownList.size());
-//    	for (WebElement option : dropdownList){
-//    		System.out.println("Options : " + option.getText());
-//    	}
-    	getAllOptions(dropdown);
-	}
-	
-	public static List<String> getAllOptions(WebElement element) {
-	    List<String> options = new ArrayList<String>();
-	    for (WebElement option : new Select(element).getOptions()) {
-	        String txt = option.getText();
-	        if (option.getAttribute("value") != "") options.add(txt);
-	    }
-	    return options;
-	}
+	/*** Web Table ***/		//-- working fine
+	public static void webTable(){
+		WebElement table = driver.findElement(By.tagName("table"));
+		List<WebElement> rows = table.findElements(By.tagName("tr"));
+		int rows_count = rows.size();
+		for (int row = 0; row < rows_count; row++){
+			 List<WebElement> columns = rows.get(row).findElements(By.tagName("td"));
+			 int columns_count = columns.size();
+			 System.out.println("No.of Cells in Row_" + row + " : " + columns_count);
+			 for (int column = 0; column < columns_count; column++) {
+				 //To retrieve text from the cells.
+				 String celltext = columns.get(column).getText();
+				 System.out.println("Cell[" + row + "][" + column + "] : " + celltext);
+			}
+		}
 		
-		
-	/*** Get all options from dropdown list & verify with expected list ***/ //  -- need to check
-	public static void verifyDropdownList(WebElement webElement, String[] expectedList){
-		Select dropdown = new Select(webElement);
-        List<WebElement> values = dropdown.getOptions();          
-        for (int i = 0; i < values.size(); i++){
-        	System.out.println("Value_" + i + " : "+ values.get(i).getText());
-            Assert.assertEquals(values.get(i).getText(), expectedList[i], "Values in the drop down for number of occupants are wrong"  );
-            System.out.println("List captured ");
-        }
-//        for(WebElement list : values){
-//        	System.out.println("List : " + dropdown.getOptions());
-//        }
 	}
 	
-	//*** Select option from dropdown list ***/
-	public static void selectDropdownOption(List<WebElement> dropdownList, String selectOption){
-    	String optionText = null;
-		for (WebElement option : dropdownList){
-    		optionText = option.getText();
-    		if(optionText.equalsIgnoreCase(selectOption)){
-    			option.click();
-    			break;
-    		}
-    	}
+	/*** Verify Text in Web Table ***/		//-- working fine
+	public static boolean VerifyText_webTable(int rowNo, int colNo, String expected){
+		WebElement table = driver.findElement(By.tagName("table"));
+		List<WebElement> rows = table.findElements(By.tagName("tr"));
+		int rows_count = rows.size();
+		for (int row = 0; row < rows_count; row++){
+			 List<WebElement> columns = rows.get(row).findElements(By.tagName("td"));
+			 int columns_count = columns.size();
+			 for (int column = 0; column < columns_count; column++) {
+				if(row==rowNo && column==colNo){
+					try {
+						String cellText = columns.get(column).getText();
+						System.out.println("Cell[" + row + "][" + column + "] : " + cellText);
+			        	return expected.equalsIgnoreCase(cellText);
+					} catch (Exception e) {
+						e.getStackTrace();
+			        	return false;
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
-	// need to verify 
-	public void selectOptionByVisibleText(WebElement dropdownelement, String option){
+	public static List<ArrayList<String>> VerifyText_web(){
+		WebElement table = driver.findElement(By.tagName("table"));
+		List<WebElement> rows = table.findElements(By.xpath(".//tbody//tr//td//.."));
+		List<ArrayList<String>> rowsData = new ArrayList<ArrayList<String>>();
+
+		for(WebElement row:rows){
+		    List<WebElement> rowElements = row.findElements(By.xpath(".//td"));
+
+		    ArrayList<String> rowData = new ArrayList<String>();
+
+		    for(WebElement column:rowElements){
+		        rowData.add(column.getText().toString());
+		    }
+
+		    rowsData.add(rowData);
+		}
+
+		return rowsData;
+	}
+	
+
+    
+    /************ Need to Verify **************/
+    
+	/*** Select Option from Dropdown List using 'SelectByVisibleText' ***/
+	public static void selectOptionByVisibleText(WebElement dropdownelement, String option){
 		Select dropdown = new Select(dropdownelement);
 		dropdown.selectByVisibleText(option);		
 	}
 	
-	public void selectOptionByValue(WebElement dropdownelement, String value){
+	/*** Select Option from Dropdown List using 'SelectByValue' ***/
+	public static void selectOptionByValue(WebElement dropdownelement, String value){
 		Select dropdown = new Select(dropdownelement);
 		dropdown.selectByValue(value);
 	}
 	
-	public void selectOptionByIndex(WebElement dropdownelement, int index){
+	/*** Select Option from Dropdown List using 'SelectByIndex' ***/
+	public static void selectOptionByIndex(WebElement dropdownelement, int index){
 		Select dropdown = new Select(dropdownelement);
 		dropdown.selectByIndex(index);
 	}
 	
-	
-	// --- Not working
-	/*** Select Value from Dropdown List using 'SelectByVisibleText' ***/
-	public static void selectDropdownOptionByVisibleText(List<WebElement> dropDownList, WebElement dropdown, String visibleText, String xPath){		
-		String valuetext = null;
-		Select select = new Select(dropdown);
-		List<WebElement> opt = dropdown.findElements(By.xpath(xPath));
-		 for (WebElement value: opt) 
-		    {
-		        valuetext = value.getText();
-		        if (valuetext.equalsIgnoreCase(visibleText))
-		        {
-		            try
-		            {
-		                select.selectByVisibleText(valuetext);                        
-		                break;
-		            }
-		            catch (Exception e)
-		            {
-		                System.out.println(valuetext + "Value not found in Dropdown to Select");
-		            }       
-		        }
-		    }		
-//		Select option = new SelectElement(dropdown).SelectByText("");
-//
-//		dropdown.selectByVisibleText(visibleText);
+	/*** Select Random Value from Dropdown List ***/
+	public static void selectRandomOptionFromDropdown(WebElement dropdownelement){
+		Select dropdown = new Select(dropdownelement);
+		List<WebElement> allOptions = dropdown.getOptions();
+		int listCount = allOptions.size();
+		Random num = new Random();
+		int iSelect = num.nextInt(listCount);
+		dropdown.selectByIndex(iSelect);
+		System.out.println("Random Selected Value from Dropdown List : " + dropdownelement.getAttribute("value"));
 	}
 	
-	
-	// -- Not working
-	/*** Select Value from Dropdown List using 'SelectByIndex' ***/
-	public static void selectDropdownOptionByIndex(WebElement dropdown, int index){		
-		Select option= new Select(dropdown);
-		System.out.println(option.getOptions());
-		option.selectByIndex(index);
+	/*** Get all options from dropdown list ***/
+	public static void getAllDropdownOptions(WebElement dropdownelement){		
+	    Select dropdown = new Select(dropdownelement);
+	    List<WebElement> options = dropdown.getOptions();
+	    for(WebElement opt : options){
+	    	System.out.println("Option Value : " + opt.getAttribute("value"));
+	        System.out.println("Display Text : " + opt.getText());
+	    }
+	}
+
+	/*** Get all options from dropdown list & verify with expected list ***/
+	public static void verifyAllDropdownOptions(WebElement dropdownelement, String[] expectedDropdownList){		
+	    Select dropdown = new Select(dropdownelement);
+	    List<WebElement> options = dropdown.getOptions();
+	    for (int i = 0; i < options.size(); i++){
+        	System.out.println("Option_" + i + " : "+ options.get(i).getText());
+            Assert.assertEquals(options.get(i).getText(), expectedDropdownList[i], "Options from Dropdown are not as expected!"  );
+            System.out.println("Option_" +  i + " captured!");
+        }
 	}
 	
-	// -- Not working
-	/*** Select Value from Dropdown List using 'SelectByValue' ***/
-	public static void selectDropdownOptionByValue(WebElement webElement, String value){		
-		Select dropdown= new Select(webElement);
-		dropdown.selectByValue(value);
+	/*** Windows Handles ***/
+	public static WebDriver getWindowToHandle(){
+        WebDriver popup = null;
+        Set<String> windowIterator = driver.getWindowHandles();
+        System.err.println("No of windows :  " + windowIterator.size());
+        for (String window : windowIterator) {
+          String windowHandle = window; 
+          popup = driver.switchTo().window(windowHandle);
+          System.out.println("Child Window Title : " + popup.getTitle());
+          System.out.println("Child Window Url : " + popup.getCurrentUrl());
+        }
+            return popup;
 	}
 	
-	
+
 
 
 

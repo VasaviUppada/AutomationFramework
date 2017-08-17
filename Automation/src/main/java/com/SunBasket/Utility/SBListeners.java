@@ -29,36 +29,42 @@ import org.testng.Reporter;
 public class SBListeners extends DriverScript implements ITestListener, ISuiteListener, IInvokedMethodListener {
  
 	// This belongs to ISuiteListener and will execute before the Suite start
-	public void onStart(ISuite arg0) {
-		Reporter.log("Begins Suite Execution : " + arg0.getName(), true);
+	@Override
+	public void onStart(ISuite result) {
+		Reporter.log("Begins Suite Execution : " + result.getName(), true);
 	}
  
 	// This belongs to ISuiteListener and will execute, once the Suite is finished
-	public void onFinish(ISuite arg0) { 
-		Reporter.log("Completed Suite Execution : " + arg0.getName(), true);
+	@Override
+	public void onFinish(ISuite result) { 
+		Reporter.log("Completed Suite Execution : " + result.getName(), true);
 	}
  
 	// This belongs to ITestListener and will execute before starting of Test set/batch 
-	public void onStart(ITestContext arg0) {
-		Reporter.log("Begins Test Execution : " + arg0.getName(), true);
+	@Override
+	public void onStart(ITestContext result) {
+		Reporter.log("Begins Test Execution : " + result.getName(), true);
 	}
  
 	// This belongs to ITestListener and will execute, once the Test set/batch is finished
-	public void onFinish(ITestContext arg0) {
-		Reporter.log("Completed Test Execution : " + arg0.getName(), true);
+	@Override
+	public void onFinish(ITestContext result) {
+		Reporter.log("Completed Test Execution : " + result.getName(), true);
 	}
  
 	// This belongs to ITestListener and will execute only when the test is pass 
-	public void onTestSuccess(ITestResult arg0) {
+	@Override
+	public void onTestSuccess(ITestResult result) {
 		// This is calling the printTestResults method
-		System.out.println("Success Test!");
-		printTestResults(arg0);
+		System.out.println("Success Test : " + result.getName());
+		printTestResults(result);
 	}
  
 	// This belongs to ITestListener and will execute only on the event of fail test
-	public void onTestFailure(ITestResult arg0) {
-		System.out.println("*** Error : "+ arg0.getName() +" test has failed ***");
-		String methodName = arg0.getName().toString().trim();
+	@Override
+	public void onTestFailure(ITestResult result) {
+		System.out.println("*** Failed Tests : "+ result.getName());
+		String methodName = result.getName().toString().trim();
 		try {
 			SBUtil.takeScreenshot(methodName);
 			System.out.println("Screenshot saved...");
@@ -66,20 +72,25 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 			e.printStackTrace();
 		}		
 		System.out.println("Failed Test!");
-		printTestResults(arg0);
+		printTestResults(result);
 	}
 	
 	// This belongs to ITestListener and will execute before the main test start (@Test)
-	public void onTestStart(ITestResult arg0) { 
-		System.out.println("Begins Main Method Execution..."); 
+	
+	@Override
+	public void onTestStart(ITestResult result) { 
+		System.out.println("Begin Execution : " + result.getName()); 
 	}
  
 	// This belongs to ITestListener and will execute only if any of the main test(@Test) get skipped
-	public void onTestSkipped(ITestResult arg0) {
-		printTestResults(arg0);
+	@Override
+	public void onTestSkipped(ITestResult result) {
+		System.out.println("Skipped Tests : " + result.getName());
+		printTestResults(result);
 	}
  
 	// This is just a piece of shit, ignore this 
+	@Override
 	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) { 
 	}
  

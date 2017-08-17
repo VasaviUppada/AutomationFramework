@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -19,7 +20,7 @@ public class SunBasketMyMenuPage extends BasePage{
 	public SunBasketMyMenuPage(){
 		super(driver);
 	}
-	
+
 	@FindBy(className = "logo-container")
 	public WebElement logo_SunBasket;
 	
@@ -92,15 +93,6 @@ public class SunBasketMyMenuPage extends BasePage{
 	@FindBy(xpath = "//*[@id='close-survey']/span[@class='icon icon-close-round']")
 	public WebElement popup_SurveyCrossmark;
 	
-	@FindBy(xpath = "//*[@class='stylize']")
-	public WebElement dropdown_SelectRecipes;
-	
-	@FindBy(xpath = "//div[@class='stylize']//li/a")
-	public List<WebElement> dropdownList_SelectRecipes2;
-	
-	@FindBy(xpath = "//div[@id='edit-mode-controls-container']//li/a/p[1]")
-	public List<WebElement> dropdownList_SelectRecipes;
-	
 	@FindBy(xpath = "//*[@class='margin-bottom-0 adelle text-xl']/a[1]")
 	public WebElement button_SwitchToFamilyOrClassicMenu;
 	
@@ -132,7 +124,7 @@ public class SunBasketMyMenuPage extends BasePage{
 	public WebElement button_Save_EditMealPlan;
 	
 	
-	//*** Action Methods ***//
+	/*** Action Methods ***/
 	
 	public void action_verifyHeader(){
 		SBUtil.verifyText(header_MyMenuHeader, "Vasavi");
@@ -146,13 +138,13 @@ public class SunBasketMyMenuPage extends BasePage{
 		Assert.assertTrue(SBUtil.verifyText(webElement, expected));
 	}
 
-	// To minimize/close Popup
+	/*** To minimize/close Popup ***/
 	public void action_MinimizePopup(){
 		popup_SurveyDownArrow.click();
 		popup_SurveyCrossmark.click();
 	}
 
-	// To Choose Recipes from Page
+	/*** To Choose Recipes from Page ***/
 	public void action_chooseRecipes(List<WebElement> checkboxReciepe, int noOfReciepes){
 		int chkboxCount = 0;
 		for(WebElement chk : checkboxReciepe){
@@ -166,66 +158,19 @@ public class SunBasketMyMenuPage extends BasePage{
 		button_Save.click();	
 	}
 	
-	//To verify all Links on a Page
+	/*** To verify all Links on a Page ***/
 	public void action_VerifyBrokenLinks(List<WebElement> allLinks){
 		SBUtil.verifyBrokenLinks(allLinks);
 	}
-
-
-/*	
-	// Unable to get all options from BootStrap Dropdown.
-	public void action_DropDown(List<WebElement> dropdown){
-		dropdown_SelectRecipes.click();
-		System.out.println("Dropdown Text : " + dropdown_SelectRecipes.getText());
-		System.out.println("Dropdown Size : " + dropdown.size());
-		for(WebElement dd : dropdown){
-			String dd_value = dd.getText();
-			System.out.println("Dropdown List _ Text : " + dd_value);
-
-//			if(dd_value.contentEquals("2 recipes")){
-//				dd.click();
-//				break;
-//			}
-			dd.click();
-//			System.out.println("Dropdown Clicked : " + dropdown_SelectRecipes.getText());
-		}
-
-
-	}
 	
-	*/
+	
+	
+
 	
 	@FindBy(xpath = "//*[@id='changeNumRecipes']")
-	public WebElement dd_SelectRecipes;
-	
-	@FindBy(xpath = "//*[@id='changeNumFamilyRecipes']/option")
-	public List<WebElement> ddList_SelectRecipes;
-	
-	public void action_GetDropdownLis(WebElement element){
-//		Select dropdown = new Select(element);
-/*		for(WebElement list : ddList_SelectRecipes){
-			String value = list.getText();
-			System.out.println("Value : " + value);
-		}*/
+	public WebElement ropdown_SelectRecipes;
 
-//		dropdown.selectByVisibleText("4 recipes");
 		String[] selectReciepeList = {"2 recipes", "4 recipes"};
-//		SBUtil.verifyDropdownList(dd_SelectRecipes, selectReciepeList);
-		SBUtil.getDropdownList(ddList_SelectRecipes, dd_SelectRecipes);
-		
-	}
-	
-	public void action_dd(WebElement dd_SelectRecipes){
-		Select dropdown = new Select(dd_SelectRecipes);
-//		dropdown.selectByValue("value");
-		dropdown.selectByIndex(1);
-//		dropdown.selectByVisibleText("2 recipes");
-		
-	}
-	
-	public Select action_select(WebElement element) { 
-		return new Select(element); 
-	}
 
 
 }

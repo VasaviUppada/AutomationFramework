@@ -14,12 +14,12 @@ public class SunBasketSchedulePage extends BasePage{
 	public SunBasketSchedulePage() {
 		super(driver);
 	}
-	
-	
+
 	@FindBy(xpath = "//*[@href]|//a")
 	public List<WebElement> link_allLinks;
 	
-	//*** Action Methods ***//
+	/*** Action Methods ***/
+	
 	public void action_VerifyBrokenLinks(List<WebElement> allLinks){
 		SBUtil.verifyBrokenLinks(allLinks);
 	}

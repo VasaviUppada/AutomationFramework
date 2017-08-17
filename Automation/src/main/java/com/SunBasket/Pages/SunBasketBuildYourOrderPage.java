@@ -1,7 +1,13 @@
 package com.SunBasket.Pages;
 
+import static org.testng.Assert.assertTrue;
+
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.touch.ScrollAction;
 import org.openqa.selenium.support.FindBy;
 
 import com.SunBasket.Utility.BasePage;
@@ -13,11 +19,14 @@ public class SunBasketBuildYourOrderPage extends BasePage {
 	public SunBasketBuildYourOrderPage() {
 		super(driver);
 	}
-	
+
 	/*** Web Elements ***/
 	
-	@FindBy(xpath = "//div[@class='offer-message semibold center']/a[1]")
-	public WebElement label_OrderTodayAndGet35;
+	@FindBy(xpath = "//*[@id='home-hero']/div/img")
+	public WebElement img_SunBasket;
+	
+	@FindBy(xpath = "//div[@id='page-content']/div/a[1]")
+	public WebElement label_PromoOffer;
 	
 	@FindBy(xpath = "//h2[text()='Build Your Order']")
 	public WebElement title_BuildYourOrder;
@@ -31,7 +40,7 @@ public class SunBasketBuildYourOrderPage extends BasePage {
 	@FindBy(xpath = "//select[@id='mealPlanSelect']")
 	public WebElement dropdown_SelectAMealPlan;
 	
-	@FindBy(xpath = "//*[@id='autocomplete']")
+	@FindBy(xpath = "//input[@id='autocomplete'][@placeholder='Address line 1']")
 	public WebElement textfield_Addressline1;
 	
 	@FindBy(xpath = "//*[@name='address2']")
@@ -52,14 +61,48 @@ public class SunBasketBuildYourOrderPage extends BasePage {
 	@FindBy(xpath = "//*[@id='setup-form']/fieldset/div[4]/div[10]/input")
 	public WebElement textfield_DeliveryInstructions;
 	
-	@FindBy(xpath = "//*[@class='submit-container float-right']")
+	@FindBy(xpath = "//form/fieldset//button[@id='submit-button']")
 	public WebElement button_Continue;
 	
+	@FindBy(xpath = "//*[@href]|//a")
+	public List<WebElement> link_allLinks;
+	
+
 	/*** Action Methods ***/
+
+	// To verify all Links on a Page
+	public void action_VerifyBrokenLinks(List<WebElement> allLinks){
+		SBUtil.verifyBrokenLinks(allLinks);
+	}
 	
 	public void action_VerifyText(WebElement element, String expected){
-		SBUtil.verifyText(element, expected);
+		assertTrue(SBUtil.verifyText(element, expected));
 	}
 
+	public void action_SendKeys(WebElement textBox, String textToPass){
+		try {
+			SBUtil.sendKeyswithJavaScriptExecutor(textBox, textToPass);
+		} catch (Exception e) {
+			System.out.println("Unable to click on : " + textBox);
+			e.printStackTrace();
+		}
+	}
+	
+	public void action_ClickOnContinueButton(WebElement element){
+		try {
+			SBUtil.clickwithJavaScriptExecutor(element);
+		} catch (Exception e) {
+			System.out.println("Unable to click on : " + element);
+			e.printStackTrace();
+		}
+	}
+	public void action_BuildYourOrder(){
+		textfield_Addressline1.sendKeys("Ownes Dr");
+		textfield_AddressLine2.sendKeys("345");
+		action_SendKeys(textfield_PhoneNumber, "9259259259");
+		textfield_DeliveryInstructions.sendKeys("Door Delivery");
+		action_ClickOnContinueButton(button_Continue);
+	}
 
+	
 }

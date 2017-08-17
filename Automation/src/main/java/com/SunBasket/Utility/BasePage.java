@@ -13,8 +13,8 @@ import org.openqa.selenium.support.PageFactory;
 public class BasePage extends DriverScript {
 
 	public BasePage(WebDriver driver){
-		DriverScript.driver = driver;
-		PageFactory.initElements(driver, this);
+		DriverScript.driver = driver; 
+        PageFactory.initElements(driver, this);
 	}
 
 	//*** Default wait time of 30sec. ***//* 

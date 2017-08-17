@@ -1,5 +1,6 @@
 package com.SunBasket.Pages;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -14,13 +15,14 @@ public class SunBasketTheSunTimesPage extends BasePage{
 	public SunBasketTheSunTimesPage() {
 		super(driver);
 	}	
-	
+
 	@FindBy(xpath = "//*[@href]|//a")
 	public List<WebElement> link_allLinks;
 	
 	//*** Action Methods ***//
 	public void action_VerifyBrokenLinks(List<WebElement> allLinks){
 		SBUtil.verifyBrokenLinks(allLinks);
+
 	}
 
 

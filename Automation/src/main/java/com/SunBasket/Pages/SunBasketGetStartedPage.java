@@ -1,10 +1,13 @@
 package com.SunBasket.Pages;
 
+import static org.testng.Assert.assertTrue;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -17,10 +20,11 @@ public class SunBasketGetStartedPage extends BasePage{
 		super(driver);
 	}
 	
+	
 	/*** Web Elements ***/
 
-	@FindBy(xpath = "//div[@id='page-content']//a[1]")
-	public WebElement label_OrderTodayAndGet35;
+	@FindBy(xpath = "//div[@id='page-content']/div/a[1]")
+	public WebElement label_PromoOffer;
 	
 	@FindBy(xpath = "//div[@id='sign-up-form']//h2[text()='Get Started']")
 	public WebElement header_GetStarted;
@@ -76,20 +80,33 @@ public class SunBasketGetStartedPage extends BasePage{
 	}
 	
 	public void action_VerifyText(WebElement element, String expected){
-		SBUtil.verifyText(element, expected);
+		assertTrue(SBUtil.verifyText(element, expected));
 	}
 	
 	public void action_GetStarted(){
 		DateFormat dateFormat = new SimpleDateFormat("ddmmyyyyhms");
         Date date = new Date();
-		textfield_FirstName.sendKeys("TestFirst");
-		textfield_LastName.sendKeys("TestLast");
-		textfield_EmailAddress.sendKeys("test" + dateFormat.format(date) + "@test.com");
-		textfield_ChooseAPassword.sendKeys("ReplacePassword123");
+        String firstName = "test" + dateFormat.format(date);
+		textfield_FirstName.sendKeys(firstName);
+		textfield_LastName.sendKeys("Test");
+		String email = firstName + "@test.com";
+		String pswd = "ReplacePassword123";
+		textfield_EmailAddress.sendKeys(email);
+		textfield_ChooseAPassword.sendKeys(pswd);
 		textfield_ZipCode.sendKeys("94588");
+//		SBUtil.waitForElementToBeClickable(button_Continue);
 		button_Continue.click();
+		action_ClickOnContinueButton(button_Continue);
 	}
 	
+	public void action_ClickOnContinueButton(WebElement element){
+		try {
+			SBUtil.clickwithJavaScriptExecutor(element);
+		} catch (Exception e) {
+			System.out.println("Unable to click on : " + element);
+			e.printStackTrace();
+		}
+}
 	
 	
 	

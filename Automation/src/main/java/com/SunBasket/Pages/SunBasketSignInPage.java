@@ -2,6 +2,7 @@ package com.SunBasket.Pages;
 
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.DataProvider;
@@ -14,7 +15,7 @@ public class SunBasketSignInPage extends BasePage{
 	public SunBasketSignInPage(){
 		super(driver);		
 	}
-	
+
 	/*** Web Elements ***/
 	@FindBy(xpath = "//h2[text()='Sign In']")
 	public WebElement header_SignIn;
@@ -47,11 +48,11 @@ public class SunBasketSignInPage extends BasePage{
 	public void action_VerifyBrokenLinks(List<WebElement> allLinks){
 		SBUtil.verifyBrokenLinks(allLinks);
 	}
-	
-	public void action_signIn(){
-		textField_EnterYourEmail.sendKeys("vasavitest@test.com");
+
+	public void action_signIn(String email){
+		textField_EnterYourEmail.sendKeys(email);
 		textfield_EnterYourPassword.sendKeys("ReplacePassword123");
-		button_SignIn.click();
+		button_SignIn.click();  // "vasavitest@test.com"
 	}
 
 }

@@ -1,10 +1,14 @@
 package com.SunBasket.Pages;
 
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import com.SunBasket.Utility.BasePage;
 import com.SunBasket.Utility.SBUtil;
@@ -14,14 +18,14 @@ public class SunBasketPromoPage extends BasePage{
 	public SunBasketPromoPage() {
 		super(driver);
 	}
-	
+
 	/*** Web Elements ***/
 	
-	@FindBy(xpath = "//div[@id='page-content']//a[1]")
-	public WebElement label_OrderTodayAndGet35;
+	@FindBy(xpath = "//div[@id='page-content']/div/a[1]")
+	public WebElement label_PromoOffer;
 	
-	@FindBy(xpath = "//div[@class='offer-message semibold center']/a[text()='Redeem Offer']")
-	public WebElement button_RedeemOffer;
+	@FindBy(xpath = "//*[@id='page-content']/div/a[2]")
+	public WebElement button_PromoRedeemOffer;
 	
 	@FindBy(xpath = "//*[@class='nav navbar-nav navbar-right hidden-xs']//a[@class='btn-join btn']")
 	public WebElement button_GetStarted;
@@ -33,7 +37,8 @@ public class SunBasketPromoPage extends BasePage{
 	public List<WebElement> link_allLinks;
 	
 	
-	// *** Action Methods *** //
+	/*** Action Methods 
+	 * @throws IOException ***/
 	
 	//To verify all Links on a Page
 	public void action_VerifyBrokenLinks(List<WebElement> allLinks){
@@ -41,7 +46,7 @@ public class SunBasketPromoPage extends BasePage{
 	}
 	
 	public void action_VerifyText(WebElement element, String expected){
-		SBUtil.verifyText(element, expected);
+		assertTrue(SBUtil.verifyText(element, expected));
 	}
 	
 	

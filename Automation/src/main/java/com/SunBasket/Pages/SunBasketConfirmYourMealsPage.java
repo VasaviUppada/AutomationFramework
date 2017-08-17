@@ -1,5 +1,9 @@
 package com.SunBasket.Pages;
 
+import static org.testng.Assert.assertTrue;
+
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,11 +17,13 @@ public class SunBasketConfirmYourMealsPage extends BasePage{
 		super(driver);
 	}
 
-	
 	/*** Web Elements ***/
 	
-	@FindBy(xpath = "//*[@id='page-content']/div[1]/a[1]")
-	public WebElement label_OrderTodayAndGet35;
+	@FindBy(xpath = "//*[@id='home-hero']/div/img")
+	public WebElement img_SunBasket;
+	
+	@FindBy(xpath = "//div[@id='page-content']/div/a[1]")
+	public WebElement label_PromoOffer;
 	
 	@FindBy(xpath = "//h2[text()='Confirm Your Meals']")
 	public WebElement title_ConfirmYourMeals;
@@ -25,10 +31,20 @@ public class SunBasketConfirmYourMealsPage extends BasePage{
 	@FindBy(xpath = "//*[@id='saveMenuButton']")
 	public WebElement button_Continue;
 	
+	@FindBy(xpath = "//*[@href]|//a")
+	public List<WebElement> link_allLinks;
+
+
 	/*** Action Methods ***/
 	
-	public void action_VerifyText(WebElement element, String expected){
-		SBUtil.verifyText(element, expected);
+	// To verify all Links on a Page
+	public void action_VerifyBrokenLinks(List<WebElement> allLinks){
+		SBUtil.verifyBrokenLinks(allLinks);
 	}
+	
+	public void action_VerifyText(WebElement element, String expected){
+		assertTrue(SBUtil.verifyText(element, expected));
+	}
+
 
 }

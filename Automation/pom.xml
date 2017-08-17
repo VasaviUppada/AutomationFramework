@@ -48,6 +48,13 @@
   		<type>pom</type>
 	</dependency>
 	
+    <dependency>
+    	<groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-core</artifactId>
+        <version>1.3</version>
+        <scope>test</scope>
+   	</dependency>	
+	
 	<!-- Include Saucelabs dependencies -->
 	<!-- https://mvnrepository.com/artifact/com.saucelabs/sauce_testng -->
 	<dependency>
@@ -72,8 +79,11 @@
         	<artifactId>maven-surefire-plugin</artifactId>
         	<version>2.20</version>
         	<configuration>
+        		<parallel>classes</parallel>
+          		<threadCount>40</threadCount>
+                <redirectTestOutputToFile>true</redirectTestOutputToFile>
           		<suiteXmlFiles>
-            	<suiteXmlFile>testng_Test_WebSmokeChecklist.xml</suiteXmlFile>
+            	<suiteXmlFile>testng_STest_WebSmokeChecklist.xml</suiteXmlFile>
           	</suiteXmlFiles>
         	</configuration>
       	</plugin>

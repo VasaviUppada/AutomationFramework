@@ -48,7 +48,6 @@ public class BaseTest extends DriverScript{
 
 	@BeforeMethod
 	public void setUp(){
-		System.out.println("Initialize Browser : " + Config.Browser.browser);
 		initializeBrowser(Config.Browser.browser);
 		driver.navigate().to(Config.Url.base_url);
 	}

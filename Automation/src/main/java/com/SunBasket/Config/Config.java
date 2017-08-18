@@ -1,21 +1,25 @@
 package com.SunBasket.Config;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Properties;
 
 import org.testng.annotations.DataProvider;
 
 public class Config {
 
 	public static class Url{
-//		public static String base_url = "https://sunbasket.com";
+
 		public static final String master_url			 = "https://master.sunbasket-staging.com";
 		public static final String develop_url			 = "https://develop.sunbasket-staging.com";
 		public static final String base_url				 = master_url;
-		
 		public static final String home_url				 = base_url + "/home";
 		public static final String SingleWeekPromo_url 	 = base_url + "/?offer=QA-TEST35OFF";
 		public static final String MultiWeekPromo_url	 = base_url + "?offer=QA-MW403010";	
 		public static final String join_conFirmation_url = base_url + "/join/confirmation";
+
 	}
 	
 	public static class Browser{
@@ -49,7 +53,7 @@ public class Config {
 //                new Object[]{"internet explorer", "10.0", "Windows 7"},
 //                  new Object[]{"firefox", "47.0", "OS X 10.10"}, 
         		  new Object[]{"chrome", "54.0", "OS X 10.10"},
-        		  new Object[]{"safari", "8.0", "OS X 10.10"},
+//        		  new Object[]{"safari", "8.0", "OS X 10.10"},
         };
     }
 	

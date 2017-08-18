@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="SB-Saucelabs_JoinFlow">
-  <test name="SauceBrowsers" preserve-order="true" parallel = "true">
+  <test name="SauceBrowsers" preserve-order="true" parallel = "none">
     <classes>
       <class name="com.SunBasket.AutomationTests.STest_WebSmokeChecklist">
       	<methods>
-        	<include name="C1_SunBasket_JoinFlow_PromoCode_001" />
-        	<include name="C6_SunBasket_JoinFlow_PromoCode_002" />
+        	<include name="S1_Page" />
+        	<include name="S2_Page" />
+        	<exclude name="C1_SunBasket_JoinFlow_PromoCode_001" />
+        	<exclude name="C6_SunBasket_JoinFlow_PromoCode_002" />
         	<exclude name="C7_SunBasket_JoinFlow_PromoCode_003" />
         	<exclude name="C8_SunBasket_JoinFlow_PromoCode_004" />
         	<exclude name="C9_SunBasket_JoinFlow_PromoCode_005" />

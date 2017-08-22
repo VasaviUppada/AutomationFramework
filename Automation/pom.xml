@@ -53,6 +53,13 @@
         <scope>test</scope>
    	</dependency>	
 	
+	<!-- https://mvnrepository.com/artifact/commons-configuration/commons-configuration -->
+	<dependency>
+    	<groupId>commons-configuration</groupId>
+    	<artifactId>commons-configuration</artifactId>
+    	<version>1.6</version>
+	</dependency>
+
 	<!-- Include Saucelabs dependencies -->
 	<!-- https://mvnrepository.com/artifact/com.saucelabs/sauce_testng -->
 	<dependency>
@@ -61,33 +68,6 @@
     	<version>2.1.23</version>
 	</dependency>
   </dependencies>
-  
-   <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-          		<artifactId>maven-compiler-plugin</artifactId>
-         		<version>3.6.2</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-      	<plugin>
-        	<groupId>org.apache.maven.plugins</groupId>
-        	<artifactId>maven-surefire-plugin</artifactId>
-        	<version>2.20</version>
-        	<configuration>
-        		<parallel>classes</parallel>
-          		<threadCount>40</threadCount>
-                <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          		<suiteXmlFiles>
-            	<suiteXmlFile>testng_STest_WebSmokeChecklist.xml</suiteXmlFile>
-          	</suiteXmlFiles>
-        	</configuration>
-      	</plugin>
-     </plugins>
-   </build>
 
     <repositories>
         <repository>
@@ -113,5 +93,47 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
+  
+   <build>
+ 	  <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+          		<artifactId>maven-compiler-plugin</artifactId>
+         		<version>3.6.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            
+      	<plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-surefire-plugin</artifactId>
+        	<version>2.20</version>
+        	
+        	<configuration>
+        		<parallel>classes</parallel>
+          		<threadCount>40</threadCount>
+                <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          		<suiteXmlFiles>
+            		<suiteXmlFile>testng_STest_WebSmokeChecklist.xml</suiteXmlFile>
+          		</suiteXmlFiles>
+          		
+          	<!--          		 
+            	<systemProperties>
+            		<property>
+              			<name>profile.name</name>
+              			<value>master.profiles</value>
+            		</property>
+          		</systemProperties>         		
+            -->           	
+            	
+          		<systemPropertyVariables>
+            		<propertyName>profile.name</propertyName>
+            		<buildDirectory>${project.build.directory}</buildDirectory>
+            	</systemPropertyVariables>  
+        	</configuration>
+      	</plugin>          
+     </plugins>
+   </build>  
 </project>

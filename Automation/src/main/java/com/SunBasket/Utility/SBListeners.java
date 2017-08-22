@@ -63,7 +63,7 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 	// This belongs to ITestListener and will execute only on the event of fail test
 	@Override
 	public void onTestFailure(ITestResult result) {
-		System.out.println("*** Failed Tests : "+ result.getName());
+		System.err.println("*** Failed Tests : "+ result.getName());
 		String methodName = result.getName().toString().trim();
 		try {
 			SBUtil.takeScreenshot(methodName);

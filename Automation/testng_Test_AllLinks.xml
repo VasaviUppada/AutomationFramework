@@ -2,10 +2,24 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Test_AllLinks">
 
-  <test name="Chrome Test">
-  	<parameter name="browser" value="chrome"/>
+  <test name="AllLinks Test">
+  	<!--  <parameter name="browser" value="chrome"/> -->
     <classes>
-      <class name="com.SunBasket.AutomationTests.Test_AllLinks"/>
+      <class name="com.SunBasket.AutomationTests.Test_AllLinks">
+      	<methods>
+        	<exclude name="AllLinks_SunBasketHomePage" />
+        	<include name="AllLinks_SunBasketGetStartedPage" />
+        	<exclude name="AllLinks_SunBasketSignInPage" />
+        	<exclude name="AllLinks_SunBasketMyMenuPage" />
+        	<exclude name="AllLinks_SunBasketSchedulePage" />
+        	<exclude name="AllLinks_SunBasketTheSunTimesPage" />
+        	<exclude name="AllLinks_SunBasketPromoPage" />
+        	<exclude name="AllLinks_SunBasketBuildYourOrderPage" />
+        	<exclude name="AllLinks_SunBasketConfirmYourMealsPage" />
+        	<exclude name="AllLinks_SunBasketCompleteYourOrderPage" />
+        	<exclude name="AllLinks_SunBasketMyAccountPage" />
+      	</methods>
+      </class>
     </classes>
   </test> <!-- Test -->
   

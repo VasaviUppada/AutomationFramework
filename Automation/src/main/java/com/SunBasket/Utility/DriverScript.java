@@ -37,6 +37,7 @@ public class DriverScript {
 	public static void browserOptions(String browser){
 		if(driver == null){
 			System.out.println("Initializing Driver : " + browser);
+			System.out.println("System Properties : " + System.getProperty("profile.name"));
 			String os = System.getProperty("os.name").toLowerCase();
 			
 			switch(browser){
@@ -102,11 +103,10 @@ public class DriverScript {
 		System.out.println("Quitting Browser!");
 		driver.quit();
 		driver = null;
-		
 	}
 
     public static WebDriver getWebDriver() {
-    	System.out.println("WebDriver" + dr.get());
+    	System.out.println("WebDriver : " + dr.get());
         return dr.get();
     }
 

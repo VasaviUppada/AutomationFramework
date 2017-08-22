@@ -96,9 +96,9 @@ public class SBUtil extends DriverScript{
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			System.out.println("Element was not found in DOM "+ e.getStackTrace());
-		} catch (Exception e) {
+		}/* catch (Exception e) {
 			System.out.println("Unable to click on element "+ e.getStackTrace());
-		}
+		}*/
 	}
 	
 	/*** Click on an element using Java Script Executor ***/

@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import org.testng.annotations.DataProvider;
 
-import com.SunBasket.Config.ReadProp.ReadPropertytFile.PropertyLoader;
+//import com.SunBasket.Config.ReadProp.ReadPropertytFile.PropertyLoader;
 
 public class Config {
 

@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import org.testng.annotations.DataProvider;
 
-import com.SunBasket.Config.ReadPropertytFile.PropertyLoader;
+import com.SunBasket.Config.ReadProp.ReadPropertytFile.PropertyLoader;
 
 public class Config {
 
@@ -74,8 +74,14 @@ public class Config {
 			propertyFileList.add("/resources/application-master.properties");
 		else if("prod.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
 			propertyFileList.add("/resources/application-prod.properties");
-		else if("sauce.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
-			propertyFileList.add("/resources/application-saucelabs.properties");
+		else if("dev-sauce.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
+			propertyFileList.add("/resources/application-dev-sauce.properties");
+		else if("master-sauce.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
+			propertyFileList.add("/resources/application-master-sauce.properties");
+		else if("prod-sauce.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
+			propertyFileList.add("/resources/application-prod-sauce.properties");
+		else if("default-sauce.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
+			propertyFileList.add("/resources/application-default-sauce.properties");
 		else
 			propertyFileList.add("/resources/application-default.properties");	
 		return propertyFileList;

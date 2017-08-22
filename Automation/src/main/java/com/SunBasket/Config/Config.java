@@ -66,16 +66,16 @@ public class Config {
 	protected static ArrayList<String> getPropertyFileList(){
 //		ArrayList<String> propertyFileList = super.getPropertyFileList();
 		ArrayList<String> propertyFileList = new ArrayList<String>();
-		if("dev.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
-			propertyFileList.add("/resources/application-dev.properties");
+		if("develop.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
+			propertyFileList.add("/resources/application-develop.properties");
 		else if("master.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
 			propertyFileList.add("/resources/application-master.properties");
 		else if("prod.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
 			propertyFileList.add("/resources/application-prod.properties");
 		else if("qa.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
 			propertyFileList.add("/resources/application-qa.properties");
-		else if("dev-sauce.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
-			propertyFileList.add("/resources/application-dev-sauce.properties");
+		else if("develop-sauce.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
+			propertyFileList.add("/resources/application-develop-sauce.properties");
 		else if("master-sauce.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
 			propertyFileList.add("/resources/application-master-sauce.properties");
 		else if("prod-sauce.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))

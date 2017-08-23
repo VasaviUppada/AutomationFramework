@@ -54,6 +54,24 @@ public class SBUtil extends DriverScript{
 		wait.until(ExpectedConditions.titleIs(pageTitle));
 	}
 	
+	/*** Explicit Wait - urlContains ***/
+	public static void waitForUrlContains(String urlText){
+		WebDriverWait wait=new WebDriverWait(driver, 60);
+		wait.until(ExpectedConditions.urlContains(urlText));
+	}
+	
+	/*** Explicit Wait - urlIs ***/
+	public static void waitForUrlMatches(String url){
+		WebDriverWait wait=new WebDriverWait(driver, 60);
+		wait.until(ExpectedConditions.urlMatches(url));
+	}
+	
+	/*** Explicit Wait - urlIs ***/
+	public static void waitForUrlToBe(String url){
+		WebDriverWait wait=new WebDriverWait(driver, 60);
+		wait.until(ExpectedConditions.urlToBe(url));
+	}
+	
 	/*** Explicit Wait - titleContains ***/ 
 	public static void waitForPageTitleContains(String titleContains){
 		WebDriverWait wait=new WebDriverWait(driver, 40);

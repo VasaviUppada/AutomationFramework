@@ -31,7 +31,7 @@ public class Config {
 	}
 	
 	public static class PageTitle{
-		public static final String pageTitle_HomePage  = "Sun Basket - Healthy organic meal delivery";
+		public static final String pageTitle_HomePage  = "Sun Basket Meal Delivery Service | Fresh Organic and Sustainable Food & Healthy Recipes";
 		public static final String pageTitle_PromoPage = "Sun Basket - Healthy organic meal delivery";
 		public static final String pageTitle_SignInPage = "Sun Basket - Healthy organic meal delivery";
 		public static final String pageTitle_GetStartedPage = "Sun Basket: Join";
@@ -56,9 +56,9 @@ public class Config {
 //                new Object[]{"MicrosoftEdge", "15", "Windows 10"},
 //                new Object[]{"firefox", "54.0", "Windows 10"},
 //                new Object[]{"internet explorer", "10.0", "Windows 7"},
-//                  new Object[]{"firefox", "47.0", "OS X 10.10"}, 
+//                new Object[]{"firefox", "47.0", "OS X 10.10"}, 
         		  new Object[]{"chrome", "54.0", "OS X 10.10"},
-        		  new Object[]{"safari", "8.0", "OS X 10.10"},
+//        		  new Object[]{"safari", "8.0", "OS X 10.10"},
         };
     }
 	

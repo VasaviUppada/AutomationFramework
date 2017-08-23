@@ -32,12 +32,12 @@ public class Config {
 	
 	public static class PageTitle{
 		public static final String pageTitle_HomePage  = "Sun Basket Meal Delivery Service | Fresh Organic and Sustainable Food & Healthy Recipes";
-		public static final String pageTitle_PromoPage = "Sun Basket - Healthy organic meal delivery";
-		public static final String pageTitle_SignInPage = "Sun Basket - Healthy organic meal delivery";
-		public static final String pageTitle_GetStartedPage = "Sun Basket: Join";
-		public static final String pageTitle_BuildYourOrderPage = "Sun Basket: Join";
-		public static final String pageTitle_CompleteYourOrderPage = "Sun Basket: Join";
-		public static final String pageTitle_JoinConfirmationPage = "Sun Basket: Join";
+		public static final String pageTitle_PromoPage = "Sun Basket Meal Delivery Service | Fresh Organic and Sustainable Food & Healthy Recipes";
+		public static final String pageTitle_SignInPage = "Sun Basket: Login and Choose Your Weekly Recipes | Healthy Meals Delivered | Sun Basket";
+		public static final String pageTitle_GetStartedPage = "Sun Basket: Sign Up for Weekly Healthy Meal Kit Delivery | Sun Basket";
+		public static final String pageTitle_BuildYourOrderPage = "Sun Basket: Build Your Order | Sun Basket";
+		public static final String pageTitle_CompleteYourOrderPage = "Sun Basket: Complete Your Order | Sun Basket";
+		public static final String pageTitle_JoinConfirmationPage = "Sun Basket: Confirm Your Meals | Sun Basket";
 		public static final String pageTitle_ConfirmYourMealsPage = "Sun Basket: Confirm Your Meals";
 		public static final String pageTitle_MyAccountPage = "Sun Basket: My Account";
 	}

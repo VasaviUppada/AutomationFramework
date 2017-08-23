@@ -49,10 +49,19 @@ public class SunBasketSignInPage extends BasePage{
 		SBUtil.verifyBrokenLinks(allLinks);
 	}
 
+	public void action_ClickOnContinueButton(WebElement element){
+		try {
+			SBUtil.clickwithJavaScriptExecutor(element);
+		} catch (Exception e) {
+			System.out.println("Unable to click on : " + element);
+			e.printStackTrace();
+		}
+	}
+	
 	public void action_signIn(String email){
 		textField_EnterYourEmail.sendKeys(email);
 		textfield_EnterYourPassword.sendKeys("ReplacePassword123");
-		button_SignIn.click();  // "vasavitest@test.com"
+		action_ClickOnContinueButton(button_SignIn);
 	}
 
 }

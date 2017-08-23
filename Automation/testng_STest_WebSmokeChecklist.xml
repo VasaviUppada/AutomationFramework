@@ -5,14 +5,12 @@
     <classes>
       <class name="com.SunBasket.AutomationTests.STest_WebSmokeChecklist">
       	<methods>
-        	<exclude name="S1_Page" />
-        	<exclude name="S2_Page" />
         	<include name="C1_SunBasket_JoinFlow_PromoCode_001" />
-        	<exclude name="C6_SunBasket_JoinFlow_PromoCode_002" />
-        	<exclude name="C7_SunBasket_JoinFlow_PromoCode_003" />
-        	<exclude name="C8_SunBasket_JoinFlow_PromoCode_004" />
-        	<exclude name="C9_SunBasket_JoinFlow_PromoCode_005" />
-        	<exclude name="C10_SunBasket_JoinFlow_PromoCode_006" />
+        	<include name="C6_SunBasket_JoinFlow_PromoCode_002" />
+        	<include name="C7_SunBasket_JoinFlow_PromoCode_003" />
+        	<include name="C8_SunBasket_JoinFlow_PromoCode_004" />
+        	<include name="C9_SunBasket_JoinFlow_PromoCode_005" />
+        	<include name="C10_SunBasket_JoinFlow_PromoCode_006" />
       </methods>
       </class>
     </classes>

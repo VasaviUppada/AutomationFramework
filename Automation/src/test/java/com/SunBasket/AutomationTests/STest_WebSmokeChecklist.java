@@ -346,17 +346,5 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(1, 0, "$35.00 off");		
 	}
 	
-	
-	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void S1_Page(String browser, String version, String os, Method method){
-		driver = setBrowser(browser, version, os, method);
-		driver.get("http://www.google.com");
-	}
-	
-	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void S2_Page(String browser, String version, String os, Method method){
-		driver = setBrowser(browser, version, os, method);
-		driver.get("http://www.gmail.com");
-	}
-	
+
 }

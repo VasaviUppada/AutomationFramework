@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="SB-Saucelabs_JoinFlow">
+ <!-- 
   <test name="SauceBrowsers" preserve-order="true" parallel = "true">
+ -->
+  <test name="SauceBrowsers" preserve-order="true">
     <classes>
       <class name="com.SunBasket.AutomationTests.STest_WebSmokeChecklist">
       	<methods>

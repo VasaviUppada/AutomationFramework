@@ -26,7 +26,7 @@ import com.SunBasket.Utility.SBaseTest;
 public class STest_WebSmokeChecklist extends SBaseTest{
 
 	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void C1_SunBasket_JoinFlow_PromoCode_001(String browser, String version, String os, Method method){
+	public void C1_SunBasket_JoinFlow_SingleWeek_001(String browser, String version, String os, Method method){
 		driver = setBrowser(browser, version, os, method);
 		
         // Step 1
@@ -69,7 +69,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 	}
 	
 	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void C6_SunBasket_JoinFlow_PromoCode_002(String browser, String version, String os, Method method){
+	public void C6_SunBasket_JoinFlow_SingleWeek_002(String browser, String version, String os, Method method){
 		driver = setBrowser(browser, version, os, method);
 		
         // Step 1
@@ -141,7 +141,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 	}
 
 	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void C7_SunBasket_JoinFlow_PromoCode_003(String browser, String version, String os, Method method){
+	public void C7_SunBasket_JoinFlow_MultiWeek_003(String browser, String version, String os, Method method){
 		driver = setBrowser(browser, version, os, method);
 		
         // Step 1
@@ -181,7 +181,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 	}
 	
 	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void C8_SunBasket_JoinFlow_PromoCode_004(String browser, String version, String os, Method method){
+	public void C8_SunBasket_JoinFlow_MultiWeek_004(String browser, String version, String os, Method method){
 		driver = setBrowser(browser, version, os, method);
 		
         // Step 1
@@ -256,7 +256,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 	}
 	
 	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void C9_SunBasket_JoinFlow_PromoCode_005(String browser, String version, String os, Method method){
+	public void C9_SunBasket_JoinFlow_SingleWeek_005(String browser, String version, String os, Method method){
 		driver = setBrowser(browser, version, os, method);
 		
         // Step 1

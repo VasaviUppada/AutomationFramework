@@ -106,7 +106,8 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		sunBasketHomePage.action_SignOut();
 		sunBasketHomePage.link_SignIn.click();
 		SunBasketSignInPage sunBasketSignInPage = new SunBasketSignInPage();
-		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_SignInPage);
+		SBUtil.waitForPageToLoad();
+//		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_SignInPage);
 		sunBasketSignInPage.action_signIn(email);
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage2 = new SunBasketBuildYourOrderPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_BuildYourOrderPage);
@@ -218,7 +219,8 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		sunBasketHomePage.action_SignOut();
 		sunBasketHomePage.link_SignIn.click();
 		SunBasketSignInPage sunBasketSignInPage = new SunBasketSignInPage();
-		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_SignInPage);
+		SBUtil.waitForPageToLoad();
+//		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_SignInPage);
 		sunBasketSignInPage.action_signIn(email);
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage2 = new SunBasketBuildYourOrderPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_BuildYourOrderPage);

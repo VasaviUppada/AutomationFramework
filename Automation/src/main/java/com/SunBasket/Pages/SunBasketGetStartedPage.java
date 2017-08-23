@@ -95,7 +95,7 @@ public class SunBasketGetStartedPage extends BasePage{
 		textfield_ChooseAPassword.sendKeys(pswd);
 		textfield_ZipCode.sendKeys("94588");
 //		SBUtil.waitForElementToBeClickable(button_Continue);
-		button_Continue.click();
+//		button_Continue.click();
 		action_ClickOnContinueButton(button_Continue);
 	}
 	

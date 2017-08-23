@@ -38,7 +38,7 @@ public class Config {
 		public static final String pageTitle_BuildYourOrderPage = "Sun Basket: Build Your Order | Sun Basket";
 		public static final String pageTitle_CompleteYourOrderPage = "Sun Basket: Complete Your Order | Sun Basket";
 		public static final String pageTitle_JoinConfirmationPage = "Sun Basket: Confirm Your Meals | Sun Basket";
-		public static final String pageTitle_ConfirmYourMealsPage = "Sun Basket: Confirm Your Meals";
+		public static final String pageTitle_ConfirmYourMealsPage = "Sun Basket Meal Delivery Service | Fresh Organic and Sustainable Food & Healthy Recipes";
 		public static final String pageTitle_MyAccountPage = "Sun Basket: My Account";
 	}
 	

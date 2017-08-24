@@ -58,7 +58,7 @@ public class Config {
 //                new Object[]{"internet explorer", "10.0", "Windows 7"},
 //                new Object[]{"firefox", "47.0", "OS X 10.10"}, 
         		  new Object[]{"chrome", "54.0", "OS X 10.10"},
-//        		  new Object[]{"safari", "8.0", "OS X 10.10"},
+        		  new Object[]{"safari", "8.0", "OS X 10.10"},
         };
     }
 	

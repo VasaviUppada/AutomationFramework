@@ -1,159 +1,155 @@
 package com.SunBasket.Utility;
 
+import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import org.testng.IInvokedMethod;
- 
 import org.testng.IInvokedMethodListener;
+import org.testng.IResultMap;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
+import org.testng.ISuiteResult;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
- 
-import org.testng.Reporter;
+import org.testng.xml.XmlSuite;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.aventstack.extentreports.reporter.configuration.ChartLocation;
-import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.relevantcodes.extentreports.LogStatus;
 
-
- 
 public class SBListeners extends DriverScript implements ITestListener, ISuiteListener, IInvokedMethodListener {
- 
-	// This belongs to ISuiteListener and will execute before the Suite start
-	@Override
-	public void onStart(ISuite result) {
-		Reporter.log("Begins Suite Execution : " + result.getName(), true);
-		logger = extent.createTest(result.getName());
-	}
- 
-	// This belongs to ISuiteListener and will execute, once the Suite is finished
-	@Override
-	public void onFinish(ISuite result) { 
-		Reporter.log("Completed Suite Execution : " + result.getName(), true);
-	}
- 
-	// This belongs to ITestListener and will execute before starting of Test set/batch 
-	@Override
-	public void onStart(ITestContext result) {
-		Reporter.log("Begins Test Execution : " + result.getName(), true);
-	}
- 
-	// This belongs to ITestListener and will execute, once the Test set/batch is finished
-	@Override
-	public void onFinish(ITestContext result) {
-		Reporter.log("Completed Test Execution : " + result.getName(), true);
-	}
- 
-	// This belongs to ITestListener and will execute only when the test is pass 
-	@Override
-	public void onTestSuccess(ITestResult result) {
-		// This is calling the printTestResults method
-		System.out.println("Success Test : " + result.getName());
-		printTestResults(result);
-	}
- 
-	// This belongs to ITestListener and will execute only on the event of fail test
-	@Override
-	public void onTestFailure(ITestResult result) {
-		System.err.println("Failed Tests : "+ result.getName());
-		String methodName = result.getName().toString().trim();
-		try {
-			SBUtil.takeScreenshot(methodName);
-			System.out.println("Screenshot saved...");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-		System.out.println("Failed Test!");
-		printTestResults(result);
-	}
-	
-	// This belongs to ITestListener and will execute before the main test start (@Test)
-	
-	@Override
-	public void onTestStart(ITestResult result) { 
-		System.out.println("Begin Execution : " + result.getName()); 
-	}
- 
-	// This belongs to ITestListener and will execute only if any of the main test(@Test) get skipped
-	@Override
-	public void onTestSkipped(ITestResult result) {
-		System.out.println("Skipped Tests : " + result.getName());
-		printTestResults(result);
-	}
- 
-	// This is just a piece of shit, ignore this 
-	@Override
-	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) { 
-	}
- 
-	// This is the method which will be executed in case of test pass or fail 
-	// This will provide the information on the test 
-	private void printTestResults(ITestResult result) {
+  
+    public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
+//    	report = new ExtentReports(outputDirectory + File.separator + "ExtentReportTestNG.html", true);
+  
+        for (ISuite suite : suites) {
+            Map<String, ISuiteResult> result = suite.getResults();
+  
+            for (ISuiteResult r : result.values()) {
+                ITestContext context = r.getTestContext();
+  
+                buildTestNodes(context.getPassedTests(), LogStatus.PASS);
+                buildTestNodes(context.getFailedTests(), LogStatus.FAIL);
+                buildTestNodes(context.getSkippedTests(), LogStatus.SKIP);
+            }
+        }
+  
+        report.flush();
+        report.close();
+    }
+  
+    private void buildTestNodes(IResultMap tests, LogStatus status) {
+  
+        if (tests.size() > 0) {
+            for (ITestResult result : tests.getAllResults()) {
+            	logger = report.startTest(result.getMethod().getMethodName());
+  
+//                test.getTest().startedTime = getTime(result.getStartMillis());
+//                test.getTest().endedTime = getTime(result.getEndMillis());
+  
+                for (String group : result.getMethod().getGroups())
+                	logger.assignCategory(group);
+  
+                String message = "Test " + status.toString().toLowerCase() + "ed";
+  
+                if (result.getThrowable() != null)
+                    message = result.getThrowable().getMessage();
+  
+                logger.log(status, message);
+  
+                report.endTest(logger);
+            }
+        }
+    }
+  
+    private Date getTime(long millis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        return calendar.getTime();        
+    }
 
-		Reporter.log("Test Method resides in " + result.getTestClass().getName(), true);
-		if (result.getParameters().length != 0) {
-			String params = null;
-			for (Object parameter : result.getParameters()) {
-				params += parameter.toString() + ",";
-			}
-			Reporter.log("Test Method had the following parameters : " + params, true);
-		}
- 
-		String status = null;
-		switch (result.getStatus()) {
-		
-		case ITestResult.SUCCESS: 
-			status = "Pass"; 
-			break;
- 
-		case ITestResult.FAILURE: 
-			status = "Failed"; 
-			break;
- 
-		case ITestResult.SKIP:
-			status = "Skipped";
-		} 
-		Reporter.log("Test Status: " + status, true); 
-	}
- 
-	// This belongs to IInvokedMethodListener and will execute before every method including @Before @After @Test 
-	public void beforeInvocation(IInvokedMethod arg0, ITestResult arg1) { 
-		String textMsg = "Begins Method Execution : " + returnMethodName(arg0.getTestMethod());
-		Reporter.log(textMsg, true);
-	}
- 
-	// This belongs to IInvokedMethodListener and will execute after every method including @Before @After @Test
-	public void afterInvocation(IInvokedMethod arg0, ITestResult arg1) {
-		String textMsg = "Completed Method Execution : " + returnMethodName(arg0.getTestMethod());
-		Reporter.log(textMsg, true); 
-	}
- 
 	// This will return method names to the calling function 
 	private String returnMethodName(ITestNGMethod method) {
 		return method.getRealClass().getSimpleName() + "." + method.getMethodName(); 
 	}
-
-
-		ExtentHtmlReporter htmlReporter;
-		ExtentReports extent;
-		ExtentTest logger;
-
 	
-	public void extent_StartReport(){
-		htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/test-output/STMExtentReport.html");
-		extent = new ExtentReports ();
-		extent.attachReporter(htmlReporter);
-		extent.setSystemInfo("Host Name", "SoftwareTestingMaterial");
-		extent.setSystemInfo("Environment", "Automation Testing");
-		extent.setSystemInfo("User Name", "Rajkumar SM");
+	@Override
+	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
+		String textMsg = "Begins Method Execution_Extent : " + returnMethodName(method.getTestMethod());
+		logger.log(LogStatus.INFO, textMsg);
+	}
+
+	@Override
+	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
+		String textMsg = "Completed Method Execution_Extent : " + returnMethodName(method.getTestMethod());
+		logger.log(LogStatus.INFO, textMsg);
+	}
+
+	@Override
+	public void onStart(ISuite suite) {
+		logger = report.startTest(suite.getName(), "Initializing!!!");
+		logger.log(LogStatus.INFO, "Suite Test Started");
+	}
+
+	@Override
+	public void onFinish(ISuite suite) {
 		
-		htmlReporter.config().setDocumentTitle("Title of the Report Comes here");
-		htmlReporter.config().setReportName("Name of the Report Comes here");
-		htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
-		htmlReporter.config().setTheme(Theme.STANDARD);
+		logger.log(LogStatus.INFO, "Test Finished");
+	}
+
+	@Override
+	public void onTestStart(ITestResult result) {
+		logger.log(LogStatus.INFO, "OnTestStart Started!!!");
+	}
+
+	@Override
+	public void onTestSuccess(ITestResult result) {
+		logger.log(LogStatus.PASS, "SUCCESS");
+		getResult(result);
+	}
+
+	@Override
+	public void onTestFailure(ITestResult result) {
+		logger.log(LogStatus.FAIL, "FAILED");
+		logger.addScreenCapture(("user.dir") +"/Screenshots_Failed");
+		getResult(result);
+	}
+
+	@Override
+	public void onTestSkipped(ITestResult result) {
+		logger.log(LogStatus.SKIP, "SKIPPED");
+		getResult(result);
+	}
+
+	@Override
+	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void onStart(ITestContext context) {
+		logger.log(LogStatus.INFO, "ITestCOntent, OnStart");
+	}
+
+	@Override
+	public void onFinish(ITestContext context) {
+		logger.log(LogStatus.INFO, "ITestContent On Finish!!!");
+	}
+	
+	public void getResult(ITestResult result){
+		if(result.getStatus() == ITestResult.SUCCESS)
+			logger.log(LogStatus.PASS, result.getName() + "Test PASS");
+		else if(result.getStatus() == ITestResult.SKIP)
+			logger.log(LogStatus.SKIP, result.getName() + "Test SKIP : " + result.getThrowable());
+		else if(result.getStatus() == ITestResult.FAILURE)
+			logger.log(LogStatus.FAIL, result.getName() + "Test FAIL : " + result.getThrowable());
+		else if(result.getStatus() == ITestResult.STARTED)
+			logger.log(LogStatus.INFO, result.getName() + "Test STARTED");
+	}
+
 }
+

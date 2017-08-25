@@ -26,8 +26,7 @@ import org.testng.annotations.Test;
 
 import com.SunBasket.Config.Config;
 
-//@Listeners(com.SunBasket.Utility.SBListeners.class)
-@Listeners(com.SunBasket.Utility.ExtentReporterNG.class)
+@Listeners(com.SunBasket.Utility.SBListeners.class)
 public class SBaseTest extends DriverScript{
 
 

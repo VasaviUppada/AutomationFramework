@@ -5,6 +5,9 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.UnexpectedException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Dimension;
@@ -32,7 +35,13 @@ public class DriverScript {
 	public static ThreadLocal<WebDriver> dr = new ThreadLocal<WebDriver>();
 	public static ThreadLocal<String> sessionId = new ThreadLocal<String>();
    
-	public static ExtentReports report = new ExtentReports(System.getProperty("user.dir") +"/test-output/ExtentReport.html", true);
+    private static String getCurrentTime() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat formater = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");       
+        return formater.format(calendar.getTime());        
+    }
+    
+	public static ExtentReports report = new ExtentReports(System.getProperty("user.dir") +"/ExtentReports/ExtentReport_" + getCurrentTime() + ".html", false);
 //	public static ExtentReports report = new ExtentReports(System.getProperty("user.dir") +"/test-output/ExtentReport.html");
 	public static ExtentTest logger;
 	

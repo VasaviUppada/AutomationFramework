@@ -22,6 +22,8 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.testng.annotations.DataProvider;
 
 import com.SunBasket.Config.Config;
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
 
 public class DriverScript {
 	
@@ -30,6 +32,10 @@ public class DriverScript {
 	public static ThreadLocal<WebDriver> dr = new ThreadLocal<WebDriver>();
 	public static ThreadLocal<String> sessionId = new ThreadLocal<String>();
    
+	public static ExtentReports report = new ExtentReports(System.getProperty("user.dir") +"/test-output/ExtentReport.html", true);
+//	public static ExtentReports report = new ExtentReports(System.getProperty("user.dir") +"/test-output/ExtentReport.html");
+	public static ExtentTest logger;
+	
 	public static void initializeBrowser(String browser){
 		browserOptions(browser);
 	}
@@ -68,14 +74,6 @@ public class DriverScript {
 					System.out.println("Sauce Labs!");
 				default :
 						System.out.println("Choosing Chrome Browser by default ...");
-/*						driver = new ChromeDriver();
-						if(os.contains("mac")){
-							System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/chromedriver");
-						}
-						else{
-							System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\chromedriver.exe");
-						}
-						break;	*/
 			}
 			maximizeScreen(driver);
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);

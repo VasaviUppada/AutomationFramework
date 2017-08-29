@@ -32,8 +32,9 @@ public class DriverScript {
 	public static ThreadLocal<WebDriver> dr = new ThreadLocal<WebDriver>();
 	public static ThreadLocal<String> sessionId = new ThreadLocal<String>();
     
-    public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/test-output/ExtentReports/ExtentReport-" + getCurrentTime() + ".html");
-	public static ExtentReports extent = new ExtentReports();
+//    public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/test-output/ExtentReports/ExtentReport-" + getCurrentTime() + ".html");
+    public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/test-output/ExtentReports/ExtentReport-" + ".html");
+    public static ExtentReports extent = new ExtentReports();
     public static ExtentTest logger;
     
     private static String getCurrentTime() {

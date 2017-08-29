@@ -95,7 +95,7 @@ public class Test_AllLinks extends BaseTest{
 	
 	@Test(description="Verifies all Links on SunBasketPromoPage!")
 	public void AllLinks_SunBasketPromoPage(){
-		driver.navigate().to(Config.Url.SingleWeekPromo_url);
+		driver.navigate().to(Config.Url.url_SingleWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		sunBasketPromoPage.waitForPageToLoad();
 		sunBasketPromoPage.action_VerifyBrokenLinks(sunBasketPromoPage.link_allLinks);
@@ -103,13 +103,13 @@ public class Test_AllLinks extends BaseTest{
 
 	@Test(description="Verifies all Links on SunBasketBuildYourOrderPage!")
 	public void AllLinks_SunBasketBuildYourOrderPage(){
-		driver.navigate().to(Config.Url.SingleWeekPromo_url);
+		driver.navigate().to(Config.Url.url_SingleWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		sunBasketPromoPage.waitForPageToLoad();
 		sunBasketPromoPage.button_GetStarted.click();
 		SunBasketGetStartedPage sunBasketGetStartedPage = new SunBasketGetStartedPage();
 		sunBasketGetStartedPage.waitForPageToLoad();
-		sunBasketGetStartedPage.action_GetStarted();
+		sunBasketGetStartedPage.action_JoinSetup();
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage = new SunBasketBuildYourOrderPage();
 		sunBasketBuildYourOrderPage.waitForPageToLoad();
 		sunBasketBuildYourOrderPage.action_VerifyBrokenLinks(sunBasketBuildYourOrderPage.link_allLinks);
@@ -117,13 +117,13 @@ public class Test_AllLinks extends BaseTest{
 	
 	@Test(description="Verifies all Links on SunBasketConfirmYourMealsPage!")
 	public void AllLinks_SunBasketConfirmYourMealsPage(){
-		driver.navigate().to(Config.Url.SingleWeekPromo_url);
+		driver.navigate().to(Config.Url.url_SingleWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		sunBasketPromoPage.waitForPageToLoad();
 		sunBasketPromoPage.button_GetStarted.click();
 		SunBasketGetStartedPage sunBasketGetStartedPage = new SunBasketGetStartedPage();
 		sunBasketGetStartedPage.waitForPageToLoad();
-		sunBasketGetStartedPage.action_GetStarted();
+		sunBasketGetStartedPage.action_JoinSetup();
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage = new SunBasketBuildYourOrderPage();
 		sunBasketBuildYourOrderPage.waitForPageToLoad();
 		sunBasketBuildYourOrderPage.textfield_Addressline1.sendKeys("Ownes Dr");
@@ -138,13 +138,13 @@ public class Test_AllLinks extends BaseTest{
 	
 	@Test(description="Verifies all Links on SunBasketCompleteYourOrderPage!")
 	public void AllLinks_SunBasketCompleteYourOrderPage(){
-		driver.navigate().to(Config.Url.SingleWeekPromo_url);
+		driver.navigate().to(Config.Url.url_SingleWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		sunBasketPromoPage.waitForPageToLoad();
 		sunBasketPromoPage.button_GetStarted.click();
 		SunBasketGetStartedPage sunBasketGetStartedPage = new SunBasketGetStartedPage();
 		sunBasketGetStartedPage.waitForPageToLoad();
-		sunBasketGetStartedPage.action_GetStarted();
+		sunBasketGetStartedPage.action_JoinSetup();
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage = new SunBasketBuildYourOrderPage();
 		sunBasketBuildYourOrderPage.waitForPageToLoad();
 		sunBasketBuildYourOrderPage.textfield_Addressline1.sendKeys("Ownes Dr");

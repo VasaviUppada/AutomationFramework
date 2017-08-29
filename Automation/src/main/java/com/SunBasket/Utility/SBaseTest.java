@@ -25,6 +25,8 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.SunBasket.Config.Config;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 
 @Listeners(com.SunBasket.Utility.SBListeners.class)
 public class SBaseTest extends DriverScript{
@@ -37,41 +39,35 @@ public class SBaseTest extends DriverScript{
 			e.printStackTrace();
 		}
         WebDriver webDriver = getWebDriver();
-        System.out.println("Browser : " + browser + " Version : " + version + " OS : " + os + " Method : " + method );
-        System.out.println("SessionID : " + getSessionId());
+        logger.log(Status.INFO,"Remote WebDriver : " +   browser + " / " + version + " / " + os);
+        logger.log(Status.INFO, "Session ID : " + getSessionId());
+        extent.setSystemInfo("BROWSER", browser);
+        extent.setSystemInfo("VERSION", version);
+        extent.setSystemInfo("OS", os);
+        extent.setSystemInfo("SESSION ID", getSessionId());
         return webDriver;
 	}
 	
 
 	@BeforeTest
 	public void beforeTest(){
-		System.out.println("Before Test!");
-	}
-	
-	@BeforeClass
-	public void beforeClass(){
-		System.out.println("Before Class!");
 	}
 
 	@BeforeMethod
-	public void setSauceLabs(){
-		System.out.println("setSauceLabs....");
+	public void setSauceLabs(Method method){
+		logger = extent.createTest(method.getName());
+		extent.setSystemInfo("Test Name", method.getName());
 	}
    
     @AfterMethod
     public void tearDown(ITestResult result) throws Exception {
         ((JavascriptExecutor) dr.get()).executeScript("sauce:job-result=" + (result.isSuccess() ? "passed" : "failed"));
+        logger.log(Status.INFO, "Quit Browser");
         dr.get().quit();
     }
 	
-	@AfterClass
-	public void afterClass(){
-		System.out.println("After Class!");
-	}
-	
 	@AfterTest
 	public void afterTest(){
-		System.out.println("After Test!");
 	}
 
 }

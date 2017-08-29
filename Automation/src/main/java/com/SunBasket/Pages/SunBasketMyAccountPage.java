@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.SunBasket.Utility.BasePage;
 import com.SunBasket.Utility.SBUtil;
+import com.aventstack.extentreports.Status;
 
 public class SunBasketMyAccountPage extends BasePage{
 
@@ -48,7 +49,9 @@ public class SunBasketMyAccountPage extends BasePage{
 	/*** Action Methods ***/
 	
 	public void action_WebTable_CouponsAvailable(int rowNo, int colNo, String expected){
+		logger.log(Status.INFO, "Verify Text - " + expected);
 		assertTrue(SBUtil.VerifyText_webTable(rowNo, colNo, expected));
+		logger.log(Status.PASS, expected + " - Matches");
 	}
 
 

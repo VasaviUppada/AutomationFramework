@@ -1,7 +1,6 @@
 package com.SunBasket.Utility;
 
 import java.awt.Toolkit;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.UnexpectedException;
@@ -11,7 +10,6 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,12 +19,11 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.safari.SafariDriver;
-import org.testng.annotations.DataProvider;
-
 import com.SunBasket.Config.Config;
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 public class DriverScript {
 	
@@ -34,25 +31,25 @@ public class DriverScript {
 	public static String buildTag = System.getenv("BUILD_TAG");
 	public static ThreadLocal<WebDriver> dr = new ThreadLocal<WebDriver>();
 	public static ThreadLocal<String> sessionId = new ThreadLocal<String>();
-   
+    
+    public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/test-output/ExtentReports/ExtentReport-" + getCurrentTime() + ".html");
+	public static ExtentReports extent = new ExtentReports();
+    public static ExtentTest logger;
+    
     private static String getCurrentTime() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat formater = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");       
         return formater.format(calendar.getTime());        
     }
-    
-	public static ExtentReports report = new ExtentReports(System.getProperty("user.dir") +"/ExtentReports/ExtentReport_" + getCurrentTime() + ".html", false);
-//	public static ExtentReports report = new ExtentReports(System.getProperty("user.dir") +"/test-output/ExtentReport.html");
-	public static ExtentTest logger;
-	
+
 	public static void initializeBrowser(String browser){
 		browserOptions(browser);
 	}
 	
 	public static void browserOptions(String browser){
 		if(driver == null){
-			System.out.println("Initializing Driver : " + browser);
-			System.out.println("System Properties : " + System.getProperty("profile.name"));
+			logger.log(Status.INFO, browser + " Browser Started");
+			logger.log(Status.INFO, "System Properties : " + System.getProperty("profile.name"));
 			String os = System.getProperty("os.name").toLowerCase();
 			
 			switch(browser){
@@ -101,23 +98,24 @@ public class DriverScript {
 		}
 
 	public static void close(){
-		System.out.println("Closing Browser!");
+		logger.log(Status.INFO, "Close Browser");
 		driver.close();
 		driver = null;
 	}
 	
 	public static void quit(){
-		System.out.println("Quitting Browser!");
+		logger.log(Status.INFO, "Quit Browser");
 		driver.quit();
 		driver = null;
 	}
 
     public static WebDriver getWebDriver() {
-    	System.out.println("WebDriver : " + dr.get());
+//		logger.log(Status.INFO, "Web Driver : " + dr.get());
         return dr.get();
     }
 
-    public String getSessionId() {
+    public static String getSessionId() {
+//    	logger.log(Status.INFO, "Session ID_ " + sessionId.get());
         return sessionId.get();
     }
     
@@ -135,12 +133,10 @@ public class DriverScript {
         URL url = new URL("https://" + Config.SauceLabs.sauceUser + ":" + Config.SauceLabs.sauceKey + "@ondemand.saucelabs.com:443/wd/hub");
         // Launch remote browser and set it as the current thread
         dr.set(new RemoteWebDriver(url,capabilities));
-//      WebDriver driver = new RemoteWebDriver(url, capabilities);
 
         // set current sessionId
       String id = ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
-      sessionId.set(id);
-      
+      sessionId.set(id);      
     }
 
 }

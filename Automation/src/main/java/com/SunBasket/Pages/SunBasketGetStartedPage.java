@@ -13,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.SunBasket.Utility.BasePage;
 import com.SunBasket.Utility.SBUtil;
+import com.aventstack.extentreports.Status;
 
 public class SunBasketGetStartedPage extends BasePage{
 
@@ -80,22 +81,27 @@ public class SunBasketGetStartedPage extends BasePage{
 	}
 	
 	public void action_VerifyText(WebElement element, String expected){
+		logger.log(Status.INFO, "Verify Text - " + expected);
 		assertTrue(SBUtil.verifyText(element, expected));
+		logger.log(Status.PASS, expected + " - Matches");
 	}
 	
-	public void action_GetStarted(){
+	public void action_JoinSetup(){
 		DateFormat dateFormat = new SimpleDateFormat("ddmmyyyyhms");
         Date date = new Date();
         String firstName = "test" + dateFormat.format(date);
+		logger.log(Status.INFO, "Enter FirstName");
 		textfield_FirstName.sendKeys(firstName);
+		logger.log(Status.INFO, "Enter LastName");
 		textfield_LastName.sendKeys("Test");
 		String email = firstName + "@test.com";
 		String pswd = "ReplacePassword123";
+		logger.log(Status.INFO, "Enter Email - " + email);
 		textfield_EmailAddress.sendKeys(email);
+		logger.log(Status.INFO, "Enter Password");
 		textfield_ChooseAPassword.sendKeys(pswd);
+		logger.log(Status.INFO, "Enter ZIPcode");
 		textfield_ZipCode.sendKeys("94588");
-//		SBUtil.waitForElementToBeClickable(button_Continue);
-//		button_Continue.click();
 		action_ClickOnContinueButton(button_Continue);
 	}
 	
@@ -103,7 +109,7 @@ public class SunBasketGetStartedPage extends BasePage{
 		try {
 			SBUtil.clickwithJavaScriptExecutor(element);
 		} catch (Exception e) {
-			System.out.println("Unable to click on : " + element);
+			logger.log(Status.FAIL, (Throwable)element);
 			e.printStackTrace();
 		}
 }

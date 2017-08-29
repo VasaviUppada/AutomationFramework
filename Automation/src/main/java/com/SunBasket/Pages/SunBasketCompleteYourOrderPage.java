@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.SunBasket.Config.Config;
 import com.SunBasket.Utility.BasePage;
 import com.SunBasket.Utility.SBUtil;
+import com.aventstack.extentreports.Status;
 
 public class SunBasketCompleteYourOrderPage extends BasePage{
 
@@ -93,30 +94,40 @@ public class SunBasketCompleteYourOrderPage extends BasePage{
 	}
 
 	public void action_VerifyText(WebElement element, String expected){
+		logger.log(Status.INFO, "Verify Text - " + expected);
 		assertTrue(SBUtil.verifyText(element, expected));
+		logger.log(Status.PASS, expected + " - Matches");
 	}
 
 	public void action_verifyAttribute(WebElement element, String attribute, String expected){
-			assertTrue(SBUtil.verifyAttributeValue(element, attribute, expected));
+		logger.log(Status.INFO, "Verify Text - " + expected);
+		assertTrue(SBUtil.verifyAttributeValue(element, attribute, expected));
+		logger.log(Status.PASS, expected + " - Matches");
 	}
 		
 	public void action_FillCreditCardAndplaceOrder(){
+		logger.log(Status.INFO, "Enter CreditCardNumber");
 		textField_CreditCardNumber.sendKeys("4242424242424242");
+		logger.log(Status.INFO, "Enter Month");
 		SBUtil.selectOptionByVisibleText(dropdown_Month, "06 - Jun");
+		logger.log(Status.INFO, "Enter Year");
 		SBUtil.selectOptionByIndex(dropdown_Year, 4);
+		logger.log(Status.INFO, "Enter CVV");
 		textField_CVC.sendKeys("925");
-//		button_SubmitOrder.click();
 		action_ClickOnSubmitButton(button_SubmitOrder);
 	}
 	
 	public void action_checkOutWithPayPal(String parentWindowHandler){
 		SBUtil.getWindowToHandle();
 		SunBasketPayPalPurchasePage sunBasketPayPalPurchasePage = new SunBasketPayPalPurchasePage();
-		sunBasketPayPalPurchasePage.waitForPageToLoad();
+		SBUtil.waitForUrlContains(Config.Url.url_Paypal);
+//		sunBasketPayPalPurchasePage.waitForPageToLoad();
+		logger.log(Status.INFO, "Click on Proceed with Sandbox button");
 		sunBasketPayPalPurchasePage.button_ProceedWithSandboxPurchase.click();
 		driver.switchTo().window(parentWindowHandler);
-		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_CompleteYourOrderPage);
-		System.out.println("Parent Page Title : " + driver.getTitle());
+//		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_CompleteYourOrderPage);
+		SBUtil.waitForUrlToBe(Config.Url.url_JoinPayment);
+		logger.log(Status.INFO, "Enter Promocode : QA-MW403010");
 		textfield_PromoCode.clear();
 		textfield_PromoCode.sendKeys("QA-MW403010");
 //		SBUtil.waitForElementToBeClickable(button_SubmitOrder);
@@ -127,8 +138,8 @@ public class SunBasketCompleteYourOrderPage extends BasePage{
 			try {
 				SBUtil.clickwithJavaScriptExecutor(element);
 			} catch (Exception e) {
-				System.out.println("Unable to click on : " + element);
-				e.printStackTrace();
+				logger.log(Status.FAIL, e.getMessage());
+				e.getMessage();
 			}
 	}
 

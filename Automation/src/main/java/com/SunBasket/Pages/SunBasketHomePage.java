@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import com.SunBasket.Utility.BasePage;
 import com.SunBasket.Utility.SBUtil;
+import com.aventstack.extentreports.Status;
 
 public class SunBasketHomePage extends BasePage{
 	
@@ -65,15 +66,17 @@ public class SunBasketHomePage extends BasePage{
 	
 	// To Verify Text
 	public void action_VerifyText(WebElement element, String expected){
+		logger.log(Status.INFO, "Verify Text - " + expected);
 		assertTrue(SBUtil.verifyText(element, expected));
+		logger.log(Status.PASS, expected + " - Matches");
 	}
 	
 	public void action_SignOut(){
 //		Select dropdown = new Select(dropdownelement);
+		logger.log(Status.INFO, "Click on Menu");
 		dropdown_Menu.click();
+		logger.log(Status.INFO, "Click on Signout");
 		link_SignOut.click();
-		
-		
 	}
 	
 }

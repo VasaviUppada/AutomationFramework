@@ -12,6 +12,9 @@ import org.openqa.selenium.support.FindBy;
 
 import com.SunBasket.Utility.BasePage;
 import com.SunBasket.Utility.SBUtil;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 
 // this page loads when customer clicks on 
 public class SunBasketBuildYourOrderPage extends BasePage {
@@ -76,14 +79,17 @@ public class SunBasketBuildYourOrderPage extends BasePage {
 	}
 	
 	public void action_VerifyText(WebElement element, String expected){
+		logger.log(Status.INFO, "Verify Text - " + expected);
 		assertTrue(SBUtil.verifyText(element, expected));
+		logger.log(Status.PASS, expected + " - Matches");
 	}
 
 	public void action_SendKeys(WebElement textBox, String textToPass){
 		try {
 			SBUtil.sendKeyswithJavaScriptExecutor(textBox, textToPass);
 		} catch (Exception e) {
-			System.out.println("Unable to click on : " + textBox);
+//			System.out.println("Unable to click on : " + textBox);
+			logger.log(Status.FAIL, (Throwable)textBox);
 			e.printStackTrace();
 		}
 	}
@@ -92,14 +98,18 @@ public class SunBasketBuildYourOrderPage extends BasePage {
 		try {
 			SBUtil.clickwithJavaScriptExecutor(element);
 		} catch (Exception e) {
-			System.out.println("Unable to click on : " + element);
+//			System.out.println("Unable to click on : " + element);
+			logger.log(Status.FAIL, (Throwable)element);
 			e.printStackTrace();
 		}
 	}
 	public void action_BuildYourOrder(){
+		logger.log(Status.INFO, "Enter Addressline1");
 		textfield_Addressline1.sendKeys("Ownes Dr");
-		textfield_AddressLine2.sendKeys("345");
+		logger.log(Status.INFO, "Enter Addressline2");
+		textfield_AddressLine2.sendKeys("345");		
 		action_SendKeys(textfield_PhoneNumber, "9259259259");
+		logger.log(Status.INFO, "Enter DeliveryInstructions");
 		textfield_DeliveryInstructions.sendKeys("Door Delivery");
 		action_ClickOnContinueButton(button_Continue);
 	}

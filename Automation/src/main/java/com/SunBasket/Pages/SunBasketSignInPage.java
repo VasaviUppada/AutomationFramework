@@ -9,6 +9,7 @@ import org.testng.annotations.DataProvider;
 
 import com.SunBasket.Utility.BasePage;
 import com.SunBasket.Utility.SBUtil;
+import com.aventstack.extentreports.Status;
 
 public class SunBasketSignInPage extends BasePage{
 
@@ -53,14 +54,18 @@ public class SunBasketSignInPage extends BasePage{
 		try {
 			SBUtil.clickwithJavaScriptExecutor(element);
 		} catch (Exception e) {
-			System.out.println("Unable to click on : " + element);
+//			System.out.println("Unable to click on : " + element);
+			logger.log(Status.FAIL, (Throwable)element);
 			e.printStackTrace();
 		}
 	}
 	
 	public void action_signIn(String email){
+		logger.log(Status.INFO, "Enter Email - " + email);
 		textField_EnterYourEmail.sendKeys(email);
+		logger.log(Status.INFO, "Enter Password");
 		textfield_EnterYourPassword.sendKeys("ReplacePassword123");
+		logger.log(Status.INFO, "Click On Continue");
 		action_ClickOnContinueButton(button_SignIn);
 	}
 

@@ -14,6 +14,7 @@ import org.testng.Assert;
 
 import com.SunBasket.Utility.BasePage;
 import com.SunBasket.Utility.SBUtil;
+import com.aventstack.extentreports.Status;
 
 public class SunBasketMyMenuPage extends BasePage{
 
@@ -126,8 +127,10 @@ public class SunBasketMyMenuPage extends BasePage{
 	
 	/*** Action Methods ***/
 	
-	public void action_verifyHeader(){
-		SBUtil.verifyText(header_MyMenuHeader, "Vasavi");
+	public void action_verifyHeader(String expectedHeader){
+		logger.log(Status.INFO, "Verify Text - " + expectedHeader);
+		SBUtil.verifyText(header_MyMenuHeader, expectedHeader);
+		logger.log(Status.PASS, expectedHeader + " - Matches");
 	}
 	
 	public void action_isTextPresent(String expected){
@@ -135,26 +138,33 @@ public class SunBasketMyMenuPage extends BasePage{
 	}
 	
 	public void action_verifyText(WebElement webElement, String expected){
+		logger.log(Status.INFO, "Verify Text - " + expected);
 		Assert.assertTrue(SBUtil.verifyText(webElement, expected));
+		logger.log(Status.PASS, expected + " - Matches");
 	}
 
 	/*** To minimize/close Popup ***/
 	public void action_MinimizePopup(){
+		logger.log(Status.INFO, "Minimize Popup");
 		popup_SurveyDownArrow.click();
 		popup_SurveyCrossmark.click();
+		logger.log(Status.PASS, "Popup minimized");
 	}
 
 	/*** To Choose Recipes from Page ***/
-	public void action_chooseRecipes(List<WebElement> checkboxReciepe, int noOfReciepes){
+	public void action_chooseRecipes(List<WebElement> checkboxReciepe, int noOfRecipes){
+		logger.log(Status.INFO, "Choose " + noOfRecipes + " Recipes");
 		int chkboxCount = 0;
 		for(WebElement chk : checkboxReciepe){
-			if(chkboxCount < noOfReciepes){
+			if(chkboxCount < noOfRecipes){
 				SBUtil.checkboxSelect(chk);
 				chkboxCount++;
 				SBUtil.waitForPageToLoad();
 			}
 		}
-		System.out.println("No.of Recipes Selected : " + checkbox_AllSelected.size());
+		logger.log(Status.PASS, "No of Recipes Selected - " + checkbox_AllSelected.size());
+//		System.out.println("No.of Recipes Selected : " + checkbox_AllSelected.size());
+		logger.log(Status.INFO, "Click on Save");
 		button_Save.click();	
 	}
 	

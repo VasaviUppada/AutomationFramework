@@ -1,6 +1,7 @@
 package com.SunBasket.Utility;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,138 +19,143 @@ import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.xml.XmlSuite;
 
-import com.relevantcodes.extentreports.LogStatus;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.MediaEntityModelProvider;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.configuration.Config;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.ChartLocation;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class SBListeners extends DriverScript implements ITestListener, ISuiteListener, IInvokedMethodListener {
-  
-    public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
-//    	report = new ExtentReports(outputDirectory + File.separator + "ExtentReportTestNG.html", true);
-  
-        for (ISuite suite : suites) {
-            Map<String, ISuiteResult> result = suite.getResults();
-  
-            for (ISuiteResult r : result.values()) {
-                ITestContext context = r.getTestContext();
-  
-                buildTestNodes(context.getPassedTests(), LogStatus.PASS);
-                buildTestNodes(context.getFailedTests(), LogStatus.FAIL);
-                buildTestNodes(context.getSkippedTests(), LogStatus.SKIP);
-            }
-        }
-  
-        report.flush();
-        report.close();
-    }
-  
-    private void buildTestNodes(IResultMap tests, LogStatus status) {
-  
-        if (tests.size() > 0) {
-            for (ITestResult result : tests.getAllResults()) {
-            	logger = report.startTest(result.getMethod().getMethodName());
-  
-//                test.getTest().startedTime = getTime(result.getStartMillis());
-//                test.getTest().endedTime = getTime(result.getEndMillis());
-  
-                for (String group : result.getMethod().getGroups())
-                	logger.assignCategory(group);
-  
-                String message = "Test " + status.toString().toLowerCase() + "ed";
-  
-                if (result.getThrowable() != null)
-                    message = result.getThrowable().getMessage();
-  
-                logger.log(status, message);
-  
-                report.endTest(logger);
-            }
-        }
-    }
-  
-    private Date getTime(long millis) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(millis);
-        return calendar.getTime();        
-    }
 
 	// This will return method names to the calling function 
 	private String returnMethodName(ITestNGMethod method) {
 		return method.getRealClass().getSimpleName() + "." + method.getMethodName(); 
 	}
-	
-	@Override
-	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-		String textMsg = "Begins Method Execution_Extent : " + returnMethodName(method.getTestMethod());
-		logger.log(LogStatus.INFO, textMsg);
-	}
-
-	@Override
-	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-		String textMsg = "Completed Method Execution_Extent : " + returnMethodName(method.getTestMethod());
-		logger.log(LogStatus.INFO, textMsg);
-	}
 
 	@Override
 	public void onStart(ISuite suite) {
-		logger = report.startTest(suite.getName(), "Initializing!!!");
-		logger.log(LogStatus.INFO, "Suite Test Started");
+		startReport(suite);
 	}
 
 	@Override
 	public void onFinish(ISuite suite) {
-		
-		logger.log(LogStatus.INFO, "Test Finished");
+		logger.log(Status.INFO, " Test Finished");
+		extent.flush();
 	}
 
 	@Override
 	public void onTestStart(ITestResult result) {
-		logger.log(LogStatus.INFO, "OnTestStart Started!!!");
+//		logger.log(Status.INFO, " Test Method Execution Starts : " +  result.getName());
+		logger.log(Status.INFO, MarkupHelper.createLabel("Test Method Execution Starts : " + result.getName(), ExtentColor.CYAN));
 	}
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
-		logger.log(LogStatus.PASS, "SUCCESS");
+		logger.log(Status.PASS, MarkupHelper.createLabel("SUCCESS", ExtentColor.GREEN));
 		getResult(result);
 	}
 
 	@Override
-	public void onTestFailure(ITestResult result) {
-		logger.log(LogStatus.FAIL, "FAILED");
-		logger.addScreenCapture(("user.dir") +"/Screenshots_Failed");
+	public void onTestFailure(ITestResult result) {	
+		String getScreenshotPath = SBUtil.getScreenshotPath();
+		logger.fail(MarkupHelper.createLabel("Above Step FAILED", ExtentColor.RED));
+        try {
+    		MediaEntityModelProvider mediaModel = MediaEntityBuilder.createScreenCaptureFromPath(getScreenshotPath).build();
+    		logger.fail("Screenshot", mediaModel);
+			logger.addScreenCaptureFromPath(getScreenshotPath, "Failed Scr");
+			
+			logger.error(result.getThrowable());
+		} catch (IOException e) {
+			logger.log(Status.FAIL, "Fail to capture the screenshot");
+			e.printStackTrace();
+		}
+
 		getResult(result);
 	}
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
-		logger.log(LogStatus.SKIP, "SKIPPED");
+		logger.log(Status.SKIP, MarkupHelper.createLabel("SKIPPED", ExtentColor.ORANGE));
 		getResult(result);
 	}
 
 	@Override
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onStart(ITestContext context) {
-		logger.log(LogStatus.INFO, "ITestCOntent, OnStart");
+		logger.log(Status.INFO, context.getName() + " Test Started ");
 	}
 
 	@Override
 	public void onFinish(ITestContext context) {
-		logger.log(LogStatus.INFO, "ITestContent On Finish!!!");
+		logger.log(Status.INFO, context.getName() + " Test Finished ");
+		extent.flush();
 	}
 	
-	public void getResult(ITestResult result){
-		if(result.getStatus() == ITestResult.SUCCESS)
-			logger.log(LogStatus.PASS, result.getName() + "Test PASS");
-		else if(result.getStatus() == ITestResult.SKIP)
-			logger.log(LogStatus.SKIP, result.getName() + "Test SKIP : " + result.getThrowable());
-		else if(result.getStatus() == ITestResult.FAILURE)
-			logger.log(LogStatus.FAIL, result.getName() + "Test FAIL : " + result.getThrowable());
-		else if(result.getStatus() == ITestResult.STARTED)
-			logger.log(LogStatus.INFO, result.getName() + "Test STARTED");
+	@Override
+	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
+//		String textMsg = "Begins Method Execution : " + returnMethodName(method.getTestMethod());
+//		logger.log(Status.INFO, textMsg);
 	}
 
+	@Override
+	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
+//		String textMsg = "Completed  Execution : " + returnMethodName(method.getTestMethod());
+//		logger.log(Status.INFO, textMsg);
+	}
+
+	public void getResult(ITestResult result){
+		if(result.getStatus() == ITestResult.SUCCESS)
+			logger.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - PASS ", ExtentColor.GREEN));
+		else if(result.getStatus() == ITestResult.SKIP)
+			logger.log(Status.SKIP, result.getName() + " - SKIP : " + "\n" + result.getThrowable());
+//			logger.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - SKIP ", ExtentColor.ORANGE) + "\n" + result.getThrowable());
+		else if(result.getStatus() == ITestResult.FAILURE){
+			logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - FAIL ", ExtentColor.RED));
+		}
+		else if(result.getStatus() == ITestResult.STARTED)
+			logger.log(Status.INFO, result.getName() + " : STARTED");
+		extent.flush();
+	}
+	
+	public static void startReport(ISuite suite){
+		
+		extent.attachReporter(htmlReporter);
+//		extent.log(Status.INFO, "HTML", "Usage: BOLD TEXT");
+		extent.setSystemInfo("Suite Name", suite.getName());
+		extent.setSystemInfo("User Name", "Vasavi Uppada");
+		extent.setTestRunnerOutput("TestNG");
+		
+		htmlReporter.config().setDocumentTitle(suite.getParentModule());
+		htmlReporter.config().setReportName(suite.getXmlSuite().toString());
+		htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
+		htmlReporter.config().setTheme(Theme.DARK);
+	    htmlReporter.config().setEncoding("utf-8");
+		htmlReporter.config().setTimeStampFormat("mm/dd/yyyy hh:mm:ss a");		
+		logger = extent.createTest(suite.getName());
+	}
+/*
+public static ExtentReports createInstance(String fileName) {
+//	Config.initConstants();
+//    ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
+    htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
+    htmlReporter.config().setChartVisibilityOnOpen(true);
+    htmlReporter.config().setTheme(Theme.DARK);
+    htmlReporter.config().setDocumentTitle("Report Title"); //Config.ReportTitle
+    htmlReporter.config().setEncoding("utf-8");
+    htmlReporter.config().setReportName("Report Name"); //Config.ReportTitle
+    extent = new ExtentReports();
+    extent.attachReporter(htmlReporter);
+    
+    return extent;
+}
+*/
 }
 

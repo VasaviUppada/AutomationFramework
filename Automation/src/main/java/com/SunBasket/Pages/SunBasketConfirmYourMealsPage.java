@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.SunBasket.Utility.BasePage;
 import com.SunBasket.Utility.SBUtil;
+import com.aventstack.extentreports.Status;
 
 public class SunBasketConfirmYourMealsPage extends BasePage{
 
@@ -43,7 +44,9 @@ public class SunBasketConfirmYourMealsPage extends BasePage{
 	}
 	
 	public void action_VerifyText(WebElement element, String expected){
+		logger.log(Status.INFO, "Verify Text - " + expected);
 		assertTrue(SBUtil.verifyText(element, expected));
+		logger.log(Status.PASS, expected + " - Matches");
 	}
 
 

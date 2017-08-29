@@ -33,6 +33,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.SunBasket.Config.Config;
+import com.aventstack.extentreports.Status;
 
 import junit.framework.Assert;
 
@@ -51,25 +52,33 @@ public class SBUtil extends DriverScript{
 	/*** Explicit Wait - titleIs ***/ 
 	public static void waitForPageTitle(String pageTitle){
 		WebDriverWait wait=new WebDriverWait(driver, 60);
+		logger.log(Status.INFO, "Verify Page Title - " + pageTitle);
 		wait.until(ExpectedConditions.titleIs(pageTitle));
+		logger.log(Status.PASS, "Page Title Matches");
 	}
 	
 	/*** Explicit Wait - urlContains ***/
 	public static void waitForUrlContains(String urlText){
 		WebDriverWait wait=new WebDriverWait(driver, 60);
+		logger.log(Status.INFO, "Verify Url Contains - " + urlText);
 		wait.until(ExpectedConditions.urlContains(urlText));
+		logger.log(Status.PASS, "URL Matches");
 	}
 	
 	/*** Explicit Wait - urlIs ***/
 	public static void waitForUrlMatches(String url){
 		WebDriverWait wait=new WebDriverWait(driver, 60);
+		logger.log(Status.INFO, "Verify Url Matches - " + url);
 		wait.until(ExpectedConditions.urlMatches(url));
+		logger.log(Status.PASS, "URL Matches");
 	}
 	
 	/*** Explicit Wait - urlIs ***/
 	public static void waitForUrlToBe(String url){
 		WebDriverWait wait=new WebDriverWait(driver, 60);
+		logger.log(Status.INFO, "Verify Url To be - " + url);
 		wait.until(ExpectedConditions.urlToBe(url));
+		logger.log(Status.PASS, "URL Matches");
 	}
 	
 	/*** Explicit Wait - titleContains ***/ 
@@ -105,12 +114,13 @@ public class SBUtil extends DriverScript{
 	/*** Click on an element using Java Script Executor ***/
 	public static void clickwithJavaScriptExecutor(WebElement button) throws Exception {
 		try {
-			waitForElementToBeClickable(button);
 			if (button.isDisplayed()) {
-				((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
-				System.out.println("Clicked on element using java script...");
+				waitForElementToBeClickable(button);
+				logger.log(Status.INFO, "Click on " + button.getText());
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);			
 			} else {
-				System.out.println("Unable to click on element");
+				System.out.println("No element Present to click - " + button.getText());
+				logger.log(Status.FAIL, button.getText());
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			System.out.println("Element was not found in DOM "+ e.getStackTrace());
@@ -125,10 +135,10 @@ public class SBUtil extends DriverScript{
 			waitForElementToBeClickable(textBox);
 			if (textBox.isDisplayed()) {
 				String script = "arguments[0].value=" + textToPass + ";";
+				logger.log(Status.INFO, "Enter " + textBox);
 				((JavascriptExecutor) driver).executeScript(script, textBox);
-				System.out.println("Sent value to element using java script...");
 			} else {
-				System.out.println("Unable to click on element");
+				logger.log(Status.ERROR, "No Textbox present to enter text - " + textBox);
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			System.out.println("Element was not found in DOM "+ e.getStackTrace());
@@ -157,11 +167,14 @@ public class SBUtil extends DriverScript{
 	/*** select Checkbox ***/
 	public static void checkboxSelect(WebElement chkbox){
 		if(chkbox.isSelected()){
-			System.out.println(chkbox + " already selected.");
+//			System.out.println(chkbox + " already selected.");
+			logger.log(Status.INFO, chkbox.getText() + "  already selected");
 		}
 		else{
+			logger.log(Status.INFO, "Select " + chkbox.getText());
 			chkbox.click();
-			waitForPageToLoad(500);
+			waitForPageToLoad(200);
+			logger.log(Status.PASS, chkbox.getText() + "  already selected");
 		}
 	}
 	
@@ -204,6 +217,7 @@ public class SBUtil extends DriverScript{
 	public static boolean isTextPresent(String expected)	
 	{
         try{
+        	logger.log(Status.INFO, "Verify Text Present - " + expected);
         	boolean b = driver.getPageSource().contains(expected);
         	return b;
         }
@@ -311,7 +325,7 @@ public class SBUtil extends DriverScript{
 	public static void getScreenshot(){		
 		String filePath = new File("Screenshots_Failed").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
-		DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy _ h.m.s");
+		DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -329,16 +343,38 @@ public class SBUtil extends DriverScript{
     {
 		String filePath = new File("Screenshots_Failed").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
-		DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy _ h.m.s");
+		DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            File trg = new File(filePath +fileSeperator + "SS_" + methodName + "_" + dateFormat.format(date) + ".png");           
+            String trg_path = filePath +fileSeperator + "SS_" + methodName + "_" + dateFormat.format(date) + ".png";
+            File trg = new File(trg_path);           
             FileUtils.copyFile(src, trg);
         }catch(Exception e){
             System.out.println("Failure to take screenshot "+e);
         }
      }
+    
+    /*** Get Screenshot Path ***/
+    public static String getScreenshotPath()
+    {
+		String filePath = new File("Screenshots_Failed").getAbsolutePath();
+    	String fileSeperator = System.getProperty("file.separator");
+		DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+        Date date = new Date();
+        try{
+            File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            String trg_path = filePath +fileSeperator + "SS_" + dateFormat.format(date) + ".png";
+            File trg = new File(trg_path);           
+            FileUtils.copyFile(src, trg);
+    return trg_path;
+    }
+    catch (Exception ex)
+    {
+    ex.printStackTrace();
+    return ex.getMessage();
+    }
+    }
 
 	
 	/*** Web Table ***/		//-- working fine
@@ -461,12 +497,12 @@ public class SBUtil extends DriverScript{
 	public static WebDriver getWindowToHandle(){
         WebDriver popup = null;
         Set<String> windowIterator = driver.getWindowHandles();
-        System.err.println("No of windows :  " + windowIterator.size());
+//        System.err.println("No of windows :  " + windowIterator.size());
         for (String window : windowIterator) {
           String windowHandle = window; 
           popup = driver.switchTo().window(windowHandle);
-          System.out.println("Child Window Title : " + popup.getTitle());
-          System.out.println("Child Window Url : " + popup.getCurrentUrl());
+//          System.out.println("Child Window Title : " + popup.getTitle());
+//          System.out.println("Child Window Url : " + popup.getCurrentUrl());
         }
             return popup;
 	}

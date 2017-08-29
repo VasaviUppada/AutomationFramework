@@ -12,16 +12,47 @@ import org.testng.annotations.DataProvider;
 public class Config {
 
 	public static class Url{
-		public static final String base_url	 = ReadPropertytFile().getProperty("url");
-		
-//		public final static String base_url				 = master_url;
-		public static final String master_url			 = "https://master.sunbasket-staging.com";
-		public static final String develop_url			 = "https://develop.sunbasket-staging.com";
-		public final static String home_url				 = base_url + "/home";
-		public final static String SingleWeekPromo_url 	 = base_url + "/?offer=QA-TEST35OFF";
-		public final static String MultiWeekPromo_url	 = base_url + "?offer=QA-MW403010";	
-		public final static String join_conFirmation_url = base_url + "/join/confirmation";
+		public static final String url_Base	 = ReadPropertytFile().getProperty("url");
 
+		public static final String url_Master			 	= "https://master.sunbasket-staging.com";
+		public static final String url_Develop				= "https://develop.sunbasket-staging.com";
+//		public static final String url_Base				 	= url_Develop;		
+		public static final String url_Home				 	= url_Base + "/home";
+		public static final String url_SingleWeekPromo 	 	= url_Base + "/?offer=QA-TEST35OFF";
+		public static final String url_MultiWeekPromo	 	= url_Base + "/?offer=QA-MW403010";	
+		public static final String url_Menu				 	= url_Base + "/menu";
+		public static final String url_MenuClassic		 	= url_Base + "/menu#classic";
+		public static final String url_MenuFamily		 	= url_Base + "/menu#family_plan";
+		public static final String url_Values			 	= url_Base + "/values";
+		public static final String url_Farms			 	= url_Base + "/farms";
+		public static final String url_Pricing 			 	= url_Base + "/pricing";
+		public static final String url_Login			 	= url_Base + "/login";
+		public static final String url_Join				 	= url_Base + "/join";
+		public static final String url_JoinSetup		 	= url_Base + "/join/setup";
+		public static final String url_MenuConfirmation	 	= url_Base + "/join/menuconfirmation";
+		public static final String url_JoinPayment		 	= url_Base + "/join/payment";
+		public static final String url_JoinConfirmation	 	= url_Base + "/join/confirmation";
+		public static final String url_MyAccount		 	= url_Base + "/my-account";
+		public static final String url_BillingHistory	 	= url_Base + "/my-account#billing-history-section";
+		public static final String url_Credits			 	= url_Base + "/my-account#credits-section";
+		public static final String url_Alerts			 	= url_Base + "/my-account#alerts-section";
+		public static final String url_MyMenu			 	= url_Base + "/mymenu";
+		public static final String url_Schedule_Upcoming 	= url_Base + "/account/schedule";
+		public static final String url_Schedule_History	 	= url_Base + "/history";
+		public static final String url_Explore_TheSunTimes	= url_Base + "/the-sun-times";
+		public static final String url_Explore_Recipes		= url_Base + "/recipes";
+		public static final String url_Explore_Videos		= url_Base + "/videos";
+		public static final String url_Explore_Tips			= url_Base + "/tips";
+		public static final String url_Explore_Stories		= url_Base + "/stories";
+		public static final String url_ReferAFriend			= url_Base + "/refer-a-friend";
+		public static final String url_GiftSelect			= url_Base + "/gift/select";
+		public static final String url_GiftDetails			= url_Base + "/gift/details";
+		public static final String url_GiftPayment			= url_Base + "/gift/payment";
+		public static final String url_GiftConfirmation		= url_Base + "/gift/confirmation";
+		public static final String url_Recycle				= url_Base + "/recycle";
+		public static final String url_Help					= "https://sunbasket.force.com/Help/s/";
+		public static final String url_Paypal				= "https://checkout.paypal.com/";
+		
 	}
 	
 	public static class Browser{

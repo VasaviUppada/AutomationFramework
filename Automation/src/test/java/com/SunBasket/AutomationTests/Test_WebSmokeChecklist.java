@@ -22,53 +22,59 @@ import com.SunBasket.Pages.SunBasketSignInPage;
 import com.SunBasket.Utility.BaseTest;
 import com.SunBasket.Utility.DriverScript;
 import com.SunBasket.Utility.SBUtil;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 
 public class Test_WebSmokeChecklist extends BaseTest{
 	
 	@Test(description = "Verifies Join Flow_1!")
 	public void C1_SunBasket_JoinFlow_PromoCode_001(){
-			
+
 		// Step 1
-		driver.navigate().to(Config.Url.SingleWeekPromo_url);
+//		driver.navigate().to(Config.Url.SingleWeekPromo_url);
+		logger.log(Status.INFO, "Navigate to SingleWeekPromoURL");
+		driver.navigate().to("https://develop.sunbasket-staging.com/?offer=QA-TEST35OFF");
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
-		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_PromoPage);
-//		sunBasketPromoPage.waitForPageToLoad();
+		SBUtil.waitForUrlToBe(Config.Url.url_SingleWeekPromo);
+		logger.log(Status.INFO, "Verify label_PromoOffer");
 		sunBasketPromoPage.action_VerifyText(sunBasketPromoPage.label_PromoOffer, "Order today and get $35 off your first delivery");
+		logger.log(Status.INFO, "Verify button_RedeemPromoOffer");
 		sunBasketPromoPage.action_VerifyText(sunBasketPromoPage.button_PromoRedeemOffer, "Redeem Offer");
-		
+
 		// Step 2
+		logger.log(Status.INFO, "Click on GetStarted");
 		sunBasketPromoPage.button_GetStarted.click();
 		SunBasketGetStartedPage sunBasketGetStartedPage = new SunBasketGetStartedPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_GetStartedPage);
 //		sunBasketGetStartedPage.waitForPageToLoad();
 		sunBasketGetStartedPage.action_VerifyText(sunBasketGetStartedPage.label_PromoOffer, "Order today and get $35 off your first delivery");
-
+		logger.log(Status.PASS, "Verified label_PromoOffer");
+		
 		// Step 3
-		sunBasketGetStartedPage.action_GetStarted();
+		sunBasketGetStartedPage.action_JoinSetup();
+		logger.log(Status.PASS, "SignUp Success");
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage = new SunBasketBuildYourOrderPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_BuildYourOrderPage);
 //		sunBasketBuildYourOrderPage.waitForPageToLoad();
 		sunBasketBuildYourOrderPage.action_VerifyText(sunBasketBuildYourOrderPage.label_PromoOffer, "Order today and get $35 off your first delivery");
+		logger.log(Status.PASS, "Verified label_PromoOffer");
 		
 		// Step 4
-		sunBasketBuildYourOrderPage.textfield_Addressline1.sendKeys("Ownes Dr");
-		sunBasketBuildYourOrderPage.textfield_AddressLine2.sendKeys("345");
-		sunBasketBuildYourOrderPage.textfield_PhoneNumber.sendKeys("9259259259");
-		sunBasketBuildYourOrderPage.textfield_DeliveryInstructions.sendKeys("Door Delivery");
-		sunBasketBuildYourOrderPage.button_Continue.click();
+		sunBasketBuildYourOrderPage.action_BuildYourOrder();
+		logger.log(Status.PASS, "BuildYourOrder Success");
 		SunBasketConfirmYourMealsPage sunBasketConfirmYourMealsPage = new SunBasketConfirmYourMealsPage();
-		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_ConfirmYourMealsPage);
 //		sunBasketConfirmYourMealsPage.waitForPageToLoad();
 		sunBasketConfirmYourMealsPage.action_VerifyText(sunBasketConfirmYourMealsPage.label_PromoOffer, "Order today and get $35 off your first delivery");
 		
 		// Step 5
 		sunBasketConfirmYourMealsPage.button_Continue.click();		
 		SunBasketCompleteYourOrderPage sunBasketCompleteYourOrderPage = new SunBasketCompleteYourOrderPage();
-		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_CompleteYourOrderPage);
 //		sunBasketCompleteYourOrderPage.waitForPageToLoad();
 		
 		// Step 6
 		sunBasketCompleteYourOrderPage.button_ApplyFreeShipping.click();
+		logger.log(Status.PASS, "Clicked on ApplyFreeShipping Popup");
 		sunBasketCompleteYourOrderPage.action_verifyAttribute(sunBasketCompleteYourOrderPage.textfield_PromoCode, "value", "QA-TEST35OFF");
 		sunBasketCompleteYourOrderPage.action_VerifyText(sunBasketCompleteYourOrderPage.value_PromoDiscount, "–$35.00");	
 	}
@@ -77,7 +83,8 @@ public class Test_WebSmokeChecklist extends BaseTest{
 	public void C6_SunBasket_JoinFlow_PromoCode_002(){
 		
 		// Step 1
-		driver.navigate().to(Config.Url.SingleWeekPromo_url);
+//		driver.navigate().to(Config.Url.SingleWeekPromo_url);
+		driver.navigate().to("https://develop.sunbasket-staging.com/?offer=QA-TEST35OFF");
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_PromoPage);
 		
@@ -87,7 +94,7 @@ public class Test_WebSmokeChecklist extends BaseTest{
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_GetStartedPage);
 		
 		// Step 3
-		sunBasketGetStartedPage.action_GetStarted();
+		sunBasketGetStartedPage.action_JoinSetup();
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage = new SunBasketBuildYourOrderPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_BuildYourOrderPage);
 		
@@ -150,7 +157,7 @@ public class Test_WebSmokeChecklist extends BaseTest{
 	public void C7_SunBasket_JoinFlow_PromoCode_003(){
 		
 		// Step 1
-		driver.navigate().to(Config.Url.MultiWeekPromo_url);
+		driver.navigate().to(Config.Url.url_MultiWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_PromoPage);
 		sunBasketPromoPage.action_VerifyText(sunBasketPromoPage.label_PromoOffer, "GET $40 OFF - $30 off your first order, $10 off your second order");
@@ -163,7 +170,7 @@ public class Test_WebSmokeChecklist extends BaseTest{
 		sunBasketGetStartedPage.action_VerifyText(sunBasketGetStartedPage.label_PromoOffer, "GET $40 OFF - $30 off your first order, $10 off your second order");
 		
 		// Step 3
-		sunBasketGetStartedPage.action_GetStarted();
+		sunBasketGetStartedPage.action_JoinSetup();
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage = new SunBasketBuildYourOrderPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_BuildYourOrderPage);
 		sunBasketBuildYourOrderPage.action_VerifyText(sunBasketBuildYourOrderPage.label_PromoOffer, "GET $40 OFF - $30 off your first order, $10 off your second order");
@@ -192,7 +199,7 @@ public class Test_WebSmokeChecklist extends BaseTest{
 	@Test(description = "Verifies Join Flow_4!")
 	public void C8_SunBasket_JoinFlow_PromoCode_004(){
 		// Step 1
-		driver.navigate().to(Config.Url.MultiWeekPromo_url);
+		driver.navigate().to(Config.Url.url_MultiWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_PromoPage);
 		
@@ -202,7 +209,7 @@ public class Test_WebSmokeChecklist extends BaseTest{
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_GetStartedPage);
 		
 		// Step 3
-		sunBasketGetStartedPage.action_GetStarted();
+		sunBasketGetStartedPage.action_JoinSetup();
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage = new SunBasketBuildYourOrderPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_BuildYourOrderPage);
 		
@@ -269,13 +276,13 @@ public class Test_WebSmokeChecklist extends BaseTest{
 	public void C9_SunBasket_JoinFlow_PromoCode_005(){
 		
 		 // Step 1		
-		driver.navigate().to(Config.Url.SingleWeekPromo_url);
+		driver.navigate().to(Config.Url.url_SingleWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_PromoPage);	
 		sunBasketPromoPage.button_GetStarted.click();
 		SunBasketGetStartedPage sunBasketGetStartedPage = new SunBasketGetStartedPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_GetStartedPage);
-		sunBasketGetStartedPage.action_GetStarted();
+		sunBasketGetStartedPage.action_JoinSetup();
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage = new SunBasketBuildYourOrderPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_BuildYourOrderPage);	
 		sunBasketBuildYourOrderPage.textfield_Addressline1.sendKeys("Ownes Dr");
@@ -316,13 +323,13 @@ public class Test_WebSmokeChecklist extends BaseTest{
 	public void C10_SunBasket_JoinFlow_PromoCode_006(){
 		
 		 // Step 1		
-		driver.navigate().to(Config.Url.home_url);
+		driver.navigate().to(Config.Url.url_Home);
 		SunBasketHomePage sunBasketHomePage = new SunBasketHomePage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_HomePage);
 		sunBasketHomePage.button_GetStarted.click();
 		SunBasketGetStartedPage sunBasketGetStartedPage = new SunBasketGetStartedPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_GetStartedPage);
-		sunBasketGetStartedPage.action_GetStarted();
+		sunBasketGetStartedPage.action_JoinSetup();
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage = new SunBasketBuildYourOrderPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_BuildYourOrderPage);	
 		sunBasketBuildYourOrderPage.textfield_Addressline1.sendKeys("Ownes Dr");

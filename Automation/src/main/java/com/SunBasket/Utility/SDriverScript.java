@@ -61,7 +61,7 @@ public class SDriverScript{
 	
 	@Test 
 	public void testSampleTestCaseSauceLabs() { 
-		driver.get(Config.Url.MultiWeekPromo_url);
+		driver.get(Config.Url.url_MultiWeekPromo);
 
         SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_PromoPage);

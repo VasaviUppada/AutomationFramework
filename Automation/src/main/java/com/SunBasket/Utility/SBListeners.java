@@ -126,15 +126,16 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 	}
 	
 	public static void startReport(ISuite suite){
-		
+
 		extent.attachReporter(htmlReporter);
 //		extent.log(Status.INFO, "HTML", "Usage: BOLD TEXT");
 		extent.setSystemInfo("Suite Name", suite.getName());
 		extent.setSystemInfo("User Name", "Vasavi Uppada");
 		extent.setTestRunnerOutput("TestNG");
 		
-		htmlReporter.config().setDocumentTitle(suite.getParentModule());
-		htmlReporter.config().setReportName(suite.getXmlSuite().toString());
+//		htmlReporter.config().setDocumentTitle(suite.getParentModule());
+		htmlReporter.config().setDocumentTitle("ExtentReports_Join Flow");
+		htmlReporter.config().setReportName(suite.getName());
 		htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
 		htmlReporter.config().setTheme(Theme.DARK);
 	    htmlReporter.config().setEncoding("utf-8");

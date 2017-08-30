@@ -33,7 +33,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		
         // Step 1
 		logger.log(Status.INFO, "Navigate to SingleWeekPromoURL");
-        driver.get(Config.Url.url_SingleWeekPromo);
+        driver.get(Config.Url.url_MultiWeekPromo);  // Need to chnage -- url_SingleWeekPromo
         SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_SingleWeekPromo);
 		sunBasketPromoPage.action_VerifyText(sunBasketPromoPage.label_PromoOffer, "Order today and get $35 off your first delivery");
@@ -83,7 +83,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		
         // Step 1
 		logger.log(Status.INFO, "Navigate to SingleWeekPromoURL");
-        driver.get(Config.Url.url_MultiWeekPromo); // need to change -- url_SingleWeekPromo
+        driver.get(Config.Url.url_SingleWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_SingleWeekPromo);
 		

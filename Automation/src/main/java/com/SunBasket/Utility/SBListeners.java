@@ -44,7 +44,7 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 
 	@Override
 	public void onFinish(ISuite suite) {
-		logger.log(Status.INFO, " Test Finished");
+//		logger.log(Status.INFO, " Test Finished");
 		extent.flush();
 	}
 
@@ -131,7 +131,7 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 //		extent.log(Status.INFO, "HTML", "Usage: BOLD TEXT");
 		extent.setSystemInfo("Suite Name", suite.getName());
 		extent.setSystemInfo("User Name", "Vasavi Uppada");
-		extent.setTestRunnerOutput("TestNG");
+//		extent.setTestRunnerOutput("TestNG");
 		
 //		htmlReporter.config().setDocumentTitle(suite.getParentModule());
 		htmlReporter.config().setDocumentTitle("ExtentReports_Join Flow");
@@ -139,7 +139,7 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 		htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
 		htmlReporter.config().setTheme(Theme.DARK);
 	    htmlReporter.config().setEncoding("utf-8");
-		htmlReporter.config().setTimeStampFormat("mm/dd/yyyy hh:mm:ss a");		
+		htmlReporter.config().setTimeStampFormat("MM/dd/yyyy hh:mm:ss a");		
 		logger = extent.createTest(suite.getName());
 	}
 /*

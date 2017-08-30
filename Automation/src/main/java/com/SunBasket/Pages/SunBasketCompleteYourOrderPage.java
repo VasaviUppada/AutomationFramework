@@ -130,8 +130,10 @@ public class SunBasketCompleteYourOrderPage extends BasePage{
 		logger.log(Status.INFO, "Enter Promocode : QA-MW403010");
 		textfield_PromoCode.clear();
 		textfield_PromoCode.sendKeys("QA-MW403010");
+		logger.log(Status.INFO, "Click on Submit Order");
 //		SBUtil.waitForElementToBeClickable(button_SubmitOrder);
-		action_ClickOnSubmitButton(button_SubmitOrder);
+		button_SubmitOrder.click();
+//		action_ClickOnSubmitButton(button_SubmitOrder);
 	}
 
 	public void action_ClickOnSubmitButton(WebElement element){

@@ -325,7 +325,7 @@ public class SBUtil extends DriverScript{
 	public static void getScreenshot(){		
 		String filePath = new File("Screenshots_Failed").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
-		DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+		DateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -343,7 +343,7 @@ public class SBUtil extends DriverScript{
     {
 		String filePath = new File("Screenshots_Failed").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
-		DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+		DateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -360,7 +360,7 @@ public class SBUtil extends DriverScript{
     {
 		String filePath = new File("Screenshots_Failed").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
-		DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+		DateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);

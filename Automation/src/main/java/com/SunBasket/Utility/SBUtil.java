@@ -364,7 +364,7 @@ public class SBUtil extends DriverScript{
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            String trg_path = filePath +fileSeperator + "ExtentScreenshot_" + dateFormat.format(date) + ".jpg";
+            String trg_path = filePath +fileSeperator + "ExtentScreenshot_" + dateFormat.format(date) + ".png";
             File trg = new File(trg_path);           
             FileUtils.copyFile(src, trg);
     return trg_path;

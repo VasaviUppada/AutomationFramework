@@ -87,7 +87,7 @@ public class SunBasketGetStartedPage extends BasePage{
 	}
 	
 	public void action_JoinSetup(){
-		DateFormat dateFormat = new SimpleDateFormat("ddmmyyyyhms");
+		DateFormat dateFormat = new SimpleDateFormat("MMddyyyy_hms");
         Date date = new Date();
         String firstName = "test" + dateFormat.format(date);
 		logger.log(Status.INFO, "Enter FirstName");

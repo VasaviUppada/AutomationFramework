@@ -329,7 +329,7 @@ public class SBUtil extends DriverScript{
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            File trg = new File(filePath + fileSeperator + "SS_" + dateFormat.format(date) + ".png");
+            File trg = new File(filePath + fileSeperator + "SS_" + dateFormat.format(date) + ".jpg");
             FileUtils.copyFile(src, trg);
         }catch(Exception e){
             //if it fails to take screenshot then this block will execute
@@ -347,7 +347,7 @@ public class SBUtil extends DriverScript{
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            String trg_path = filePath +fileSeperator + "SS_" + methodName + "_" + dateFormat.format(date) + ".png";
+            String trg_path = filePath +fileSeperator + "SS_" + methodName + "_" + dateFormat.format(date) + ".jpg";
             File trg = new File(trg_path);           
             FileUtils.copyFile(src, trg);
         }catch(Exception e){
@@ -364,7 +364,7 @@ public class SBUtil extends DriverScript{
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            String trg_path = filePath +fileSeperator + "ExtentScreenshot_" + dateFormat.format(date) + ".png";
+            String trg_path = filePath +fileSeperator + "ExtentScreenshot_" + dateFormat.format(date) + ".jpg";
             File trg = new File(trg_path);           
             FileUtils.copyFile(src, trg);
     return trg_path;

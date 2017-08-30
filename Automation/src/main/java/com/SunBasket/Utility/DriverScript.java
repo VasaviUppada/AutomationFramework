@@ -39,7 +39,7 @@ public class DriverScript {
     
     private static String getCurrentTime() {
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat formater = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");       
+        SimpleDateFormat formater = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");       
         return formater.format(calendar.getTime());        
     }
 

@@ -281,10 +281,9 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		String parentWindowHandler = driver.getWindowHandle();
 		sunBasketCompleteYourOrderPage.action_ClickOnSubmitButton(sunBasketCompleteYourOrderPage.button_CheckoutWithPaypal);
 		sunBasketCompleteYourOrderPage.action_checkOutWithPayPal(parentWindowHandler);
-//		sunBasketCompleteYourOrderPage.action_ClickOnSubmitButton(sunBasketCompleteYourOrderPage.button_SubmitOrder);
+		logger.log(Status.PASS, "Paypal Payment Success");
 		SunBasketJoinConfirmationPage sunBasketJoinConfirmationPage = new SunBasketJoinConfirmationPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinConfirmation);
-//		sunBasketJoinConfirmationPage.waitForPageToLoad();
 		
 		// Step 10
 		logger.log(Status.INFO, "Click on Menu");

@@ -1,6 +1,8 @@
 package com.SunBasket.Utility;
 
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.UnexpectedException;
 import java.util.LinkedList;
 
 import org.openqa.selenium.WebDriver;
@@ -35,17 +37,16 @@ public class SDriverScript{
 		this.browser = browser; 
 	}
 	
+
 	public static LinkedList<String[]> browsersStrings() { 
-		LinkedList<String[]> browsers = new LinkedList<String[]>();
-		// windows 7, IE 9 
-		browsers.add(new String[]{"Windows 7", "9", "internet explorer"}); 
-		// windows 8, IE 10 
-		browsers.add(new String[]{"Windows 8", "10", "internet explorer"}); 
-		// windows 8.1, IE 11 
-		browsers.add(new String[]{"Windows 8.1", "11", "internet explorer"}); 
-		return browsers; 
-	} 
+		LinkedList<String[]> browser = new LinkedList<String[]>();
+		browser.add(new String[]{"OS X 10.10", "54.0", "chrome"}); 
+		browser.add(new String[]{"OS X 10.10", "8.0", "safari"});  
+		browser.add(new String[]{"OS X 10.10", "47.0", "firefox"}); 
+		return browser; 
+	}
 	
+	@Parameters({"browser", "version", "os"})
 	@BeforeMethod
 	public void setUp() throws Exception { 
 		
@@ -59,6 +60,28 @@ public class SDriverScript{
 		System.out.println(message); 
 	}
 	
+    protected static void createDriver(String browser, String version, String os, String methodName)
+            throws MalformedURLException, UnexpectedException {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
+        capabilities.setCapability(CapabilityType.VERSION, version);
+        capabilities.setCapability(CapabilityType.PLATFORM, os);
+        capabilities.setCapability("name", methodName);
+/*
+        if (buildTag != null) {
+            capabilities.setCapability("build", buildTag);
+        }
+        URL url = new URL("https://" + Config.SauceLabs.sauceUser + ":" + Config.SauceLabs.sauceKey + "@ondemand.saucelabs.com:443/wd/hub");
+        // Launch remote browser and set it as the current thread
+        dr.set(new RemoteWebDriver(url,capabilities));
+
+        // set current sessionId
+      String id = ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
+      sessionId.set(id);     
+*/
+       
+    }
+	
 	@Test 
 	public void testSampleTestCaseSauceLabs() { 
 		driver.get(Config.Url.url_MultiWeekPromo);
@@ -69,7 +92,7 @@ public class SDriverScript{
 		// Step 2
 		sunBasketPromoPage.button_GetStarted.click();
 		SunBasketGetStartedPage sunBasketGetStartedPage = new SunBasketGetStartedPage();
-		sunBasketGetStartedPage.waitForPageToLoad();
+		SBUtil.waitForPageToLoad();
 	}
 	
 	@AfterMethod

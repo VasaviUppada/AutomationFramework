@@ -45,17 +45,21 @@ public class DriverScript {
     public static ExtentReports extent = new ExtentReports();
     public static ExtentTest logger;
 
-    private static void createFolders() throws IOException {
-        File dir = new File("target/ExtentReports");
+    private static void createFolders() {
+        try {
+            File dir = new File("target/ExtentReports");
 
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
 
-        dir = new File("target/Screenshots_Extent");
+            dir = new File("target/Screenshots_Extent");
 
-        if (!dir.exists()) {
-            dir.mkdir();
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+        } catch (IOException e) {
+            logger.log(Status.INFO, "Could not create Extent Report folders");
         }
     }
 

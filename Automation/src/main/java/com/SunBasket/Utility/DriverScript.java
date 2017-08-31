@@ -45,7 +45,7 @@ public class DriverScript {
     public static ExtentReports extent = new ExtentReports();
     public static ExtentTest logger;
 
-    private static void createFolders() {
+    protected static void createFolders() {
         try {
             File dir = new File("target/ExtentReports");
 
@@ -58,7 +58,7 @@ public class DriverScript {
             if (!dir.exists()) {
                 dir.mkdir();
             }
-        } catch (IOException e) {
+        } catch (SecurityException e) {
             logger.log(Status.INFO, "Could not create Extent Report folders");
         }
     }

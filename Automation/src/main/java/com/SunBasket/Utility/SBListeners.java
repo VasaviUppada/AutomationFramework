@@ -39,7 +39,7 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 
 	@Override
 	public void onStart(ISuite suite) {
-		createFolders();
+		SBListeners.createFolders();
 		startReport(suite);
 	}
 

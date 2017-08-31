@@ -1,6 +1,7 @@
 package com.SunBasket.Utility;
 
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,33 +34,47 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 public class DriverScript {
-	
+
 	public static WebDriver driver;
 	public static String buildTag = System.getenv("BUILD_TAG");
 	public static ThreadLocal<WebDriver> dr = new ThreadLocal<WebDriver>();
 	public static ThreadLocal<String> sessionId = new ThreadLocal<String>();
-    
+
 //    public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/target/ExtentReports/ExtentReport-" + getCurrentTime() + ".html");
     public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/target/ExtentReports/ExtentReport" + ".html");
     public static ExtentReports extent = new ExtentReports();
     public static ExtentTest logger;
-    
+
+    private static void createFolders() throws IOException {
+        File dir = new File("target/ExtentReports");
+
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+
+        dir = new File("target/Screenshots_Extent");
+
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+    }
+
     private static String getCurrentTime() {
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat formater = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");       
-        return formater.format(calendar.getTime());        
+        SimpleDateFormat formater = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");
+        return formater.format(calendar.getTime());
     }
 
 	public static void initializeBrowser(String browser){
 		browserOptions(browser);
 	}
-	
+
 	public static void browserOptions(String browser){
 		if(driver == null){
 			logger.log(Status.INFO, browser + " Browser Started");
 			logger.log(Status.INFO, "System Properties : " + System.getProperty("profile.name"));
 			String os = System.getProperty("os.name").toLowerCase();
-			
+
 			switch(browser){
 				case "firefox" :
 					if(os.contains("mac")){
@@ -67,7 +82,7 @@ public class DriverScript {
 					}
 					else{
 						System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"\\geckodriver.exe");
-					}				
+					}
 					ProfilesIni profile = new ProfilesIni();
 					FirefoxProfile myprofile = profile.getProfile("default");
 					DesiredCapabilities dc = DesiredCapabilities.firefox();
@@ -91,11 +106,11 @@ public class DriverScript {
 			}
 			maximizeScreen(driver);
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-			driver.manage().deleteAllCookies();	
+			driver.manage().deleteAllCookies();
 		}
 
 	}
-		
+
 	public static void maximizeScreen(WebDriver driver) {
 		java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Point position = new Point(0, 0);
@@ -110,7 +125,7 @@ public class DriverScript {
 		driver.close();
 		driver = null;
 	}
-	
+
 	public static void quit(){
 		logger.log(Status.INFO, "Quit Browser");
 		driver.quit();
@@ -126,7 +141,7 @@ public class DriverScript {
 //    	logger.log(Status.INFO, "Session ID_ " + sessionId.get());
         return sessionId.get();
     }
-    
+
     protected static void createDriver(String browser, String version, String os, String methodName)
             throws MalformedURLException, UnexpectedException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -144,7 +159,7 @@ public class DriverScript {
 
         // set current sessionId
       String id = ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
-      sessionId.set(id);      
+      sessionId.set(id);
     }
 
 
@@ -159,5 +174,5 @@ public class DriverScript {
 			e.printStackTrace();
 		}
 	}
-    
+
 }

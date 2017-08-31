@@ -32,13 +32,14 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class SBListeners extends DriverScript implements ITestListener, ISuiteListener, IInvokedMethodListener {
 
-	// This will return method names to the calling function 
+	// This will return method names to the calling function
 	private String returnMethodName(ITestNGMethod method) {
-		return method.getRealClass().getSimpleName() + "." + method.getMethodName(); 
+		return method.getRealClass().getSimpleName() + "." + method.getMethodName();
 	}
 
 	@Override
 	public void onStart(ISuite suite) {
+		createFolders();
 		startReport(suite);
 	}
 
@@ -88,7 +89,7 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 		logger.log(Status.INFO, context.getName() + " Test Finished ");
 		extent.flush();
 	}
-	
+
 	@Override
 	public void beforeInvocation(IInvokedMethod method, ITestResult result) {
 //		String textMsg = "Begins Method Execution : " + returnMethodName(method.getTestMethod());
@@ -114,7 +115,7 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 		getScreentShotForExtentReport("Test Completed");
 		extent.flush();
 	}
-	
+
 	public static void startReport(ISuite suite){
 
 		extent.attachReporter(htmlReporter);
@@ -122,14 +123,14 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 		extent.setSystemInfo("Suite Name", suite.getName());
 		extent.setSystemInfo("User Name", "Vasavi Uppada");
 //		extent.setTestRunnerOutput("TestNG");
-		
+
 //		htmlReporter.config().setDocumentTitle(suite.getParentModule());
 		htmlReporter.config().setDocumentTitle("ExtentReports");
 		htmlReporter.config().setReportName(suite.getName());
 		htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
 		htmlReporter.config().setTheme(Theme.DARK);
 	    htmlReporter.config().setEncoding("utf-8");
-		htmlReporter.config().setTimeStampFormat("MM/dd/yyyy hh:mm:ss a");		
+		htmlReporter.config().setTimeStampFormat("MM/dd/yyyy hh:mm:ss a");
 		logger = extent.createTest(suite.getName());
 	}
 /*
@@ -144,10 +145,10 @@ public static ExtentReports createInstance(String fileName) {
     htmlReporter.config().setReportName("Report Name"); //Config.ReportTitle
     extent = new ExtentReports();
     extent.attachReporter(htmlReporter);
-    
+
     return extent;
 }
 */
-	
+
 }
 

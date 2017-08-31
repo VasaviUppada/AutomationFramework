@@ -39,24 +39,24 @@ import junit.framework.Assert;
 
 public class SBUtil extends DriverScript{
 
-	/*** Custom wait time ***/ 
+	/*** Custom wait time ***/
 	public static void waitForPageToLoad(long time) {
 		driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
 	}
-	
-	/*** Default wait time of 30sec. ***/ 
+
+	/*** Default wait time of 30sec. ***/
 	public static void waitForPageToLoad() {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	}	
-	
-	/*** Explicit Wait - titleIs ***/ 
+	}
+
+	/*** Explicit Wait - titleIs ***/
 	public static void waitForPageTitle(String pageTitle){
 		WebDriverWait wait=new WebDriverWait(driver, 60);
 		logger.log(Status.INFO, "Verify Page Title - " + pageTitle);
 		wait.until(ExpectedConditions.titleIs(pageTitle));
 		logger.log(Status.PASS, "Page Title Matches");
 	}
-	
+
 	/*** Explicit Wait - urlContains ***/
 	public static void waitForUrlContains(String urlText){
 		WebDriverWait wait=new WebDriverWait(driver, 60);
@@ -64,7 +64,7 @@ public class SBUtil extends DriverScript{
 		wait.until(ExpectedConditions.urlContains(urlText));
 		logger.log(Status.PASS, "URL Matches");
 	}
-	
+
 	/*** Explicit Wait - urlIs ***/
 	public static void waitForUrlMatches(String url){
 		WebDriverWait wait=new WebDriverWait(driver, 60);
@@ -72,7 +72,7 @@ public class SBUtil extends DriverScript{
 		wait.until(ExpectedConditions.urlMatches(url));
 		logger.log(Status.PASS, "URL Matches");
 	}
-	
+
 	/*** Explicit Wait - urlIs ***/
 	public static void waitForUrlToBe(String url){
 		WebDriverWait wait=new WebDriverWait(driver, 60);
@@ -80,44 +80,44 @@ public class SBUtil extends DriverScript{
 		wait.until(ExpectedConditions.urlToBe(url));
 		logger.log(Status.PASS, "URL Matches");
 	}
-	
-	/*** Explicit Wait - titleContains ***/ 
+
+	/*** Explicit Wait - titleContains ***/
 	public static void waitForPageTitleContains(String titleContains){
 		WebDriverWait wait=new WebDriverWait(driver, 40);
 		wait.until(ExpectedConditions.titleContains(titleContains));
 	}
-	
-	/*** Explicit Wait - textToBePresentInElement ***/ 
+
+	/*** Explicit Wait - textToBePresentInElement ***/
 	public static void waitForTextToBePresentInElement(WebElement textToBePresentInElement, String expectedText){
 		WebDriverWait wait=new WebDriverWait(driver, 40);
 		wait.until(ExpectedConditions.textToBePresentInElement(textToBePresentInElement, expectedText));
 	}
 
-	/*** Explicit Wait - elementToBeClickable ***/ 
+	/*** Explicit Wait - elementToBeClickable ***/
 	public static void waitForElementToBeClickable(WebElement elementToBeClickable){
 		WebDriverWait wait=new WebDriverWait(driver, 40);
 		wait.until(ExpectedConditions.elementToBeClickable(elementToBeClickable));
 	}
-	
-	/*** Explicit Wait - explicitWait_Wait for Windows to be appeared ***/ 
+
+	/*** Explicit Wait - explicitWait_Wait for Windows to be appeared ***/
 	public static void wait_WindowsToAppear(int noofWindows){
 		WebDriverWait wait=new WebDriverWait(driver, 40);
 		wait.until(ExpectedConditions.numberOfWindowsToBe(noofWindows));
 	}
-	
-	/*** Explicit Wait - presenceOfElementLocated - To check whether element is present in DOM or not ***/ 
+
+	/*** Explicit Wait - presenceOfElementLocated - To check whether element is present in DOM or not ***/
     public static WebElement waitForElement(By locator) {
     	WebDriverWait wait = new WebDriverWait(driver, 40);
     	return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
-	
+
 	/*** Click on an element using Java Script Executor ***/
 	public static void clickwithJavaScriptExecutor(WebElement button) throws Exception {
 		try {
 			if (button.isDisplayed()) {
 				waitForElementToBeClickable(button);
 				logger.log(Status.INFO, "Click on " + button.getText());
-				((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);			
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
 			} else {
 				System.out.println("No element Present to click - " + button.getText());
 				logger.log(Status.FAIL, button.getText());
@@ -128,7 +128,7 @@ public class SBUtil extends DriverScript{
 			System.out.println("Unable to click on element "+ e.getStackTrace());
 		}*/
 	}
-	
+
 	/*** Click on an element using Java Script Executor ***/
 	public static void sendKeyswithJavaScriptExecutor(WebElement textBox, String textToPass) throws Exception {
 		try {
@@ -146,7 +146,7 @@ public class SBUtil extends DriverScript{
 			System.out.println("Unable to send value to element "+ e.getStackTrace());
 		}
 	}
-	
+
 	/*** Scroll to view an element using Java Script Executor ***/
 	public static void scrollToViewWithJavaScriptExecutor(WebElement element) throws Exception {
 		try {
@@ -163,7 +163,7 @@ public class SBUtil extends DriverScript{
 			System.out.println("Unable to scroll to view element "+ e.getStackTrace());
 		}
 	}
-	
+
 	/*** select Checkbox ***/
 	public static void checkboxSelect(WebElement chkbox){
 		if(chkbox.isSelected()){
@@ -177,7 +177,7 @@ public class SBUtil extends DriverScript{
 			logger.log(Status.PASS, chkbox.getText() + "  already selected");
 		}
 	}
-	
+
 	/*** Verify Attribute ***/
 	public static boolean verifyAttributeValue(WebElement webElement, String attribute, String expected){
 		try {
@@ -185,21 +185,21 @@ public class SBUtil extends DriverScript{
 		} catch (Exception e) {
 			e.getStackTrace();
         	return false;
-		}		
+		}
 	}
-	
+
 	/*** Verify Text present or not ***/	//-- working fine
-	public static boolean verifyText(WebElement actual, String expected){ 
+	public static boolean verifyText(WebElement actual, String expected){
 		try {
         	return expected.equalsIgnoreCase(actual.getText());
 		} catch (Exception e) {
 			e.getStackTrace();
         	return false;
 		}
-	}	
+	}
 
 	/*** Verify whether element contains the Text ***/	//-- working fine
-	public static boolean containsText(WebElement actual, String expected){ 
+	public static boolean containsText(WebElement actual, String expected){
 		try {
         	return actual.getText().contains(expected);
 		} catch (Exception e) {
@@ -212,9 +212,9 @@ public class SBUtil extends DriverScript{
 	public static String getPageTitle() {
 		return driver.getTitle();
 	}
-	
+
 	/*** Verify whether Element present or not ***/
-	public static boolean isTextPresent(String expected)	
+	public static boolean isTextPresent(String expected)
 	{
         try{
         	logger.log(Status.INFO, "Verify Text Present - " + expected);
@@ -222,11 +222,11 @@ public class SBUtil extends DriverScript{
         	return b;
         }
         catch (Exception e){
-        	System.out.println(e.getMessage()); 
+        	System.out.println(e.getMessage());
         	return false;
         }
 	}
-		
+
 //		String actual = webElement.getText();
 //		if(webElement.isDisplayed()){
 //			if(expected.equals(actual)){
@@ -260,17 +260,17 @@ public class SBUtil extends DriverScript{
 //                continue;
 //            }
             try {
-                huc = (HttpURLConnection)(new URL(url).openConnection());               
-                huc.setRequestMethod("HEAD");               
-                huc.connect();             
-                respCode = huc.getResponseCode();               
+                huc = (HttpURLConnection)(new URL(url).openConnection());
+                huc.setRequestMethod("HEAD");
+                huc.connect();
+                respCode = huc.getResponseCode();
                 if(respCode >= 400){
                     System.err.println("Broken URL : " + url + " - " + respCode + " : "+ huc.getResponseMessage());
                 }
                 else{
                     System.out.println("Success URL : " + url + " - " + respCode + " : "+ huc.getResponseMessage());
                 }
-                    
+
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -290,16 +290,16 @@ public class SBUtil extends DriverScript{
 			verifyLinkResponse(urlLink);
 		}
 	}
-	
+
 	/*** Verify Links response on Page ***/
-	public static void verifyLinkResponse(String linkUrl)	 
-	{	
-		try 
+	public static void verifyLinkResponse(String linkUrl)
+	{
+		try
         {
-           URL url = new URL(linkUrl);           
-           HttpURLConnection httpURLConnect=(HttpURLConnection)url.openConnection();          
-           httpURLConnect.setConnectTimeout(3000);           
-           httpURLConnect.connect();          
+           URL url = new URL(linkUrl);
+           HttpURLConnection httpURLConnect=(HttpURLConnection)url.openConnection();
+           httpURLConnect.setConnectTimeout(3000);
+           httpURLConnect.connect();
            if(httpURLConnect.getResponseCode()==200)
            {
                System.out.println("Success Link : " + linkUrl+" - " + httpURLConnect.getResponseMessage());
@@ -307,7 +307,7 @@ public class SBUtil extends DriverScript{
            else if(httpURLConnect.getResponseCode()>=400){
         	   System.out.println("Broken Link : " + linkUrl+" - " + httpURLConnect.getResponseMessage());
            }
-           else if(httpURLConnect.getResponseCode()==HttpURLConnection.HTTP_NOT_FOUND)  
+           else if(httpURLConnect.getResponseCode()==HttpURLConnection.HTTP_NOT_FOUND)
            {
                System.out.println(linkUrl+" - " + httpURLConnect.getResponseMessage() + " - "+ HttpURLConnection.HTTP_NOT_FOUND);
            }
@@ -320,10 +320,10 @@ public class SBUtil extends DriverScript{
         	e.getMessage();
         }
 	}
-	
+
 	/*** Take Screenshot ***/ 	//-- working fine
-	public static void getScreenshot(){		
-		String filePath = new File("Screenshots_Extent").getAbsolutePath();
+	public static void getScreenshot(){
+		String filePath = new File("target/Screenshots_Extent").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
 		DateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");
         Date date = new Date();
@@ -337,35 +337,35 @@ public class SBUtil extends DriverScript{
 
         }
 	}
-	
+
 	/*** Get Screenshot ***/  //-- working fine
-    public static void takeScreenshot(String methodName) throws Exception 
+    public static void takeScreenshot(String methodName) throws Exception
     {
-		String filePath = new File("Screenshots_Extent").getAbsolutePath();
+		String filePath = new File("target/Screenshots_Extent").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
 		DateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
             String trg_path = filePath +fileSeperator + "SS_" + methodName + "_" + dateFormat.format(date) + ".jpg";
-            File trg = new File(trg_path);           
+            File trg = new File(trg_path);
             FileUtils.copyFile(src, trg);
         }catch(Exception e){
             System.out.println("Failure to take screenshot "+e);
         }
      }
-    
+
     /*** Get Screenshot Path ***/
     public static String getScreenshotPath()
     {
-		String filePath = new File("Screenshots_Extent").getAbsolutePath();
+		String filePath = new File("target/Screenshots_Extent").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
 		DateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");
         Date date = new Date();
         try{
             File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
             String trg_path = filePath +fileSeperator + "ExtentScreenshot_" + dateFormat.format(date) + ".jpg";
-            File trg = new File(trg_path);           
+            File trg = new File(trg_path);
             FileUtils.copyFile(src, trg);
 
             return "../Screenshots_Extent/ExtentScreenshot_" + dateFormat.format(date) + ".jpg";
@@ -377,7 +377,7 @@ public class SBUtil extends DriverScript{
         }
     }
 
-	
+
 	/*** Web Table ***/		//-- working fine
 	public static void webTable(){
 		WebElement table = driver.findElement(By.tagName("table"));
@@ -393,9 +393,9 @@ public class SBUtil extends DriverScript{
 				 System.out.println("Cell[" + row + "][" + column + "] : " + celltext);
 			}
 		}
-		
+
 	}
-	
+
 	/*** Verify Text in Web Table ***/		//-- working fine
 	public static boolean VerifyText_webTable(int rowNo, int colNo, String expected){
 		WebElement table = driver.findElement(By.tagName("table"));
@@ -419,7 +419,7 @@ public class SBUtil extends DriverScript{
 		}
 		return false;
 	}
-	
+
 	public static List<ArrayList<String>> VerifyText_web(){
 		WebElement table = driver.findElement(By.tagName("table"));
 		List<WebElement> rows = table.findElements(By.xpath(".//tbody//tr//td//.."));
@@ -439,29 +439,29 @@ public class SBUtil extends DriverScript{
 
 		return rowsData;
 	}
-	
 
-    
+
+
     /************ Need to Verify **************/
-    
+
 	/*** Select Option from Dropdown List using 'SelectByVisibleText' ***/
 	public static void selectOptionByVisibleText(WebElement dropdownelement, String option){
 		Select dropdown = new Select(dropdownelement);
-		dropdown.selectByVisibleText(option);		
+		dropdown.selectByVisibleText(option);
 	}
-	
+
 	/*** Select Option from Dropdown List using 'SelectByValue' ***/
 	public static void selectOptionByValue(WebElement dropdownelement, String value){
 		Select dropdown = new Select(dropdownelement);
 		dropdown.selectByValue(value);
 	}
-	
+
 	/*** Select Option from Dropdown List using 'SelectByIndex' ***/
 	public static void selectOptionByIndex(WebElement dropdownelement, int index){
 		Select dropdown = new Select(dropdownelement);
 		dropdown.selectByIndex(index);
 	}
-	
+
 	/*** Select Random Value from Dropdown List ***/
 	public static void selectRandomOptionFromDropdown(WebElement dropdownelement){
 		Select dropdown = new Select(dropdownelement);
@@ -472,9 +472,9 @@ public class SBUtil extends DriverScript{
 		dropdown.selectByIndex(iSelect);
 		System.out.println("Random Selected Value from Dropdown List : " + dropdownelement.getAttribute("value"));
 	}
-	
+
 	/*** Get all options from dropdown list ***/
-	public static void getAllDropdownOptions(WebElement dropdownelement){		
+	public static void getAllDropdownOptions(WebElement dropdownelement){
 	    Select dropdown = new Select(dropdownelement);
 	    List<WebElement> options = dropdown.getOptions();
 	    for(WebElement opt : options){
@@ -484,7 +484,7 @@ public class SBUtil extends DriverScript{
 	}
 
 	/*** Get all options from dropdown list & verify with expected list ***/
-	public static void verifyAllDropdownOptions(WebElement dropdownelement, String[] expectedDropdownList){		
+	public static void verifyAllDropdownOptions(WebElement dropdownelement, String[] expectedDropdownList){
 	    Select dropdown = new Select(dropdownelement);
 	    List<WebElement> options = dropdown.getOptions();
 	    for (int i = 0; i < options.size(); i++){
@@ -493,21 +493,21 @@ public class SBUtil extends DriverScript{
             System.out.println("Option_" +  i + " captured!");
         }
 	}
-	
+
 	/*** Windows Handles ***/
 	public static WebDriver getWindowToHandle(){
         WebDriver popup = null;
         Set<String> windowIterator = driver.getWindowHandles();
 //        System.err.println("No of windows :  " + windowIterator.size());
         for (String window : windowIterator) {
-          String windowHandle = window; 
+          String windowHandle = window;
           popup = driver.switchTo().window(windowHandle);
 //          System.out.println("Child Window Title : " + popup.getTitle());
 //          System.out.println("Child Window Url : " + popup.getCurrentUrl());
         }
             return popup;
 	}
-	
+
 
 
 

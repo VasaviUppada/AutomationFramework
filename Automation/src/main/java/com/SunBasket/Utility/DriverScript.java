@@ -1,6 +1,7 @@
 package com.SunBasket.Utility;
 
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.UnexpectedException;
@@ -19,10 +20,16 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestResult;
+
 import com.SunBasket.Config.Config;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 public class DriverScript {
@@ -140,4 +147,17 @@ public class DriverScript {
       sessionId.set(id);      
     }
 
+
+	public void getScreentShotForExtentReport(String screenshotName){
+		String getScreenshotPath = SBUtil.getScreenshotPath();
+        try {
+    		MediaEntityModelProvider mediaModel = MediaEntityBuilder.createScreenCaptureFromPath(getScreenshotPath).build();
+    		logger.info(screenshotName, mediaModel);
+			logger.addScreenCaptureFromPath(getScreenshotPath, "Scr");
+		} catch (IOException e) {
+			logger.log(Status.FAIL, "Fail to capture the screenshot");
+			e.printStackTrace();
+		}
+	}
+    
 }

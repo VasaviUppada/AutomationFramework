@@ -61,20 +61,10 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 	}
 
 	@Override
-	public void onTestFailure(ITestResult result) {	
-		String getScreenshotPath = SBUtil.getScreenshotPath();
+	public void onTestFailure(ITestResult result) {
 		logger.fail(MarkupHelper.createLabel("Above Step FAILED", ExtentColor.RED));
-        try {
-    		MediaEntityModelProvider mediaModel = MediaEntityBuilder.createScreenCaptureFromPath(getScreenshotPath).build();
-    		logger.fail("Screenshot", mediaModel);
-			logger.addScreenCaptureFromPath(getScreenshotPath, "Failed Scr");
-			
-			logger.error(result.getThrowable());
-		} catch (IOException e) {
-			logger.log(Status.FAIL, "Fail to capture the screenshot");
-			e.printStackTrace();
-		}
-
+		getScreentShotForExtentReport("Failed Screenshot");
+		logger.error(result.getThrowable());
 		getResult(result);
 	}
 
@@ -100,13 +90,13 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 	}
 	
 	@Override
-	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
+	public void beforeInvocation(IInvokedMethod method, ITestResult result) {
 //		String textMsg = "Begins Method Execution : " + returnMethodName(method.getTestMethod());
 //		logger.log(Status.INFO, textMsg);
 	}
 
 	@Override
-	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
+	public void afterInvocation(IInvokedMethod method, ITestResult result) {
 //		String textMsg = "Completed  Execution : " + returnMethodName(method.getTestMethod());
 //		logger.log(Status.INFO, textMsg);
 	}
@@ -117,11 +107,11 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 		else if(result.getStatus() == ITestResult.SKIP)
 			logger.log(Status.SKIP, result.getName() + " - SKIP : " + "\n" + result.getThrowable());
 //			logger.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - SKIP ", ExtentColor.ORANGE) + "\n" + result.getThrowable());
-		else if(result.getStatus() == ITestResult.FAILURE){
+		else if(result.getStatus() == ITestResult.FAILURE)
 			logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - FAIL ", ExtentColor.RED));
-		}
 		else if(result.getStatus() == ITestResult.STARTED)
 			logger.log(Status.INFO, result.getName() + " : STARTED");
+		getScreentShotForExtentReport("Test Completed");
 		extent.flush();
 	}
 	
@@ -134,7 +124,7 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 //		extent.setTestRunnerOutput("TestNG");
 		
 //		htmlReporter.config().setDocumentTitle(suite.getParentModule());
-		htmlReporter.config().setDocumentTitle("ExtentReports_Join Flow");
+		htmlReporter.config().setDocumentTitle("ExtentReports");
 		htmlReporter.config().setReportName(suite.getName());
 		htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
 		htmlReporter.config().setTheme(Theme.DARK);
@@ -158,5 +148,6 @@ public static ExtentReports createInstance(String fileName) {
     return extent;
 }
 */
+	
 }
 

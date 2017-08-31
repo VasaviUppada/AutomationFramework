@@ -36,9 +36,11 @@ public class STest_WebSmokeChecklist extends SBaseTest{
         driver.get(Config.Url.url_SingleWeekPromo);
         SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_SingleWeekPromo);
+		getScreentShotForExtentReport("SingleWeekJoinPage");
 		sunBasketPromoPage.action_VerifyText(sunBasketPromoPage.label_PromoOffer, "Order today and get $35 off your first delivery");
 		sunBasketPromoPage.action_VerifyText(sunBasketPromoPage.button_PromoRedeemOffer, "Redeem Offer");
-
+		
+		
 		// Step 2
 		logger.log(Status.INFO, "Click on Get Started");
 		sunBasketPromoPage.button_GetStarted.click();
@@ -58,22 +60,23 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		logger.log(Status.PASS, "Join Setup success");
 		SunBasketConfirmYourMealsPage sunBasketConfirmYourMealsPage = new SunBasketConfirmYourMealsPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_MenuConfirmation);
-//		sunBasketConfirmYourMealsPage.waitForPageToLoad();
+		getScreentShotForExtentReport("MenuConfirmationPage");
 		sunBasketConfirmYourMealsPage.action_VerifyText(sunBasketConfirmYourMealsPage.label_PromoOffer, "Order today and get $35 off your first delivery");
-		
+				
 		// Step 5
 		logger.log(Status.INFO, "Click on Continue");
 		sunBasketConfirmYourMealsPage.button_Continue.click();
 		logger.log(Status.PASS, "Menu Confirmed");
 		SunBasketCompleteYourOrderPage sunBasketCompleteYourOrderPage = new SunBasketCompleteYourOrderPage();
 		SBUtil.waitForUrlMatches(Config.Url.url_JoinPayment);
+		getScreentShotForExtentReport("ApplyFreeShippingPopup");
 		
 		// Step 6
 		logger.log(Status.PASS, "Click on Apply Free Shipping");
 		sunBasketCompleteYourOrderPage.button_ApplyFreeShipping.click();
 		sunBasketCompleteYourOrderPage.action_verifyAttribute(sunBasketCompleteYourOrderPage.textfield_PromoCode, "value", "QA-TEST35OFF");
 		sunBasketCompleteYourOrderPage.action_VerifyText(sunBasketCompleteYourOrderPage.value_PromoDiscount, "–$35.00");
-
+		getScreentShotForExtentReport("JoinPaymentPage");
 	}
 	
 	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
@@ -86,6 +89,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
         driver.get(Config.Url.url_SingleWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_SingleWeekPromo);
+		getScreentShotForExtentReport("SingleWeekJoinPage");
 		
 		// Step 2
 		logger.log(Status.INFO, "Click on get Started");
@@ -113,6 +117,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		SBUtil.waitForUrlToBe(Config.Url.url_Home);
 		sunBasketHomePage.action_VerifyText(sunBasketHomePage.label_PromoOffer, "Order today and get $35 off your first delivery");		
 		sunBasketHomePage.action_VerifyText(sunBasketHomePage.button_PromoRedeemOffer, "Redeem Offer");
+		getScreentShotForExtentReport("HomePage");
 		String username = sunBasketHomePage.dropdown_Menu.getText();
 		String email = username + "@test.com";
 		
@@ -127,18 +132,21 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		logger.log(Status.PASS, "SignIn success");
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage2 = new SunBasketBuildYourOrderPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinSetup);
+		getScreentShotForExtentReport("JoinSetUpPage");
 		
 		// Step 7
 		logger.log(Status.INFO, "Click on Continue");
 		sunBasketBuildYourOrderPage2.button_Continue.click();
 		SunBasketConfirmYourMealsPage sunBasketConfirmYourMealsPage2 = new SunBasketConfirmYourMealsPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_MenuConfirmation);
+		getScreentShotForExtentReport("MenuConfirmationPage");
 		
 		// Step 8
 		logger.log(Status.INFO, "Click on Continue");
 		sunBasketConfirmYourMealsPage2.button_Continue.click();
 		SunBasketCompleteYourOrderPage sunBasketCompleteYourOrderPage = new SunBasketCompleteYourOrderPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinPayment);
+		getScreentShotForExtentReport("ApplyFreeShippingPopup");
 		logger.log(Status.INFO, "Click on Apply Free Shipping");
 		sunBasketCompleteYourOrderPage.button_ApplyFreeShipping.click();
 
@@ -147,6 +155,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		logger.log(Status.PASS, "Place Order success");
 		SunBasketJoinConfirmationPage sunBasketJoinConfirmationPage = new SunBasketJoinConfirmationPage();
 		SBUtil.waitForUrlMatches(Config.Url.url_JoinConfirmation);
+		getScreentShotForExtentReport("JoinConfirmationPage");
 		
 		// Step 10
 		logger.log(Status.INFO, "Click on Menu");
@@ -159,8 +168,8 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		// Step 11
 		logger.log(Status.INFO, "Click on Credits & Coupons");
 		sunBasketMyAccountPage.link_CreditsAndCoupons.click();
-		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(1, 0, "$35.00 off");	
-		
+		getScreentShotForExtentReport("MyAccountPage");
+		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(1, 0, "$35.00 off");			
 	}
 
 	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
@@ -173,6 +182,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
         driver.get(Config.Url.url_MultiWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_MultiWeekPromo);
+		getScreentShotForExtentReport("MultiWeekJoinPage");
 		sunBasketPromoPage.action_VerifyText(sunBasketPromoPage.label_PromoOffer, "GET $40 OFF - $30 off your first order, $10 off your second order");
 		sunBasketPromoPage.action_VerifyText(sunBasketPromoPage.button_PromoRedeemOffer, "Redeem Offer");
 		
@@ -195,6 +205,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		logger.log(Status.PASS, "Join Setup Success");
 		SunBasketConfirmYourMealsPage sunBasketConfirmYourMealsPage = new SunBasketConfirmYourMealsPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_MenuConfirmation);
+		getScreentShotForExtentReport("MenuConfirmationPage");
 		sunBasketConfirmYourMealsPage.action_VerifyText(sunBasketConfirmYourMealsPage.label_PromoOffer, "GET $40 OFF - $30 off your first order, $10 off your second order");
 		
 		// Step 5
@@ -202,7 +213,8 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		sunBasketConfirmYourMealsPage.button_Continue.click();		
 		SunBasketCompleteYourOrderPage sunBasketCompleteYourOrderPage = new SunBasketCompleteYourOrderPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinPayment);
-	
+		getScreentShotForExtentReport("ApplyFreeShippingPopup");
+		
 		// Step 6
 		logger.log(Status.INFO, "Click on Apply Free Shipping");
 		sunBasketCompleteYourOrderPage.button_ApplyFreeShipping.click();
@@ -220,6 +232,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
         driver.get(Config.Url.url_MultiWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_MultiWeekPromo);
+		getScreentShotForExtentReport("MultiWeekJoinPage");
 		
 		// Step 2
 		logger.log(Status.INFO, "Click on get Started");
@@ -238,12 +251,14 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		logger.log(Status.PASS, "Join Setup Success");
 		SunBasketConfirmYourMealsPage sunBasketConfirmYourMealsPage = new SunBasketConfirmYourMealsPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_MenuConfirmation);
+		getScreentShotForExtentReport("MenuConfirmationPage");
 		
 		// Step 5
 		logger.log(Status.INFO, "Click on SunBasket Image");
 		sunBasketConfirmYourMealsPage.img_SunBasket.click();			
 		SunBasketHomePage sunBasketHomePage = new SunBasketHomePage();
 		SBUtil.waitForUrlToBe(Config.Url.url_Home);
+		getScreentShotForExtentReport("HomePage");
 		sunBasketHomePage.action_VerifyText(sunBasketHomePage.label_PromoOffer, "GET $40 OFF - $30 off your first order, $10 off your second order");		
 		sunBasketHomePage.action_VerifyText(sunBasketHomePage.button_PromoRedeemOffer, "Redeem Offer");
 		
@@ -256,22 +271,26 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		sunBasketHomePage.link_SignIn.click();
 		SunBasketSignInPage sunBasketSignInPage = new SunBasketSignInPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_Login);
+		getScreentShotForExtentReport("SignIn");
 		sunBasketSignInPage.action_signIn(email);
 		logger.log(Status.PASS, "SignIn success");
 		SunBasketBuildYourOrderPage sunBasketBuildYourOrderPage2 = new SunBasketBuildYourOrderPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinSetup);
+		getScreentShotForExtentReport("JoinSetUpPage");
 		
 		// Step 7
 		logger.log(Status.INFO, "Click on Continue");
 		sunBasketBuildYourOrderPage2.button_Continue.click();
 		SunBasketConfirmYourMealsPage sunBasketConfirmYourMealsPage2 = new SunBasketConfirmYourMealsPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_MenuConfirmation);
+		getScreentShotForExtentReport("MenuConfirmationPage");
 		
 		// Step 8
 		logger.log(Status.INFO, "Click on Continue");
 		sunBasketConfirmYourMealsPage2.button_Continue.click();
 		SunBasketCompleteYourOrderPage sunBasketCompleteYourOrderPage = new SunBasketCompleteYourOrderPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinPayment);
+		getScreentShotForExtentReport("ApplyFreeShippingPopup");
 		logger.log(Status.INFO, "Click on Apply Free Shipping");
 		sunBasketCompleteYourOrderPage.button_ApplyFreeShipping.click();
 		sunBasketCompleteYourOrderPage.action_verifyAttribute(sunBasketCompleteYourOrderPage.textfield_PromoCode, "value", "QA-MW403010");
@@ -279,11 +298,12 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		
 		// Step 9
 		String parentWindowHandler = driver.getWindowHandle();
-		sunBasketCompleteYourOrderPage.action_ClickOnSubmitButton(sunBasketCompleteYourOrderPage.button_CheckoutWithPaypal);
+		sunBasketCompleteYourOrderPage.action_ClickOnButton(sunBasketCompleteYourOrderPage.button_CheckoutWithPaypal);
 		sunBasketCompleteYourOrderPage.action_checkOutWithPayPal(parentWindowHandler);
 		logger.log(Status.PASS, "Paypal Payment Success");
 		SunBasketJoinConfirmationPage sunBasketJoinConfirmationPage = new SunBasketJoinConfirmationPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinConfirmation);
+		getScreentShotForExtentReport("JoinConfirmationPage");
 		
 		// Step 10
 		logger.log(Status.INFO, "Click on Menu");
@@ -294,6 +314,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		SBUtil.waitForUrlMatches(Config.Url.url_MyAccount);
 		logger.log(Status.INFO, "Click on Credits & Coupons");
 		sunBasketMyAccountPage.link_CreditsAndCoupons.click();
+		getScreentShotForExtentReport("MyAccountPage");
 		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(1, 0, "$10.00 off");
 		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(2, 0, "$30.00 off");	
 	}
@@ -308,6 +329,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
         driver.get(Config.Url.url_SingleWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_SingleWeekPromo);
+		getScreentShotForExtentReport("SingleWeekPromoPage");
 		logger.log(Status.INFO, "Click on Get Started");
 		sunBasketPromoPage.button_GetStarted.click();
 		SunBasketGetStartedPage sunBasketGetStartedPage = new SunBasketGetStartedPage();
@@ -320,10 +342,12 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		logger.log(Status.PASS, "Join Setup Success");
 		SunBasketConfirmYourMealsPage sunBasketConfirmYourMealsPage = new SunBasketConfirmYourMealsPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_MenuConfirmation);
+		getScreentShotForExtentReport("MenuConfirmationPage");
 		logger.log(Status.INFO, "Click on Continue");
 		sunBasketConfirmYourMealsPage.button_Continue.click();
 		SunBasketCompleteYourOrderPage sunBasketCompleteYourOrderPage = new SunBasketCompleteYourOrderPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinPayment);
+		getScreentShotForExtentReport("ApplyFreeShippingPopup");
 		logger.log(Status.INFO, "Click on Apply Free Shipping");
 		sunBasketCompleteYourOrderPage.button_ApplyFreeShipping.click();
 		logger.log(Status.INFO, "Clear Single Promo code & Pass Multiple Promo code : QA-MW403010");
@@ -335,14 +359,14 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		sunBasketCompleteYourOrderPage.action_verifyAttribute(sunBasketCompleteYourOrderPage.textfield_PromoCode, "value", "QA-MW403010");
 		SBUtil.waitForTextToBePresentInElement(sunBasketCompleteYourOrderPage.value_PromoDiscount, "–$30.00");
 		sunBasketCompleteYourOrderPage.action_VerifyText(sunBasketCompleteYourOrderPage.value_PromoDiscount, "–$30.00");	
+		getScreentShotForExtentReport("Change PromoCode from Single to Multiple");
 		
 		// Step 2
 		sunBasketCompleteYourOrderPage.action_FillCreditCardAndplaceOrder();
 		logger.log(Status.PASS, "Place Order success");
 		SunBasketJoinConfirmationPage sunBasketJoinConfirmationPage = new SunBasketJoinConfirmationPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinConfirmation);
-//		sunBasketJoinConfirmationPage.waitForPageToLoad();
-		
+		getScreentShotForExtentReport("JoinConfirmationPage");
 		// Step 3
 		logger.log(Status.INFO, "Click on Menu");
 		sunBasketJoinConfirmationPage.dropdown_Menu.click();
@@ -352,8 +376,10 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		SBUtil.waitForUrlMatches(Config.Url.url_MyAccount);
 		logger.log(Status.INFO, "Click on Credits & Coupons");
 		sunBasketMyAccountPage.link_CreditsAndCoupons.click();
+		getScreentShotForExtentReport("MyAccountPage");
 		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(1, 0, "$10.00 off");
-		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(2, 0, "$30.00 off");		
+		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(2, 0, "$30.00 off");
+		
 	}
 	
 	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
@@ -366,6 +392,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		driver.get(Config.Url.url_Home);
 		SunBasketHomePage sunBasketHomePage = new SunBasketHomePage();
 		SBUtil.waitForUrlToBe(Config.Url.url_Home);
+		getScreentShotForExtentReport("HomePage");
 		logger.log(Status.INFO, "Click on Get Started");
 		sunBasketHomePage.button_GetStarted.click();
 		SunBasketGetStartedPage sunBasketGetStartedPage = new SunBasketGetStartedPage();
@@ -378,10 +405,12 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		logger.log(Status.PASS, "Join Setup Success");
 		SunBasketConfirmYourMealsPage sunBasketConfirmYourMealsPage = new SunBasketConfirmYourMealsPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_MenuConfirmation);
+		getScreentShotForExtentReport("MenuConfirmationPage");
 		logger.log(Status.INFO, "Click on Continue");
 		sunBasketConfirmYourMealsPage.button_Continue.click();
 		SunBasketCompleteYourOrderPage sunBasketCompleteYourOrderPage = new SunBasketCompleteYourOrderPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinPayment);
+		getScreentShotForExtentReport("ApplyFreeShippingPopup");
 		logger.log(Status.INFO, "Click on Apply Free Shipping");
 		sunBasketCompleteYourOrderPage.button_ApplyFreeShipping.click();
 		
@@ -390,19 +419,20 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		logger.log(Status.INFO, "Clear Multiple Promo code & Pass Single Promo code : QA-TEST35OFF");
 		sunBasketCompleteYourOrderPage.textfield_PromoCode.clear();
 		sunBasketCompleteYourOrderPage.textfield_PromoCode.sendKeys("QA-TEST35OFF");
-		sunBasketCompleteYourOrderPage.action_ClickOnSubmitButton(sunBasketCompleteYourOrderPage.button_ApplyPromoCode);
+		sunBasketCompleteYourOrderPage.action_ClickOnButton(sunBasketCompleteYourOrderPage.button_ApplyPromoCode);
 		logger.log(Status.INFO, "Click on Apply Promo code");
 		sunBasketCompleteYourOrderPage.button_ApplyPromoCode.click();
 		sunBasketCompleteYourOrderPage.action_verifyAttribute(sunBasketCompleteYourOrderPage.textfield_PromoCode, "value", "QA-TEST35OFF");
 		SBUtil.waitForTextToBePresentInElement(sunBasketCompleteYourOrderPage.value_PromoDiscount, "–$35.00");
 		sunBasketCompleteYourOrderPage.action_VerifyText(sunBasketCompleteYourOrderPage.value_PromoDiscount, "–$35.00");	
+		getScreentShotForExtentReport("Change PromoCode from Multiple to Single");
 		
 		// Step 3
 		sunBasketCompleteYourOrderPage.action_FillCreditCardAndplaceOrder();
 		logger.log(Status.PASS, "Place Order success");
 		SunBasketJoinConfirmationPage sunBasketJoinConfirmationPage = new SunBasketJoinConfirmationPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinConfirmation);
-//		sunBasketJoinConfirmationPage.waitForPageToLoad();
+		getScreentShotForExtentReport("JoinConfirmationPage");
 		
 		// Step 4
 		logger.log(Status.INFO, "Click on Menu");
@@ -413,6 +443,7 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		SBUtil.waitForUrlMatches(Config.Url.url_MyAccount);
 		logger.log(Status.INFO, "Click on Credits & Coupons");
 		sunBasketMyAccountPage.link_CreditsAndCoupons.click();
+		getScreentShotForExtentReport("MyAccountPage");
 		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(1, 0, "$35.00 off");		
 	}
 	

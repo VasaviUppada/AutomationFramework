@@ -367,13 +367,14 @@ public class SBUtil extends DriverScript{
             String trg_path = filePath +fileSeperator + "ExtentScreenshot_" + dateFormat.format(date) + ".jpg";
             File trg = new File(trg_path);           
             FileUtils.copyFile(src, trg);
-    return trg_path;
-    }
-    catch (Exception ex)
-    {
-    ex.printStackTrace();
-    return ex.getMessage();
-    }
+
+            return "../Screenshot_Extent/ExtentScreenshot_" + dateFormat.format(date) + ".jpg";
+        }
+        catch (Exception ex)
+        {
+        	ex.printStackTrace();
+        	return ex.getMessage();
+        }
     }
 
 	

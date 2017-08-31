@@ -323,7 +323,7 @@ public class SBUtil extends DriverScript{
 	
 	/*** Take Screenshot ***/ 	//-- working fine
 	public static void getScreenshot(){		
-		String filePath = new File("Screenshots_Failed").getAbsolutePath();
+		String filePath = new File("Screenshots_Extent").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
 		DateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");
         Date date = new Date();
@@ -341,7 +341,7 @@ public class SBUtil extends DriverScript{
 	/*** Get Screenshot ***/  //-- working fine
     public static void takeScreenshot(String methodName) throws Exception 
     {
-		String filePath = new File("Screenshots_Failed").getAbsolutePath();
+		String filePath = new File("Screenshots_Extent").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
 		DateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");
         Date date = new Date();
@@ -358,7 +358,7 @@ public class SBUtil extends DriverScript{
     /*** Get Screenshot Path ***/
     public static String getScreenshotPath()
     {
-		String filePath = new File("Screenshots_Failed").getAbsolutePath();
+		String filePath = new File("Screenshots_Extent").getAbsolutePath();
     	String fileSeperator = System.getProperty("file.separator");
 		DateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm_ss");
         Date date = new Date();

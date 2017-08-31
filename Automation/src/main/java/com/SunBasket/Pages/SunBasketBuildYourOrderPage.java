@@ -111,6 +111,7 @@ public class SunBasketBuildYourOrderPage extends BasePage {
 		action_SendKeys(textfield_PhoneNumber, "9259259259");
 		logger.log(Status.INFO, "Enter DeliveryInstructions");
 		textfield_DeliveryInstructions.sendKeys("Door Delivery");
+		getScreentShotForExtentReport("JoinSetUpPage");
 		action_ClickOnContinueButton(button_Continue);
 	}
 

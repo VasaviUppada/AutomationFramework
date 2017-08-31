@@ -66,6 +66,7 @@ public class SunBasketSignInPage extends BasePage{
 		logger.log(Status.INFO, "Enter Password");
 		textfield_EnterYourPassword.sendKeys("ReplacePassword123");
 		logger.log(Status.INFO, "Click On Continue");
+		getScreentShotForExtentReport("SignInPage");
 		action_ClickOnContinueButton(button_SignIn);
 	}
 

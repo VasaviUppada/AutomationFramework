@@ -102,6 +102,7 @@ public class SunBasketGetStartedPage extends BasePage{
 		textfield_ChooseAPassword.sendKeys(pswd);
 		logger.log(Status.INFO, "Enter ZIPcode");
 		textfield_ZipCode.sendKeys("94588");
+		getScreentShotForExtentReport("JoinPage");
 		action_ClickOnContinueButton(button_Continue);
 	}
 	

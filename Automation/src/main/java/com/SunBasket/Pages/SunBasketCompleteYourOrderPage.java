@@ -114,7 +114,8 @@ public class SunBasketCompleteYourOrderPage extends BasePage{
 		SBUtil.selectOptionByIndex(dropdown_Year, 4);
 		logger.log(Status.INFO, "Enter CVV");
 		textField_CVC.sendKeys("925");
-		action_ClickOnSubmitButton(button_SubmitOrder);
+		getScreentShotForExtentReport("JoinPaymentPage");
+		action_ClickOnButton(button_SubmitOrder);
 	}
 	
 	public void action_checkOutWithPayPal(String parentWindowHandler){
@@ -131,12 +132,13 @@ public class SunBasketCompleteYourOrderPage extends BasePage{
 		textfield_PromoCode.clear();
 		textfield_PromoCode.sendKeys("QA-MW403010");
 		logger.log(Status.INFO, "Click on Submit Order");
+		getScreentShotForExtentReport("PaypalPaymentPopup");
 //		SBUtil.waitForElementToBeClickable(button_SubmitOrder);
 		button_SubmitOrder.click();
 //		action_ClickOnSubmitButton(button_SubmitOrder);
 	}
 
-	public void action_ClickOnSubmitButton(WebElement element){
+	public void action_ClickOnButton(WebElement element){
 			try {
 				SBUtil.clickwithJavaScriptExecutor(element);
 			} catch (Exception e) {

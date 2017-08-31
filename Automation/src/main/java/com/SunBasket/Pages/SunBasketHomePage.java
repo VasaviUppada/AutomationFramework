@@ -76,6 +76,7 @@ public class SunBasketHomePage extends BasePage{
 		logger.log(Status.INFO, "Click on Menu");
 		dropdown_Menu.click();
 		logger.log(Status.INFO, "Click on Signout");
+		getScreentShotForExtentReport("Signout");
 		link_SignOut.click();
 	}
 	

@@ -256,7 +256,7 @@ public class Test_WebSmokeChecklist extends BaseTest{
 		
 		// Step 9
 		String parentWindowHandler = driver.getWindowHandle();
-		sunBasketCompleteYourOrderPage.action_ClickOnSubmitButton(sunBasketCompleteYourOrderPage.button_CheckoutWithPaypal);
+		sunBasketCompleteYourOrderPage.action_ClickOnButton(sunBasketCompleteYourOrderPage.button_CheckoutWithPaypal);
 		sunBasketCompleteYourOrderPage.action_checkOutWithPayPal(parentWindowHandler);
 		sunBasketCompleteYourOrderPage.button_SubmitOrder.click();
 		SunBasketJoinConfirmationPage sunBasketJoinConfirmationPage = new SunBasketJoinConfirmationPage();
@@ -347,7 +347,7 @@ public class Test_WebSmokeChecklist extends BaseTest{
 		// Step 2
 		sunBasketCompleteYourOrderPage.textfield_PromoCode.clear();
 		sunBasketCompleteYourOrderPage.textfield_PromoCode.sendKeys("QA-TEST35OFF");
-		sunBasketCompleteYourOrderPage.action_ClickOnSubmitButton(sunBasketCompleteYourOrderPage.button_ApplyPromoCode);
+		sunBasketCompleteYourOrderPage.action_ClickOnButton(sunBasketCompleteYourOrderPage.button_ApplyPromoCode);
 		sunBasketCompleteYourOrderPage.button_ApplyPromoCode.click();
 		sunBasketCompleteYourOrderPage.action_verifyAttribute(sunBasketCompleteYourOrderPage.textfield_PromoCode, "value", "QA-TEST35OFF");
 		SBUtil.waitForTextToBePresentInElement(sunBasketCompleteYourOrderPage.value_PromoDiscount, "–$35.00");

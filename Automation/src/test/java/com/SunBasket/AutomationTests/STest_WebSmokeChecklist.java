@@ -26,10 +26,8 @@ import com.aventstack.extentreports.Status;
 
 public class STest_WebSmokeChecklist extends SBaseTest{
 
-	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void C1_SunBasket_JoinFlow_SingleWeek_001(String browser, String version, String os, Method method){
-		driver = setBrowser(browser, version, os, method);
-		logger.log(Status.PASS, "Browser Set Up");
+	@Test
+	public void C1_SunBasket_JoinFlow_SingleWeek_001(){
 		
         // Step 1
 		logger.log(Status.INFO, "Navigate to SingleWeekPromoURL");
@@ -79,10 +77,8 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		getScreentShotForExtentReport("JoinPaymentPage");
 	}
 	
-	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void C6_SunBasket_JoinFlow_SingleWeek_002(String browser, String version, String os, Method method){
-		driver = setBrowser(browser, version, os, method);
-		logger.log(Status.PASS, "Browser Set Up");
+	@Test
+	public void C6_SunBasket_JoinFlow_SingleWeek_002(){
 		
         // Step 1
 		logger.log(Status.INFO, "Navigate to SingleWeekPromoURL");
@@ -172,11 +168,9 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(1, 0, "$35.00 off");			
 	}
 
-	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void C7_SunBasket_JoinFlow_MultiWeek_003(String browser, String version, String os, Method method){
-		driver = setBrowser(browser, version, os, method);
-		logger.log(Status.PASS, "Browser Set Up");
-		
+	@Test
+	public void C7_SunBasket_JoinFlow_MultiWeek_003(){
+
         // Step 1
 		logger.log(Status.INFO, "Navigate to MultiWeekPromoURL");
         driver.get(Config.Url.url_MultiWeekPromo);
@@ -222,11 +216,9 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		sunBasketCompleteYourOrderPage.action_VerifyText(sunBasketCompleteYourOrderPage.value_PromoDiscount, "–$30.00");		
 	}
 	
-	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void C8_SunBasket_JoinFlow_MultiWeek_004(String browser, String version, String os, Method method){
-		driver = setBrowser(browser, version, os, method);
-		logger.log(Status.PASS, "Browser Set Up");
-		
+	@Test
+	public void C8_SunBasket_JoinFlow_MultiWeek_004(){
+
         // Step 1
 		logger.log(Status.INFO, "Navigate to MultiWeekPromoURL");
         driver.get(Config.Url.url_MultiWeekPromo);
@@ -319,10 +311,8 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(2, 0, "$30.00 off");	
 	}
 	
-	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void C9_SunBasket_JoinFlow_SingleWeek_005(String browser, String version, String os, Method method){
-		driver = setBrowser(browser, version, os, method);
-		logger.log(Status.PASS, "Browser Set Up");
+	@Test
+	public void C9_SunBasket_JoinFlow_SingleWeek_005(){
 		
         // Step 1
 		logger.log(Status.INFO, "Navigate to SingleWeekPromoURL");
@@ -382,11 +372,9 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		
 	}
 	
-	@Test(dataProvider = "saucelabsBrowsers", dataProviderClass = Config.class)
-	public void C10_SunBasket_JoinFlow_PromoCode_006(String browser, String version, String os, Method method){
-		driver = setBrowser(browser, version, os, method);
-		logger.log(Status.PASS, "Browser Set Up");
-		
+	@Test
+	public void C10_SunBasket_JoinFlow_PromoCode_006(){
+
         // Step 1
 		logger.log(Status.INFO, "Navigate to HomeURL");
 		driver.get(Config.Url.url_Home);
@@ -446,6 +434,5 @@ public class STest_WebSmokeChecklist extends SBaseTest{
 		getScreentShotForExtentReport("MyAccountPage");
 		sunBasketMyAccountPage.action_WebTable_CouponsAvailable(1, 0, "$35.00 off");		
 	}
-	
 
 }

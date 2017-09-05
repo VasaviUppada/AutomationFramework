@@ -16,7 +16,7 @@ public class Config {
 
 		public static final String url_Master			 	= "https://master.sunbasket-staging.com";
 		public static final String url_Develop				= "https://develop.sunbasket-staging.com";
-//		public static final String url_Base				 	= url_Develop;		
+//		public static final String url_Base				 	= url_Master;		
 		public static final String url_Home				 	= url_Base + "/home";
 		public static final String url_SingleWeekPromo 	 	= url_Base + "/?offer=QA-TEST35OFF";
 		public static final String url_MultiWeekPromo	 	= url_Base + "/?offer=QA-MW403010";	
@@ -81,7 +81,7 @@ public class Config {
 	    public static final boolean browserMob    = true;
 	}
 	
-    @DataProvider(name = "saucelabsBrowsers", parallel = true)
+/*    @DataProvider(name = "saucelabsBrowsers", parallel = true)
     public static Object[][] sauceBrowsers(Method testMethod) {
         return new Object[][]{
 //                new Object[]{"MicrosoftEdge", "15", "Windows 10"},
@@ -92,8 +92,7 @@ public class Config {
 //        		  new Object[]{"safari", "8.0", "OS X 10.10"},
         };
     }
-	
-    
+*/
 	protected static ArrayList<String> getPropertyFileList(){
 //		ArrayList<String> propertyFileList = super.getPropertyFileList();
 		ArrayList<String> propertyFileList = new ArrayList<String>();

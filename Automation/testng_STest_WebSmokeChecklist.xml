@@ -4,10 +4,10 @@
 	<listeners>
 		<listener class-name="com.SunBasket.Utility.SBListeners"/>
 	</listeners>
- <!-- 
   <test name="SauceBrowsers" preserve-order="true">
- -->
-  <test name="SauceBrowsers" preserve-order="true">
+  <parameter name="browser" value="safari"></parameter> 
+  <parameter name="version" value="8.0"></parameter> 
+  <parameter name="os" value="OS X 10.10"></parameter> 
     <classes>
       <class name="com.SunBasket.AutomationTests.STest_WebSmokeChecklist">
       	<methods>

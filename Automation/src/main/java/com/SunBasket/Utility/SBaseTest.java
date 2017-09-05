@@ -21,6 +21,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -47,18 +48,16 @@ public class SBaseTest extends DriverScript{
         extent.setSystemInfo("SESSION ID", getSessionId());
         return webDriver;
 	}
-	
 
-	@BeforeTest
-	public void beforeTest(){
-	}
-
+	@Parameters({"browser", "version", "os"})
 	@BeforeMethod
-	public void setSauceLabs(Method method){
+	public void setSauceLabs(@Optional("chrome")String browser, @Optional("54.0")String version, @Optional("OS X 10.10")String os, Method method){
 		logger = extent.createTest(method.getName());
 		extent.setSystemInfo("Test Name", method.getName());
+		driver = setBrowser(browser, version, os, method);
+		logger.log(Status.PASS, "Browser Set Up");
 	}
-   
+
     @AfterMethod
     public void tearDown(ITestResult result) throws Exception {
         ((JavascriptExecutor) dr.get()).executeScript("sauce:job-result=" + (result.isSuccess() ? "passed" : "failed"));

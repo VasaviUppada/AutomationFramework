@@ -32,8 +32,10 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.ChartLocation;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 
-public class DriverScript {
+public class Extent_DriverScript {
 
 	public static WebDriver driver;
 	public static String buildTag = System.getenv("BUILD_TAG");
@@ -42,10 +44,16 @@ public class DriverScript {
 
 //    public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/target/ExtentReports/ExtentReport-" + getCurrentTime() + ".html");
     public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/target/ExtentReports/ExtentReport" + ".html");
-    public static ExtentReports extent = new ExtentReports();
+//    public static ExtentReports extent = new ExtentReports();
     public static ExtentTest logger;
     public static ExtentTest parent_logger;
 
+    
+	public static ExtentReports extent = ExtentManager.createInstance("extent.html");
+	public static ThreadLocal<Object> parentTest = new ThreadLocal<Object>();
+    public static ThreadLocal<Object> test = new ThreadLocal<Object>();
+    
+    
     protected static void createFolders() {
         try {
             File dir = new File("target/ExtentReports");
@@ -126,13 +134,13 @@ public class DriverScript {
 		}
 
 	public static void close(){
-		parent_logger.log(Status.INFO, "Close Browser");
+		logger.log(Status.INFO, "Close Browser");
 		driver.close();
 		driver = null;
 	}
 
 	public static void quit(){
-		parent_logger.log(Status.INFO, "Quit Browser");
+		logger.log(Status.INFO, "Quit Browser");
 		driver.quit();
 		driver = null;
 	}
@@ -178,6 +186,32 @@ public class DriverScript {
 			logger.log(Status.FAIL, "Fail to capture the screenshot");
 			e.printStackTrace();
 		}
+	}
+	
+	
+	
+	public static class ExtentManager {	    
+	    private static ExtentReports extent;	    
+	    public static ExtentReports getInstance() {
+	    	if (extent == null)
+	    		createInstance("test-output/extent.html");	    	
+	        return extent;
+	    }
+	    
+	    public static ExtentReports createInstance(String fileName) {
+	        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
+	        htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
+	        htmlReporter.config().setChartVisibilityOnOpen(true);
+	        htmlReporter.config().setTheme(Theme.STANDARD);
+	        htmlReporter.config().setDocumentTitle(fileName);
+	        htmlReporter.config().setEncoding("utf-8");
+	        htmlReporter.config().setReportName(fileName);
+	        
+	        extent = new ExtentReports();
+	        extent.attachReporter(htmlReporter);
+	        
+	        return extent;
+	    }
 	}
 
 }

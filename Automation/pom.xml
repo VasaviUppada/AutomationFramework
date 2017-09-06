@@ -119,22 +119,26 @@
         	<version>2.20</version>
         	
         	<configuration>
-        		<parallel>classes</parallel>
-          		<threadCount>40</threadCount>
+                <parallel>all</parallel>
+                <useUnlimitedThreads>true</useUnlimitedThreads>
+                  
                 <redirectTestOutputToFile>true</redirectTestOutputToFile>
           		<suiteXmlFiles>
+          		<!--
             		<suiteXmlFile>testng_STest_WebSmokeChecklist.xml</suiteXmlFile>
+            	-->
+            		  <suiteXmlFile>testng_STest_WebSmokeChecklist_Firefox.xml</suiteXmlFile>
+            	
           		</suiteXmlFiles>
-          		
-          	<!--          		 
+          
+                                    			 
             	<systemProperties>
             		<property>
               			<name>profile.name</name>
-              			<value>master.profiles</value>
+              			<value>master-sauce.profiles</value>
             		</property>
           		</systemProperties>         		
-            -->           	
-            	
+
           		<systemPropertyVariables>
             		<propertyName>profile.name</propertyName>
             		<buildDirectory>${project.build.directory}</buildDirectory>

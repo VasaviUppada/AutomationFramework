@@ -1,64 +1,74 @@
 package com.SunBasket.Utility;
 
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.rmi.UnexpectedException;
+import java.util.UUID;
+
+import org.openqa.selenium.InvalidElementStateException;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ISuite;
+import org.testng.ITestClass;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
+import com.SunBasket.Config.Config;
+import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 
 @Listeners(com.SunBasket.Utility.SBListeners.class)
 public class BaseTest extends DriverScript{
-	
-	@BeforeTest
-	public void beforeTest(){
-	}
-	
-/*	@BeforeClass
-	public void beforeClass(){
-	}
-*/
-	
-/*** Use this to run Tests using TestNG.xml ***/
-/*
-	@Parameters({ "browser" })
-	@BeforeMethod(dependsOnGroups = {"testNGRun"})
-	public void setUp(String browser){
-		initializeBrowser(browser);
-		driver.navigate().to(Config.Url.base_url);
-	}
-*/
-/*
-	@BeforeMethod
-	public void setUp(){
-		initializeBrowser(Config.Browser.browser);
-		driver.navigate().to(Config.Url.base_url);
-	}
-	*/
 
+
+	public WebDriver setBrowser(String browser, String version, String os, Method method){
+        try {
+			createDriver(browser, version, os, method.getName());
+		} catch (UnexpectedException | MalformedURLException e) {
+			e.printStackTrace();
+		}
+        WebDriver webDriver = getWebDriver();
+        logger.log(Status.INFO,"Remote WebDriver : " +   browser + " / " + version + " / " + os);
+        logger.log(Status.INFO, "Session ID : " + getSessionId());
+        extent.setSystemInfo("BROWSER", browser);
+        extent.setSystemInfo("VERSION", version);
+        extent.setSystemInfo("OS", os);
+        extent.setSystemInfo("SESSION ID", getSessionId());
+        return webDriver;
+	}
+	
+	@Parameters({"browser", "version", "os"})
 	@BeforeMethod
-	public void setUp(Method method){
-		logger = extent.createTest(method.getName());
-		initializeBrowser("chrome");
-		driver.navigate().to("https://develop.sunbasket-staging.com");
+	public void setSauceLabs(@Optional("chrome")String browser, @Optional("54.0")String version, @Optional("OS X 10.10")String os, Method method){
+//		logger = extent.createTest(method.getName());
+		logger = parent_logger.createNode(method.getName());
+		extent.setSystemInfo("Test Name", method.getName());
+		driver = setBrowser(browser, version, os, method);
+		logger.log(Status.PASS, "Browser Set Up");
 	}
 
-	@AfterMethod
-	public void tearDown(){
-		logger.log(Status.INFO, "Quit Browser");
-		quit();
-	}
-/*
-	@AfterClass
-	public void afterClass(){
-	}
-	*/
-	@AfterTest
-	public void afterTest(){
-	}
+    @AfterMethod
+    public void tearDown(ITestResult result) throws Exception {
+        ((JavascriptExecutor) dr.get()).executeScript("sauce:job-result=" + (result.isSuccess() ? "passed" : "failed"));
+        logger.log(Status.INFO, "Quit Browser");
+        dr.get().quit();
+    }
 
 }

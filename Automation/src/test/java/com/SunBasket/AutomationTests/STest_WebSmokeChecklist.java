@@ -21,10 +21,11 @@ import com.SunBasket.Pages.SunBasketMyAccountPage;
 import com.SunBasket.Pages.SunBasketPromoPage;
 import com.SunBasket.Pages.SunBasketSignInPage;
 import com.SunBasket.Utility.SBUtil;
-import com.SunBasket.Utility.SBaseTest;
+import com.SunBasket.Utility.BaseTest;
+import com.SunBasket.Utility.Extent_BaseTest;
 import com.aventstack.extentreports.Status;
 
-public class STest_WebSmokeChecklist extends SBaseTest{
+public class STest_WebSmokeChecklist extends BaseTest{
 
 	@Test
 	public void C1_SunBasket_JoinFlow_SingleWeek_001(){

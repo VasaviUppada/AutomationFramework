@@ -13,6 +13,7 @@ import org.testng.IResultMap;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 import org.testng.ISuiteResult;
+import org.testng.ITestClass;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestNGMethod;
@@ -41,6 +42,7 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 	public void onStart(ISuite suite) {
 		SBListeners.createFolders();
 		startReport(suite);
+//		logger = extent.createTest(suite.getName());
 	}
 
 	@Override
@@ -81,12 +83,13 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 
 	@Override
 	public void onStart(ITestContext context) {
-		logger.log(Status.INFO, context.getName() + " Test Started ");
+		parent_logger = extent.createTest(context.getName());
+		parent_logger.log(Status.INFO, context.getName() + " - Test Started ");
 	}
 
 	@Override
 	public void onFinish(ITestContext context) {
-		logger.log(Status.INFO, context.getName() + " Test Finished ");
+		parent_logger.log(Status.INFO, context.getName() + " - Test Finished ");
 		extent.flush();
 	}
 
@@ -131,24 +134,8 @@ public class SBListeners extends DriverScript implements ITestListener, ISuiteLi
 		htmlReporter.config().setTheme(Theme.DARK);
 	    htmlReporter.config().setEncoding("utf-8");
 		htmlReporter.config().setTimeStampFormat("MM/dd/yyyy hh:mm:ss a");
-		logger = extent.createTest(suite.getName());
+//		logger = extent.createTest(suite.getName());
 	}
-/*
-public static ExtentReports createInstance(String fileName) {
-//	Config.initConstants();
-//    ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
-    htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
-    htmlReporter.config().setChartVisibilityOnOpen(true);
-    htmlReporter.config().setTheme(Theme.DARK);
-    htmlReporter.config().setDocumentTitle("Report Title"); //Config.ReportTitle
-    htmlReporter.config().setEncoding("utf-8");
-    htmlReporter.config().setReportName("Report Name"); //Config.ReportTitle
-    extent = new ExtentReports();
-    extent.attachReporter(htmlReporter);
-
-    return extent;
-}
-*/
 
 }
 

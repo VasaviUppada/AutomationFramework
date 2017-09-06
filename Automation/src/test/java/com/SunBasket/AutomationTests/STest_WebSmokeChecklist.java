@@ -1,14 +1,6 @@
 package com.SunBasket.AutomationTests;
 
 import org.testng.annotations.Test;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.rmi.UnexpectedException;
-import java.util.UUID;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.touch.ScrollAction;
-import org.testng.annotations.Test;
 
 import com.SunBasket.Config.Config;
 import com.SunBasket.Pages.SunBasketBuildYourOrderPage;
@@ -21,10 +13,10 @@ import com.SunBasket.Pages.SunBasketMyAccountPage;
 import com.SunBasket.Pages.SunBasketPromoPage;
 import com.SunBasket.Pages.SunBasketSignInPage;
 import com.SunBasket.Utility.SBUtil;
-import com.SunBasket.Utility.SBaseTest;
+import com.SunBasket.Utility.BaseTest;
 import com.aventstack.extentreports.Status;
 
-public class STest_WebSmokeChecklist extends SBaseTest{
+public class STest_WebSmokeChecklist extends BaseTest{
 
 	@Test
 	public void C1_SunBasket_JoinFlow_SingleWeek_001(){

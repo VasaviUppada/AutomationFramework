@@ -124,11 +124,11 @@
                   
                 <redirectTestOutputToFile>true</redirectTestOutputToFile>
           		<suiteXmlFiles>
-          		<!--
+
             		<suiteXmlFile>testng_STest_WebSmokeChecklist.xml</suiteXmlFile>
-            	-->
+    <!--
             		  <suiteXmlFile>testng_STest_WebSmokeChecklist_Firefox.xml</suiteXmlFile>
-            	
+    -->
           		</suiteXmlFiles>
           
                                     			 

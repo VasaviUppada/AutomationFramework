@@ -59,6 +59,8 @@ public class Config {
 //		public static String browser = "firefox";
 //		public static String browser = "chrome";
 		public static String browser = ReadPropertytFile().getProperty("browser");
+		public static String version = ReadPropertytFile().getProperty("version");
+		public static String os = ReadPropertytFile().getProperty("os");
 	}
 	
 	public static class PageTitle{

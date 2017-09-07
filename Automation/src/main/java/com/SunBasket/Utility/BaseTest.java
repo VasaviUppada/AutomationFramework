@@ -53,17 +53,28 @@ public class BaseTest extends DriverScript{
         extent.setSystemInfo("SESSION ID", getSessionId());
         return webDriver;
 	}
-	
+
 	@Parameters({"browser", "version", "os"})
 	@BeforeMethod
-	public void setSauceLabs(@Optional("chrome")String browser, @Optional("54.0")String version, @Optional("OS X 10.10")String os, Method method){
+	public void setSauceLab(@Optional("chrome")String browser, @Optional("54.0")String version, @Optional("OS X 10.10")String os, Method method){
 //		logger = extent.createTest(method.getName());
 		logger = parent_logger.createNode(method.getName());
 		extent.setSystemInfo("Test Name", method.getName());
 		driver = setBrowser(browser, version, os, method);
 		logger.log(Status.PASS, "Browser Set Up");
 	}
-
+/*
+	@BeforeMethod
+	public void setSauceLabs(Method method){
+		logger = parent_logger.createNode(method.getName());
+		extent.setSystemInfo("Test Name", method.getName());
+		driver = setBrowser(Config.Browser.browser, Config.Browser.version, Config.Browser.os, method);
+		logger.info("Config.Browser.browser : " + Config.Browser.browser);
+		logger.info("Config.Browser.version : " + Config.Browser.version);
+		logger.info("Config.Browser.os : " + Config.Browser.os);
+		logger.log(Status.PASS, "Browser Set Up");
+	}
+*/
     @AfterMethod
     public void tearDown(ITestResult result) throws Exception {
         ((JavascriptExecutor) dr.get()).executeScript("sauce:job-result=" + (result.isSuccess() ? "passed" : "failed"));

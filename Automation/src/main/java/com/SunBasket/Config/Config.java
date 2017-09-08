@@ -15,8 +15,7 @@ public class Config {
 		public static final String url_Base	 = ReadPropertytFile().getProperty("url");
 
 		public static final String url_Master			 	= "https://master.sunbasket-staging.com";
-		public static final String url_Develop				= "https://develop.sunbasket-staging.com";
-//		public static final String url_Base				 	= url_Master;		
+		public static final String url_Develop				= "https://develop.sunbasket-staging.com";	
 		public static final String url_Home				 	= url_Base + "/home";
 		public static final String url_SingleWeekPromo 	 	= url_Base + "/?offer=QA-TEST35OFF";
 		public static final String url_MultiWeekPromo	 	= url_Base + "/?offer=QA-MW403010";	
@@ -56,8 +55,6 @@ public class Config {
 	}
 	
 	public static class Browser{
-//		public static String browser = "firefox";
-//		public static String browser = "chrome";
 		public static String browser = ReadPropertytFile().getProperty("browser");
 		public static String version = ReadPropertytFile().getProperty("version");
 		public static String os = ReadPropertytFile().getProperty("os");
@@ -78,23 +75,9 @@ public class Config {
 	public static class SauceLabs{
 	    public static final String sauceUser      = ReadPropertytFile().getProperty("sauceUser");
 	    public static final String sauceKey       = ReadPropertytFile().getProperty("sauceKey");
-//	    public static final String sauceUser      = "sbdevops";
-//	    public static final String sauceKey       = "92c7dc53-cca0-4efe-b674-0e30e4814005";
 	    public static final boolean browserMob    = true;
 	}
 	
-/*    @DataProvider(name = "saucelabsBrowsers", parallel = true)
-    public static Object[][] sauceBrowsers(Method testMethod) {
-        return new Object[][]{
-//                new Object[]{"MicrosoftEdge", "15", "Windows 10"},
-//                new Object[]{"firefox", "54.0", "Windows 10"},
-//                new Object[]{"internet explorer", "10.0", "Windows 7"},
-//                new Object[]{"firefox", "47.0", "OS X 10.10"}, 
-        		  new Object[]{"chrome", "54.0", "OS X 10.10"},
-//        		  new Object[]{"safari", "8.0", "OS X 10.10"},
-        };
-    }
-*/
 	protected static ArrayList<String> getPropertyFileList(){
 //		ArrayList<String> propertyFileList = super.getPropertyFileList();
 		ArrayList<String> propertyFileList = new ArrayList<String>();
@@ -115,7 +98,8 @@ public class Config {
 		else if("qa-sauce.profiles".equalsIgnoreCase(System.getProperties().getProperty("profile.name")))
 			propertyFileList.add("/resources/application-qa-sauce.properties");
 		else
-			System.out.println("We don't have properties with profile.name : " + System.getProperties().getProperty("profile.name"));	
+			System.out.println("We don't have properties with profile.name : " + System.getProperties().getProperty("profile.name"));
+//			propertyFileList.add("/resources/application-master.properties");
 		return propertyFileList;
 		
 	}    
@@ -126,7 +110,7 @@ public class Config {
 		FileInputStream fs = null;
 			property = new Properties();
 			try {
-//				fs  = new FileInputStream(System.getProperty("user.dir") + "/resources" + "/application-master.properties");
+//				fs  = new FileInputStream(System.getProperty("user.dir") + "/resources" + "/master.properties");
 				fs  = new FileInputStream(System.getProperty("user.dir") + loadProperties().get(0));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -145,6 +129,5 @@ public class Config {
 		ArrayList<String> propertyFileList = getPropertyFileList();
 		return propertyFileList;
 	}
-    
     
 }

@@ -44,8 +44,8 @@ public class DriverScript {
 //    public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/target/ExtentReports/ExtentReport-" + getCurrentTime() + ".html");
     public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/target/ExtentReports/ExtentReport" + ".html");
     public static ExtentReports extent = new ExtentReports();
-    public static ExtentTest logger;
     public static ExtentTest parent_logger;
+    public static ExtentTest logger;
 
     protected static void createFolders() {
         try {
@@ -77,8 +77,6 @@ public class DriverScript {
 
 	public static void browserOptions(String browser){
 		if(driver == null){
-			parent_logger.log(Status.INFO, browser + " Browser Started");
-			parent_logger.log(Status.INFO, "System Properties : " + System.getProperty("profile.name"));
 			String os = System.getProperty("os.name").toLowerCase();
 
 			switch(browser){
@@ -127,13 +125,13 @@ public class DriverScript {
 		}
 
 	public static void close(){
-		parent_logger.log(Status.INFO, "Close Browser");
+		logger.log(Status.INFO, "Close Browser");
 		driver.close();
 		driver = null;
 	}
 
 	public static void quit(){
-		parent_logger.log(Status.INFO, "Quit Browser");
+		logger.log(Status.INFO, "Quit Browser");
 		driver.quit();
 		driver = null;
 	}

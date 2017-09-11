@@ -135,7 +135,7 @@ public class SBUtil extends DriverScript{
 			waitForElementToBeClickable(textBox);
 			if (textBox.isDisplayed()) {
 				String script = "arguments[0].value=" + textToPass + ";";
-				logger.log(Status.INFO, "Enter " + textBox);
+				logger.log(Status.INFO, "Enter " + textBox.getText());
 				((JavascriptExecutor) driver).executeScript(script, textBox);
 			} else {
 				logger.log(Status.ERROR, "No Textbox present to enter text - " + textBox);

@@ -4,6 +4,7 @@
 <!--
 <suite name="Test_JoinFlow" parallel="methods" thread-count="5" verbose="1">
 -->
+
   <test name="JoinFlow_CHROME" preserve-order="true">
   <parameter name="browser" value="chrome"></parameter> 
   <parameter name="version" value="59.0"></parameter> 
@@ -21,7 +22,7 @@
       </class>
     </classes>
   </test>
-  
+
 <!--
   <test name="JoinFlow_FIREFOX" preserve-order="true">
   <parameter name="browser" value="firefox"></parameter> 
@@ -40,6 +41,6 @@
       </class>
     </classes>
   </test>
-  -->
+-->  
    <!-- Test -->
 </suite> <!-- Suite -->

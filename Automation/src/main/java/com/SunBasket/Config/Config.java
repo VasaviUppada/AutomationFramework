@@ -99,7 +99,7 @@ public class Config {
 			propertyFileList.add("/resources/application-qa-sauce.properties");
 		else
 			System.out.println("We don't have properties with profile.name : " + System.getProperties().getProperty("profile.name"));
-//			propertyFileList.add("/resources/application-master.properties");
+//			propertyFileList.add("/resources/application-master-sauce.properties");
 		return propertyFileList;
 		
 	}    

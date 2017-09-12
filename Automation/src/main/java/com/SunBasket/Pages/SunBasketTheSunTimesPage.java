@@ -11,7 +11,7 @@ import com.SunBasket.Utility.SBUtil;
 public class SunBasketTheSunTimesPage extends BasePage{
 
 	public SunBasketTheSunTimesPage() {
-		super(driver);
+		super(threadDriver);
 	}	
 
 	@FindBy(xpath = "//*[@href]|//a")

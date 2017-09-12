@@ -9,7 +9,7 @@ import com.SunBasket.Utility.BasePage;
 public class SunBasketPayPalPurchasePage extends BasePage{
 
 	public SunBasketPayPalPurchasePage() {
-		super(driver);
+		super(threadDriver);
 	}
 
 	

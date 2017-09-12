@@ -18,7 +18,7 @@ import com.aventstack.extentreports.Status;
 public class SunBasketGetStartedPage extends BasePage{
 
 	public SunBasketGetStartedPage(){
-		super(driver);
+		super(threadDriver);
 	}
 	
 	

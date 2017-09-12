@@ -1,6 +1,8 @@
 package com.SunBasket.Utility;
 
 import java.lang.reflect.Method;
+
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
@@ -8,64 +10,56 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
 import com.SunBasket.Config.Config;
+import com.SunBasket.Config.Config.Browser;
 import com.aventstack.extentreports.Status;
 
-//@Listeners(com.SunBasket.Utility.SBListeners.class)
+@Listeners(com.SunBasket.Utility.SBListeners.class)
 public class BaseTest_Local extends DriverScript{
-	
-	@BeforeTest
-	public void beforeTest(){
-	}
-	
-/*	@BeforeClass
-	public void beforeClass(){
-	}
-*/
 	
 /*** Use this to run Tests using TestNG.xml ***/
 
+
+/*** We need this to run tests through testng.xml ***/
 	@Parameters({"browser"})
 	@BeforeMethod
-	public void setUp(String browser){
+	public static void setUp(@Optional("chrome")String browser, Method method){
+		logger = parent_logger.createNode(method.getName());
+		extent.setSystemInfo("Test Name", method.getName());
 		initializeBrowser(browser);
-		driver.navigate().to(Config.Url.url_Base);
-// 		driver.navigate().to("https://develop.sunbasket-staging.com");
+		getDriver().navigate().to(Config.Url.url_Base);
+		logger.log(Status.PASS, "Browser Set Up");
 	}
 
-/*
-	@BeforeMethod
-	public void setUp(){
-		initializeBrowser(Config.Browser.browser);
-		driver.navigate().to(Config.Url.base_url);
-	}
-	*/
-	/*
-	@BeforeMethod
-	public void setUp(Method method){
-		logger = extent.createTest(method.getName());
-		initializeBrowser("chrome");
-		driver.navigate().to("https://master.sunbasket-staging.com");
-	}
-/*
-	@AfterMethod
-	public void tearDown(){
-		logger.log(Status.INFO, "Quit Browser");
-		quit();
-	}
-/*
-	@AfterClass
-	public void afterClass(){
-	}
-	*/
-	@AfterTest
-	public void afterTest(){
-	}
-	@AfterMethod
-	public void tearDown(){
-		quit();
-	}
+	
+/*** We need this to run tests through .class file ***/
+//	@BeforeMethod
+//	public void setUp(){
+//		logger = parent_logger.createNode("Test");
+//		initializeBrowser(Browser.browser);
+//		getDriver().navigate().to(Config.Url.url_Base);
+//		logger.log(Status.PASS, "Browser Set Up");
+//	}
+
+
+/*** We need this to run Jobs through Jenkins ***/
+//	@BeforeMethod
+//	public void setUp(String browser, Method method){
+//		logger = parent_logger.createNode(method.getName());
+//		extent.setSystemInfo("Test Name", method.getName());
+//		initializeBrowser(browser);
+//		getDriver().navigate().to(Config.Url.url_Base);
+//		logger.log(Status.PASS, "Browser Set Up");
+//	}
+	
+
+    @AfterMethod
+    public void tearDown(ITestResult result) throws Exception {
+        quit();
+    }
+
 
 }

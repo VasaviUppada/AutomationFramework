@@ -14,6 +14,7 @@ import com.SunBasket.Pages.SunBasketPromoPage;
 import com.SunBasket.Pages.SunBasketSignInPage;
 import com.SunBasket.Utility.SBUtil;
 import com.SunBasket.Utility.BaseTest;
+import com.SunBasket.Utility.BaseTest_Local;
 import com.aventstack.extentreports.Status;
 
 public class STest_WebSmokeChecklist extends BaseTest{
@@ -23,7 +24,7 @@ public class STest_WebSmokeChecklist extends BaseTest{
 		
         // Step 1
 		logger.log(Status.INFO, "Navigate to SingleWeekPromoURL");
-        driver.get(Config.Url.url_SingleWeekPromo);
+		getDriver().get(Config.Url.url_SingleWeekPromo);
         SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_SingleWeekPromo);
 		getScreentShotForExtentReport("SingleWeekJoinPage");
@@ -74,7 +75,7 @@ public class STest_WebSmokeChecklist extends BaseTest{
 		
         // Step 1
 		logger.log(Status.INFO, "Navigate to SingleWeekPromoURL");
-        driver.get(Config.Url.url_SingleWeekPromo);
+		getDriver().get(Config.Url.url_SingleWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_SingleWeekPromo);
 		getScreentShotForExtentReport("SingleWeekJoinPage");
@@ -165,7 +166,7 @@ public class STest_WebSmokeChecklist extends BaseTest{
 
         // Step 1
 		logger.log(Status.INFO, "Navigate to MultiWeekPromoURL");
-        driver.get(Config.Url.url_MultiWeekPromo);
+		getDriver().get(Config.Url.url_MultiWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_MultiWeekPromo);
 		getScreentShotForExtentReport("MultiWeekJoinPage");
@@ -213,7 +214,7 @@ public class STest_WebSmokeChecklist extends BaseTest{
 
         // Step 1
 		logger.log(Status.INFO, "Navigate to MultiWeekPromoURL");
-        driver.get(Config.Url.url_MultiWeekPromo);
+		getDriver().get(Config.Url.url_MultiWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_MultiWeekPromo);
 		getScreentShotForExtentReport("MultiWeekJoinPage");
@@ -308,7 +309,7 @@ public class STest_WebSmokeChecklist extends BaseTest{
 		
         // Step 1
 		logger.log(Status.INFO, "Navigate to SingleWeekPromoURL");
-        driver.get(Config.Url.url_SingleWeekPromo);
+		getDriver().get(Config.Url.url_SingleWeekPromo);
 		SunBasketPromoPage sunBasketPromoPage = new SunBasketPromoPage();
 		SBUtil.waitForUrlToBe(Config.Url.url_SingleWeekPromo);
 		getScreentShotForExtentReport("SingleWeekPromoPage");
@@ -369,7 +370,7 @@ public class STest_WebSmokeChecklist extends BaseTest{
 
         // Step 1
 		logger.log(Status.INFO, "Navigate to HomeURL");
-		driver.get(Config.Url.url_Home);
+		getDriver().get(Config.Url.url_Home);
 		SunBasketHomePage sunBasketHomePage = new SunBasketHomePage();
 		SBUtil.waitForUrlToBe(Config.Url.url_Home);
 		getScreentShotForExtentReport("HomePage");

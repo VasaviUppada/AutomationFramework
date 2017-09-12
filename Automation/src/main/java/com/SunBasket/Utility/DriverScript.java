@@ -8,35 +8,31 @@ import java.net.URL;
 import java.rmi.UnexpectedException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.ITestResult;
-
 import com.SunBasket.Config.Config;
-import com.SunBasket.Config.Config.Browser;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.markuputils.ExtentColor;
-import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 public class DriverScript {
 
 	public static WebDriver driver;
+    public static ThreadLocal<WebDriver> threadDriver = new ThreadLocal<WebDriver>();	
 	public static String buildTag = System.getenv("BUILD_TAG");
 	public static ThreadLocal<WebDriver> dr = new ThreadLocal<WebDriver>();
 	public static ThreadLocal<String> sessionId = new ThreadLocal<String>();
@@ -72,77 +68,81 @@ public class DriverScript {
     }
 
 	public static void initializeBrowser(String browser){
-		browserOptions(browser);
+//		createBrowserInstance(browser);
+		setDriver(createBrowserInstance(browser));
 	}
-
-	public static void browserOptions(String browser){
-		if(driver == null){
+	
+	public static WebDriver createBrowserInstance(String browser){
+		WebDriver webDriver = null;
 			String os = System.getProperty("os.name").toLowerCase();
-
-			switch(browser){
-				case "firefox" :
-					if(os.contains("mac")){
-						System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"/geckodriver");
-					}
-					else{
-						System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"\\geckodriver.exe");
-					}
-					ProfilesIni profile = new ProfilesIni();
-					FirefoxProfile myprofile = profile.getProfile("default");
-					DesiredCapabilities dc = DesiredCapabilities.firefox();
-					dc.setCapability(FirefoxDriver.PROFILE, myprofile);
-					dc.setCapability("marionette", true);
-					driver = new FirefoxDriver(dc);
-					break;
-				case "chrome" :
-					driver = new ChromeDriver();
-					if(os.contains("mac")){
-						System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/chromedriver");
-					}
-					else{
-						System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\chromedriver.exe");
-					}
-					break;
-				case "saucelabs" :
-					System.out.println("Sauce Labs!");
-				default :
-						System.out.println("Choosing Chrome Browser by default ...");
+			if (browser.toLowerCase().contains("firefox")){
+				if(os.contains("mac")){
+					System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"/geckodriver");
+				}
+				else{
+					System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"\\geckodriver.exe");
+				}
+				ProfilesIni profile = new ProfilesIni();
+				FirefoxProfile myprofile = profile.getProfile("default");
+				DesiredCapabilities dc = DesiredCapabilities.firefox();
+				dc.setCapability(FirefoxDriver.PROFILE, myprofile);
+				dc.setCapability("marionette", true);
+				webDriver = new FirefoxDriver(dc);
+				webDriver.manage().window().maximize();
 			}
-			maximizeScreen(driver);
-			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-			driver.manage().deleteAllCookies();
-		}
-
+			else if(browser.toLowerCase().contains("chrome")){
+				if(os.contains("mac")){
+					System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/chromedriver");
+				}
+				else{
+					System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\chromedriver.exe");
+				}
+				ChromeOptions options = new ChromeOptions();
+				DesiredCapabilities cap = DesiredCapabilities.chrome();
+				cap.setCapability(ChromeOptions.CAPABILITY, options);
+				webDriver = new ChromeDriver(cap);
+				maximizeScreen(webDriver);
+			}
+			webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			webDriver.manage().deleteAllCookies();
+			return webDriver;
 	}
 
 	public static void maximizeScreen(WebDriver driver) {
-		java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Point position = new Point(0, 0);
 		driver.manage().window().setPosition(position);
-		Dimension maximizedScreenSize =
-		new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight());
-		driver.manage().window().setSize(maximizedScreenSize);
+		int Width = (int) toolkit.getScreenSize().getWidth();
+		int Height = (int)toolkit.getScreenSize().getHeight();
+		//For Dimension class, Import following library "org.openqa.selenium.Dimension"  
+		driver.manage().window().setSize(new Dimension(Width,Height));
 		}
-
+	
 	public static void close(){
 		logger.log(Status.INFO, "Close Browser");
-		driver.close();
-		driver = null;
+        WebDriver driver = getDriver();
+        if (driver != null) {
+            driver.close();
+        }
+//		driver.close();
+//		driver = null;
 	}
 
 	public static void quit(){
 		logger.log(Status.INFO, "Quit Browser");
-		driver.quit();
-		driver = null;
+        WebDriver driver = getDriver();
+        if (driver != null) {
+            driver.quit();
+        }
+//		driver.quit();
+//		driver = null;
 	}
-
-    public static WebDriver getWebDriver() {
-//		logger.log(Status.INFO, "Web Driver : " + dr.get());
+	
+    public static WebDriver getSauceWebDriver() {
         return dr.get();
     }
 
-    public static String getSessionId() {
-//    	logger.log(Status.INFO, "Session ID_ " + sessionId.get());
+    public static String getSauceSessionId() {
         return sessionId.get();
     }
 
@@ -162,12 +162,11 @@ public class DriverScript {
         dr.set(new RemoteWebDriver(url,capabilities));
 
         // set current sessionId
-      String id = ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
+      String id = ((RemoteWebDriver) getSauceWebDriver()).getSessionId().toString();
       sessionId.set(id);
     }
 
-
-	public void getScreentShotForExtentReport(String screenshotName){
+	public static void getScreentShotForExtentReport(String screenshotName){
 		String getScreenshotPath = SBUtil.getScreenshotPath();
         try {
     		MediaEntityModelProvider mediaModel = MediaEntityBuilder.createScreenCaptureFromPath(getScreenshotPath).build();
@@ -178,5 +177,13 @@ public class DriverScript {
 			e.printStackTrace();
 		}
 	}
+	 
+    public static WebDriver getDriver() {
+        return threadDriver.get();
+    }	 
+	public static void setDriver(WebDriver drv) {
+		threadDriver.set(drv);
+    }	
+
 
 }

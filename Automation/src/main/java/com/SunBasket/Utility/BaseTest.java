@@ -44,13 +44,13 @@ public class BaseTest extends DriverScript{
 		} catch (UnexpectedException | MalformedURLException e) {
 			e.printStackTrace();
 		}
-        WebDriver webDriver = getWebDriver();
+        WebDriver webDriver = getSauceWebDriver();
         logger.log(Status.INFO,"Remote WebDriver : " +   browser + " / " + version + " / " + os);
-        logger.log(Status.INFO, "Session ID : " + getSessionId());
+        logger.log(Status.INFO, "Session ID : " + getSauceSessionId());
         extent.setSystemInfo("BROWSER", browser);
         extent.setSystemInfo("VERSION", version);
         extent.setSystemInfo("OS", os);
-        extent.setSystemInfo("SESSION ID", getSessionId());
+        extent.setSystemInfo("SESSION ID", getSauceSessionId());
         return webDriver;
 	}
 
@@ -60,21 +60,23 @@ public class BaseTest extends DriverScript{
 //		logger = extent.createTest(method.getName());
 		logger = parent_logger.createNode(method.getName());
 		extent.setSystemInfo("Test Name", method.getName());
-		driver = setBrowser(browser, version, os, method);
+		setDriver(setBrowser(browser, version, os, method));
 		logger.log(Status.PASS, "Browser Set Up");
 	}
+		
 /*
 	@BeforeMethod
 	public void setSauceLabs(Method method){
 		logger = parent_logger.createNode(method.getName());
 		extent.setSystemInfo("Test Name", method.getName());
-		driver = setBrowser(Config.Browser.browser, Config.Browser.version, Config.Browser.os, method);
+		setDriver(setBrowser(Config.Browser.browser, Config.Browser.version, Config.Browser.os, method));
 		logger.info("Config.Browser.browser : " + Config.Browser.browser);
 		logger.info("Config.Browser.version : " + Config.Browser.version);
 		logger.info("Config.Browser.os : " + Config.Browser.os);
 		logger.log(Status.PASS, "Browser Set Up");
 	}
 */
+
     @AfterMethod
     public void tearDown(ITestResult result) throws Exception {
         ((JavascriptExecutor) dr.get()).executeScript("sauce:job-result=" + (result.isSuccess() ? "passed" : "failed"));

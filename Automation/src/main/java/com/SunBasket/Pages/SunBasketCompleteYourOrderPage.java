@@ -20,7 +20,7 @@ import com.aventstack.extentreports.Status;
 public class SunBasketCompleteYourOrderPage extends BasePage{
 
 	public SunBasketCompleteYourOrderPage() {
-		super(driver);
+		super(threadDriver);
 	}
 
 	/*** Web Elements ***/

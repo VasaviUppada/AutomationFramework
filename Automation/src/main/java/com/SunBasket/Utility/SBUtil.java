@@ -95,7 +95,7 @@ public class SBUtil extends DriverScript{
 
 	/*** Explicit Wait - elementToBeClickable ***/
 	public static void waitForElementToBeClickable(WebElement elementToBeClickable){
-		WebDriverWait wait=new WebDriverWait(driver, 40);
+		WebDriverWait wait=new WebDriverWait(driver, 60);
 		wait.until(ExpectedConditions.elementToBeClickable(elementToBeClickable));
 	}
 
@@ -123,13 +123,13 @@ public class SBUtil extends DriverScript{
 				logger.log(Status.FAIL, button.getText());
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-			System.out.println("Element was not found in DOM "+ e.getStackTrace());
+			System.out.println("Element was not found in DOM "+ e.getMessage());
 		}/* catch (Exception e) {
-			System.out.println("Unable to click on element "+ e.getStackTrace());
+			System.out.println("Unable to click on element "+ e.getMessage());
 		}*/
 	}
 
-	/*** Click on an element using Java Script Executor ***/
+	/*** Sendkeys to element using Java Script Executor ***/
 	public static void sendKeyswithJavaScriptExecutor(WebElement textBox, String textToPass) throws Exception {
 		try {
 			waitForElementToBeClickable(textBox);
@@ -141,9 +141,9 @@ public class SBUtil extends DriverScript{
 				logger.log(Status.ERROR, "No Textbox present to enter text - " + textBox);
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-			System.out.println("Element was not found in DOM "+ e.getStackTrace());
+			System.out.println("Element was not found in DOM "+ e.getMessage());
 		} catch (Exception e) {
-			System.out.println("Unable to send value to element "+ e.getStackTrace());
+			System.out.println("Unable to send value to element "+ e.getMessage());
 		}
 	}
 

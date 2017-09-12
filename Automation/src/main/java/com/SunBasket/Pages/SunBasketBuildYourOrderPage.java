@@ -20,7 +20,7 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 public class SunBasketBuildYourOrderPage extends BasePage {
 
 	public SunBasketBuildYourOrderPage() {
-		super(driver);
+		super(threadDriver);
 	}
 
 	/*** Web Elements ***/

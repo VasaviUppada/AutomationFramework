@@ -16,7 +16,7 @@ import com.aventstack.extentreports.Status;
 public class SunBasketMyAccountPage extends BasePage{
 
 	public SunBasketMyAccountPage() {
-		super(driver);
+		super(threadDriver);
 	}
 
 	/*** Web Elements ***/

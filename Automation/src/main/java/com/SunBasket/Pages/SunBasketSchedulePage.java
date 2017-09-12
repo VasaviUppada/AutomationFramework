@@ -12,7 +12,7 @@ import com.SunBasket.Utility.SBUtil;
 public class SunBasketSchedulePage extends BasePage{
 
 	public SunBasketSchedulePage() {
-		super(driver);
+		super(threadDriver);
 	}
 
 	@FindBy(xpath = "//*[@href]|//a")

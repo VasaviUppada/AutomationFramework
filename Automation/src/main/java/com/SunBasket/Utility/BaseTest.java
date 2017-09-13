@@ -54,6 +54,7 @@ public class BaseTest extends DriverScript{
         return webDriver;
 	}
 
+	/*** We need this to run tests through pom.xml & through Jenkins ***/
 	@Parameters({"browser", "version", "os"})
 	@BeforeMethod
 	public void setSauceLab(@Optional("chrome")String browser, @Optional("54.0")String version, @Optional("OS X 10.10")String os, Method method){

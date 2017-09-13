@@ -19,8 +19,7 @@
       </methods>
       </class>
     </classes>
-  </test> 
- -->
+  </test>
   
   <test name="JoinFlow_FIREFOX" preserve-order="true">
   	<parameter name="browser" value="firefox"></parameter> 
@@ -39,7 +38,8 @@
       </class>
     </classes>
   </test> 
-  
+ -->
+   
   <test name="JoinFlow_INTERNETEXPLORER" preserve-order="true">
   	<parameter name="browser" value="internetExplorer"></parameter> 
   	<parameter name="version" value="11.103"></parameter> 

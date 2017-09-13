@@ -17,7 +17,7 @@ import com.SunBasket.Utility.BaseTest;
 import com.SunBasket.Utility.BaseTest_Local;
 import com.aventstack.extentreports.Status;
 
-public class STest_WebSmokeChecklist extends BaseTest_Local{
+public class STest_WebSmokeChecklist extends BaseTest{
 
 	@Test
 	public void C1_SunBasket_JoinFlow_SingleWeek_001(){

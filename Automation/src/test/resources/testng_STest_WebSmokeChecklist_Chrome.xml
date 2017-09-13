@@ -24,7 +24,7 @@
     </classes>
   </test>
 
-
+<!-- 
   <test name="JoinFlow_FIREFOX" preserve-order="true">
   <parameter name="browser" value="firefox"></parameter> 
   <parameter name="version" value="47.0"></parameter> 
@@ -42,6 +42,7 @@
       </class>
     </classes>
   </test>
- 
+ -->
+  
    <!-- Test -->
 </suite> <!-- Suite -->

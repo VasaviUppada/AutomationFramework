@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -29,6 +30,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.server.handler.FindElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -41,17 +43,17 @@ public class SBUtil extends DriverScript{
 
 	/*** Custom wait time ***/
 	public static void waitForPageToLoad(long time) {
-		driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
+		getDriver().manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
 	}
 
 	/*** Default wait time of 30sec. ***/
 	public static void waitForPageToLoad() {
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
 	/*** Explicit Wait - titleIs ***/
 	public static void waitForPageTitle(String pageTitle){
-		WebDriverWait wait=new WebDriverWait(driver, 60);
+		WebDriverWait wait=new WebDriverWait(getDriver(), 60);
 		logger.log(Status.INFO, "Verify Page Title - " + pageTitle);
 		wait.until(ExpectedConditions.titleIs(pageTitle));
 		logger.log(Status.PASS, "Page Title Matches");
@@ -59,7 +61,7 @@ public class SBUtil extends DriverScript{
 
 	/*** Explicit Wait - urlContains ***/
 	public static void waitForUrlContains(String urlText){
-		WebDriverWait wait=new WebDriverWait(driver, 60);
+		WebDriverWait wait=new WebDriverWait(getDriver(), 60);
 		logger.log(Status.INFO, "Verify Url Contains - " + urlText);
 		wait.until(ExpectedConditions.urlContains(urlText));
 		logger.log(Status.PASS, "URL Matches");
@@ -67,7 +69,7 @@ public class SBUtil extends DriverScript{
 
 	/*** Explicit Wait - urlIs ***/
 	public static void waitForUrlMatches(String url){
-		WebDriverWait wait=new WebDriverWait(driver, 60);
+		WebDriverWait wait=new WebDriverWait(getDriver(), 60);
 		logger.log(Status.INFO, "Verify Url Matches - " + url);
 		wait.until(ExpectedConditions.urlMatches(url));
 		logger.log(Status.PASS, "URL Matches");
@@ -75,7 +77,7 @@ public class SBUtil extends DriverScript{
 
 	/*** Explicit Wait - urlIs ***/
 	public static void waitForUrlToBe(String url){
-		WebDriverWait wait=new WebDriverWait(driver, 60);
+		WebDriverWait wait=new WebDriverWait(getDriver(), 60);
 		logger.log(Status.INFO, "Verify Url To be - " + url);
 		wait.until(ExpectedConditions.urlToBe(url));
 		logger.log(Status.PASS, "URL Matches");
@@ -83,32 +85,32 @@ public class SBUtil extends DriverScript{
 
 	/*** Explicit Wait - titleContains ***/
 	public static void waitForPageTitleContains(String titleContains){
-		WebDriverWait wait=new WebDriverWait(driver, 40);
+		WebDriverWait wait=new WebDriverWait(getDriver(), 40);
 		wait.until(ExpectedConditions.titleContains(titleContains));
 	}
 
 	/*** Explicit Wait - textToBePresentInElement ***/
 	public static void waitForTextToBePresentInElement(WebElement textToBePresentInElement, String expectedText){
-		WebDriverWait wait=new WebDriverWait(driver, 40);
+		WebDriverWait wait=new WebDriverWait(getDriver(), 40);
 		wait.until(ExpectedConditions.textToBePresentInElement(textToBePresentInElement, expectedText));
 	}
 
 	/*** Explicit Wait - elementToBeClickable ***/
 	public static void waitForElementToBeClickable(WebElement elementToBeClickable){
-		WebDriverWait wait=new WebDriverWait(driver, 60);
+		WebDriverWait wait=new WebDriverWait(getDriver(), 60);
 		wait.until(ExpectedConditions.elementToBeClickable(elementToBeClickable));
 	}
 
 	/*** Explicit Wait - explicitWait_Wait for Windows to be appeared ***/
 	public static void wait_WindowsToAppear(int noofWindows){
-		WebDriverWait wait=new WebDriverWait(driver, 40);
+		WebDriverWait wait=new WebDriverWait(getDriver(), 40);
 		wait.until(ExpectedConditions.numberOfWindowsToBe(noofWindows));
 	}
 
 	/*** Explicit Wait - presenceOfElementLocated - To check whether element is present in DOM or not ***/
-    public static WebElement waitForElement(By locator) {
-    	WebDriverWait wait = new WebDriverWait(driver, 40);
-    	return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    public static WebElement waitForElement(WebElement element) {
+    	WebDriverWait wait = new WebDriverWait(getDriver(), 60);
+    	return wait.until(ExpectedConditions.presenceOfElementLocated((By) element));
     }
 
 	/*** Click on an element using Java Script Executor ***/
@@ -120,13 +122,12 @@ public class SBUtil extends DriverScript{
 				((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
 			} else {
 				System.out.println("No element Present to click - " + button.getText());
-				logger.log(Status.FAIL, button.getText());
+				logger.log(Status.FAIL, "No element Present to click - " + button.getText());
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			System.out.println("Element was not found in DOM "+ e.getMessage());
-		}/* catch (Exception e) {
-			System.out.println("Unable to click on element "+ e.getMessage());
-		}*/
+			logger.log(Status.FAIL, "Unable to click on element - " + button.getText());
+		}
 	}
 
 	/*** Sendkeys to element using Java Script Executor ***/
@@ -136,7 +137,7 @@ public class SBUtil extends DriverScript{
 			if (textBox.isDisplayed()) {
 				String script = "arguments[0].value=" + textToPass + ";";
 				logger.log(Status.INFO, "Enter " + textBox.getText());
-				((JavascriptExecutor) driver).executeScript(script, textBox);
+				((JavascriptExecutor) getDriver()).executeScript(script, textBox);
 			} else {
 				logger.log(Status.ERROR, "No Textbox present to enter text - " + textBox);
 			}
@@ -210,7 +211,7 @@ public class SBUtil extends DriverScript{
 
 	/*** To get Page Title ***/
 	public static String getPageTitle() {
-		return driver.getTitle();
+		return getDriver().getTitle();
 	}
 
 	/*** Verify whether Element present or not ***/
@@ -218,7 +219,7 @@ public class SBUtil extends DriverScript{
 	{
         try{
         	logger.log(Status.INFO, "Verify Text Present - " + expected);
-        	boolean b = driver.getPageSource().contains(expected);
+        	boolean b = getDriver().getPageSource().contains(expected);
         	return b;
         }
         catch (Exception e){
@@ -380,7 +381,7 @@ public class SBUtil extends DriverScript{
 
 	/*** Web Table ***/		//-- working fine
 	public static void webTable(){
-		WebElement table = driver.findElement(By.tagName("table"));
+		WebElement table = getDriver().findElement(By.tagName("table"));
 		List<WebElement> rows = table.findElements(By.tagName("tr"));
 		int rows_count = rows.size();
 		for (int row = 0; row < rows_count; row++){
@@ -398,7 +399,7 @@ public class SBUtil extends DriverScript{
 
 	/*** Verify Text in Web Table ***/		//-- working fine
 	public static boolean VerifyText_webTable(int rowNo, int colNo, String expected){
-		WebElement table = driver.findElement(By.tagName("table"));
+		WebElement table = getDriver().findElement(By.tagName("table"));
 		List<WebElement> rows = table.findElements(By.tagName("tr"));
 		int rows_count = rows.size();
 		for (int row = 0; row < rows_count; row++){
@@ -421,7 +422,7 @@ public class SBUtil extends DriverScript{
 	}
 
 	public static List<ArrayList<String>> VerifyText_web(){
-		WebElement table = driver.findElement(By.tagName("table"));
+		WebElement table = getDriver().findElement(By.tagName("table"));
 		List<WebElement> rows = table.findElements(By.xpath(".//tbody//tr//td//.."));
 		List<ArrayList<String>> rowsData = new ArrayList<ArrayList<String>>();
 
@@ -497,19 +498,15 @@ public class SBUtil extends DriverScript{
 	/*** Windows Handles ***/
 	public static WebDriver getWindowToHandle(){
         WebDriver popup = null;
-        Set<String> windowIterator = driver.getWindowHandles();
+        Set<String> windowIterator = getDriver().getWindowHandles();
 //        System.err.println("No of windows :  " + windowIterator.size());
         for (String window : windowIterator) {
           String windowHandle = window;
-          popup = driver.switchTo().window(windowHandle);
+          popup = getDriver().switchTo().window(windowHandle);
 //          System.out.println("Child Window Title : " + popup.getTitle());
 //          System.out.println("Child Window Url : " + popup.getCurrentUrl());
         }
             return popup;
 	}
-
-
-
-
 
 }

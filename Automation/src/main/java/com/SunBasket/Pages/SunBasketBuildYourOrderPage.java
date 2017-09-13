@@ -4,6 +4,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -40,10 +41,10 @@ public class SunBasketBuildYourOrderPage extends BasePage {
 	@FindBy(xpath = "//select[@id='numberOfMealsSelect']")
 	public WebElement dropdown_DefaultRecipes;
 	
-	@FindBy(xpath = "//select[@id='mealPlanSelect']")
+	@FindBy(xpath = "//select[@id='mealPlanSelect'][@title='Meal plan']") 
 	public WebElement dropdown_SelectAMealPlan;
 	
-	@FindBy(xpath = "//input[@id='autocomplete'][@placeholder='Address line 1']")
+	@FindBy(xpath = "//input[@id='autocomplete']")
 	public WebElement textfield_Addressline1;
 	
 	@FindBy(xpath = "//*[@name='address2']")
@@ -98,21 +99,23 @@ public class SunBasketBuildYourOrderPage extends BasePage {
 		try {
 			SBUtil.clickwithJavaScriptExecutor(element);
 		} catch (Exception e) {
-//			System.out.println("Unable to click on : " + element);
 			logger.log(Status.FAIL, (Throwable)element);
 			e.printStackTrace();
 		}
 	}
+	
 	public void action_BuildYourOrder(){
 		logger.log(Status.INFO, "Enter Addressline1");
 		textfield_Addressline1.sendKeys("Ownes Dr");
 		logger.log(Status.INFO, "Enter Addressline2");
-		textfield_AddressLine2.sendKeys("345");		
+		textfield_AddressLine2.sendKeys("925");		
 		action_SendKeys(textfield_PhoneNumber, "9259259259");
 		logger.log(Status.INFO, "Enter DeliveryInstructions");
 		textfield_DeliveryInstructions.sendKeys("Door Delivery");
 		getScreentShotForExtentReport("JoinSetUpPage");
-		action_ClickOnContinueButton(button_Continue);
+//		action_ClickOnContinueButton(button_Continue);
+		logger.log(Status.INFO, "Click on Continue");
+		button_Continue.sendKeys(Keys.ENTER);
 	}
 
 	

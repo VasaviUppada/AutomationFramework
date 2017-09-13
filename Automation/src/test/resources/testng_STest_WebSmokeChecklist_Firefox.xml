@@ -39,7 +39,7 @@
     </classes>
   </test> 
  -->
-   
+ <!--  
   <test name="JoinFlow_INTERNETEXPLORER" preserve-order="true">
   	<parameter name="browser" value="internetExplorer"></parameter> 
   	<parameter name="version" value="11.103"></parameter> 
@@ -57,7 +57,8 @@
       </class>
     </classes>
   </test> 
-  
+ --> 
+   
   <test name="JoinFlow_EDGE" preserve-order="true">
   	<parameter name="browser" value="edge"></parameter> 
   	<parameter name="version" value="15.15063"></parameter> 

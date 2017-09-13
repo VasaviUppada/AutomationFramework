@@ -22,7 +22,7 @@
   </test> 
  -->
   
-  <test name="JoinFlow_FIREFOX" preserve-order="false">
+  <test name="JoinFlow_FIREFOX" preserve-order="true">
   	<parameter name="browser" value="firefox"></parameter> 
   	<parameter name="version" value="55.0"></parameter> 
   	<parameter name="os" value="Windows 10"></parameter>
@@ -40,7 +40,7 @@
     </classes>
   </test> 
   
-  <test name="JoinFlow_INTERNETEXPLORER" preserve-order="false">
+  <test name="JoinFlow_INTERNETEXPLORER" preserve-order="true">
   	<parameter name="browser" value="internetExplorer"></parameter> 
   	<parameter name="version" value="11.103"></parameter> 
   	<parameter name="os" value="Windows 10"></parameter>
@@ -58,7 +58,7 @@
     </classes>
   </test> 
   
-  <test name="JoinFlow_EDGE" preserve-order="false">
+  <test name="JoinFlow_EDGE" preserve-order="true">
   	<parameter name="browser" value="edge"></parameter> 
   	<parameter name="version" value="15.15063"></parameter> 
   	<parameter name="os" value="Windows 10"></parameter>

@@ -122,10 +122,10 @@
                 <redirectTestOutputToFile>true</redirectTestOutputToFile>
                 
           		<suiteXmlFiles>
-          		<suiteXmlFile>src/test/resources/testng_STest_WebSmokeChecklist_Firefox.xml</suiteXmlFile>
+          		<suiteXmlFile>src/test/resources/testng_STest_WebSmokeChecklist_Chrome.xml</suiteXmlFile>
             		
             	<!-- 
-            		<suiteXmlFile>src/test/resources/testng_STest_WebSmokeChecklist_Chrome.xml</suiteXmlFile>
+            		<suiteXmlFile>src/test/resources/testng_STest_WebSmokeChecklist_MultipleBrowsers.xml</suiteXmlFile>
             	-->            	
           		</suiteXmlFiles>
                                   			 

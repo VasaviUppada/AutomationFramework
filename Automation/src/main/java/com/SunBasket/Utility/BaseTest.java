@@ -57,7 +57,7 @@ public class BaseTest extends DriverScript{
 	/*** We need this to run tests through pom.xml & through Jenkins ***/
 	@Parameters({"browser", "version", "os"})
 	@BeforeMethod
-	public void setSauceLab(@Optional("chrome")String browser, @Optional("54.0")String version, @Optional("OS X 10.10")String os, Method method){
+	public void setSauceLab(@Optional("chrome")String browser, @Optional("60.0")String version, @Optional("macOS 10.12")String os, Method method){
 //		logger = extent.createTest(method.getName());
 		logger = parent_logger.createNode(method.getName());
 		extent.setSystemInfo("Test Name", method.getName());

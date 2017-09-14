@@ -57,7 +57,6 @@
       </class>
     </classes>
   </test> 
- --> 
    
   <test name="JoinFlow_SAFARI" preserve-order="true">
   	<parameter name="browser" value="safari"></parameter> 

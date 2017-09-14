@@ -125,7 +125,7 @@ public class SunBasketCompleteYourOrderPage extends BasePage{
 //		sunBasketPayPalPurchasePage.waitForPageToLoad();
 		logger.log(Status.INFO, "Click on Proceed with Sandbox button");
 		sunBasketPayPalPurchasePage.button_ProceedWithSandboxPurchase.click();
-		driver.switchTo().window(parentWindowHandler);
+		getDriver().switchTo().window(parentWindowHandler);
 //		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_CompleteYourOrderPage);
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinPayment);
 		logger.log(Status.INFO, "Enter Promocode : QA-MW403010");

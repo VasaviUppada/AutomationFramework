@@ -113,9 +113,9 @@ public class SunBasketBuildYourOrderPage extends BasePage {
 		logger.log(Status.INFO, "Enter DeliveryInstructions");
 		textfield_DeliveryInstructions.sendKeys("Door Delivery");
 		getScreentShotForExtentReport("JoinSetUpPage");
-//		action_ClickOnContinueButton(button_Continue);
 		logger.log(Status.INFO, "Click on Continue");
-		button_Continue.sendKeys(Keys.ENTER);
+		button_Continue.click();
+//		action_ClickOnContinueButton(button_Continue);
 	}
 
 	

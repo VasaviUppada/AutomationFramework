@@ -108,7 +108,7 @@ public class STest_WebSmokeChecklist extends BaseTest{
 		sunBasketHomePage.action_VerifyText(sunBasketHomePage.button_PromoRedeemOffer, "Redeem Offer");
 		getScreentShotForExtentReport("HomePage");
 		String username = sunBasketHomePage.dropdown_Menu.getText();
-		String email = username + "@test.com";
+		String email = username + "@testsbemail.com";
 		
 		// Step 6
 		sunBasketHomePage.action_SignOut();
@@ -249,7 +249,7 @@ public class STest_WebSmokeChecklist extends BaseTest{
 		
 		// Step 6
 		String username = sunBasketHomePage.dropdown_Menu.getText();
-		String email = username + "@test.com";
+		String email = username + "@testsbemail.com";
 		sunBasketHomePage.action_SignOut();
 		logger.log(Status.PASS, "Signout success");
 		logger.log(Status.INFO, "Click on SignIn");

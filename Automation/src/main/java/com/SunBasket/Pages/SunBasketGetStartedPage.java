@@ -94,7 +94,7 @@ public class SunBasketGetStartedPage extends BasePage{
 		textfield_FirstName.sendKeys(firstName);
 		logger.log(Status.INFO, "Enter LastName");
 		textfield_LastName.sendKeys("Test");
-		String email = firstName + "@test.com";
+		String email = firstName + "@testsbemail.com";
 		String pswd = "ReplacePassword123";
 		logger.log(Status.INFO, "Enter Email - " + email);
 		textfield_EmailAddress.sendKeys(email);

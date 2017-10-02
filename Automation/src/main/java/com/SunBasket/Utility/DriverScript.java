@@ -3,6 +3,7 @@ package com.SunBasket.Utility;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.UnexpectedException;
@@ -37,7 +38,7 @@ public class DriverScript {
 
 	public static WebDriver driver;
 	public static Eyes eyes;
-	private static BatchInfo batchInfo;	
+	protected static BatchInfo batchInfo;	
 	public static String buildTag = System.getenv("BUILD_TAG");
 	public static ThreadLocal<String> sessionId = new ThreadLocal<String>();
     public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/target/ExtentReports/ExtentReport" + ".html");
@@ -68,8 +69,8 @@ public class DriverScript {
         return formater.format(calendar.getTime());
     }
 
-	public static void initializeBrowser(String browser){
-		createBrowserInstance(browser);
+	public static WebDriver initializeBrowser(String browser){
+		return createBrowserInstance(browser);
 	}
 	
 	public static WebDriver createBrowserInstance(String browser){
@@ -88,7 +89,7 @@ public class DriverScript {
 				dc.setCapability(FirefoxDriver.PROFILE, myprofile);
 				dc.setCapability("marionette", true);
 				webDriver = new FirefoxDriver(dc);
-				webDriver.manage().window().maximize();
+//				webDriver.manage().window().maximize(); // commenting for Applitool's View port size 
 			}
 			else if(browser.toLowerCase().contains("chrome")){
 				if(os.contains("mac")){
@@ -101,7 +102,7 @@ public class DriverScript {
 				DesiredCapabilities cap = DesiredCapabilities.chrome();
 				cap.setCapability(ChromeOptions.CAPABILITY, options);
 				webDriver = new ChromeDriver(cap);
-				maximizeScreen(webDriver);
+//				maximizeScreen(webDriver); // commenting for Applitool's View port size
 			}
 			webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 			webDriver.manage().deleteAllCookies();
@@ -146,7 +147,7 @@ public class DriverScript {
         capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
         capabilities.setCapability(CapabilityType.VERSION, version);
         capabilities.setCapability(CapabilityType.PLATFORM, os);
-        capabilities.setCapability("screenResolution", "1280x1024"); //1430, 700 Added for Applitools viewport size
+        capabilities.setCapability("screenResolution", "1280x1024"); //1250, 900 Added for Applitools viewport size
         capabilities.setCapability("name", methodName);
 
         if (buildTag != null) {
@@ -158,13 +159,15 @@ public class DriverScript {
         sessionId.set(id);
     }
     
-    protected static void setupApplitools() {
+    protected static void setupApplitools(String string, int X, int Y) {
 		DriverScript.eyes = new Eyes();
 		DriverScript.eyes.setApiKey(DriverScript.applitoolsApiKey);
-		DriverScript.eyes.setForceFullPageScreenshot(true);
+		DriverScript.eyes.setForceFullPageScreenshot(false);  // Turn in to 'false' -- To take full page screenshot 
 		DriverScript.eyes.setStitchMode(StitchMode.CSS);
 		eyes.setBatch(batchInfo);
-        eyes.open(driver, "SunBasket", "SaucelabsTest", new RectangleSize(1250, 700));
+		eyes.setIgnoreCaret(true);
+//		eyes.setIsDisabled(true);  // To disable Applitools
+        eyes.open(driver, "SunBasket", string, new RectangleSize(X, Y));
     }
 
 	public static void getScreentShotForExtentReport(String screenshotName){

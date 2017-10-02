@@ -30,6 +30,8 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.SunBasket.Config.Config;
+import com.applitools.eyes.BatchInfo;
+import com.applitools.eyes.TestResults;
 import com.applitools.eyes.selenium.Eyes;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -54,6 +56,14 @@ public class BaseTest extends DriverScript{
         return driver;
 	}
 
+	@BeforeClass
+	public static void beforeClass() {
+		String name = System.getenv("JOB_NAME");
+		batchInfo = new BatchInfo(name != null ? name : "LocalBatchJob");
+		String batchId = System.getenv("APPLITOOLS_BATCH_ID");  // To use Jenkins Plugin
+		if (batchId != null){ batchInfo.setId(System.getenv("APPLITOOLS_BATCH_ID")); }
+	}
+	
 	/*** We need this to run tests through pom.xml & through Jenkins ***/
 	@Parameters({"browser", "version", "os"})
 	@BeforeMethod
@@ -62,7 +72,7 @@ public class BaseTest extends DriverScript{
 		logger = parent_logger.createNode(method.getName());
 		extent.setSystemInfo("Test Name", method.getName());
 		setBrowser(browser, version, os, method);
-//        setupApplitools();
+        setupApplitools(method.getName(), 1250, 900);
         logger.log(Status.PASS, "Browser Set Up");
 	}
 		
@@ -84,22 +94,12 @@ public class BaseTest extends DriverScript{
     public void tearDown(ITestResult result) throws Exception {
         ((JavascriptExecutor) driver).executeScript("sauce:job-result=" + (result.isSuccess() ? "passed" : "failed"));
         logger.log(Status.INFO, "Quit Browser");
-//        eyes.close();
+//        eyes.close(false);
+        TestResults applitools_results = eyes.close(false);
+        assert(applitools_results.getMismatches() > 0);
         driver.quit();
-//        eyes.abortIfNotClosed();
-    }
-/*   
-    @AfterClass
-    public void afterClass() {
-        eyes.close();
         eyes.abortIfNotClosed();
     }
-*/
-/*    
-	@AfterSuite
-    public void afterSuite() {
-        eyes.close();
-        eyes.abortIfNotClosed();
-    }*/
+
 
 }

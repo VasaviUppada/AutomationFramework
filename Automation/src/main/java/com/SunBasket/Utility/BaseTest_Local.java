@@ -15,14 +15,21 @@ import org.testng.annotations.Parameters;
 
 import com.SunBasket.Config.Config;
 import com.SunBasket.Config.Config.Browser;
+import com.applitools.eyes.BatchInfo;
 import com.applitools.eyes.RectangleSize;
+import com.applitools.eyes.TestResults;
 import com.aventstack.extentreports.Status;
 
 @Listeners(com.SunBasket.Utility.SBListeners.class)
 public class BaseTest_Local extends DriverScript{
-	
-/*** Use this to run Tests using TestNG.xml ***/
 
+	@BeforeClass
+	public static void beforeClass() {
+		String name = System.getenv("JOB_NAME");
+		batchInfo = new BatchInfo(name != null ? name : "BatchJob");
+		String batchId = System.getenv("APPLITOOLS_BATCH_ID");  // To use Jenkins Plugin
+		if (batchId != null){ batchInfo.setId(System.getenv("APPLITOOLS_BATCH_ID")); }
+	}
 
 /*** We need this to run tests through testng.xml ***/
 	@Parameters({"browser"})
@@ -30,8 +37,8 @@ public class BaseTest_Local extends DriverScript{
 	public static void setUp(@Optional("chrome")String browser, Method method){
 		logger = parent_logger.createNode(method.getName());
 		extent.setSystemInfo("Test Name", method.getName());
-		initializeBrowser(browser);
-		setupApplitools();
+		driver = initializeBrowser(browser);
+		setupApplitools(method.getName(), 1400, 650);
 		driver.navigate().to(Config.Url.url_Base);
 		logger.log(Status.PASS, "Browser Set Up");
 	}
@@ -60,7 +67,8 @@ public class BaseTest_Local extends DriverScript{
 
     @AfterMethod
     public void tearDown(ITestResult result) throws Exception {
-        eyes.close(); 
+        TestResults applitools_results = eyes.close(false);
+        assert(applitools_results.getMismatches() > 0);
         quit();
         eyes.abortIfNotClosed();
     }

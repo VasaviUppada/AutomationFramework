@@ -162,7 +162,7 @@ public class DriverScript {
     protected static void setupApplitools(String string, int X, int Y) {
 		DriverScript.eyes = new Eyes();
 		DriverScript.eyes.setApiKey(DriverScript.applitoolsApiKey);
-		DriverScript.eyes.setForceFullPageScreenshot(false);  // Turn in to 'false' -- To take full page screenshot 
+		DriverScript.eyes.setForceFullPageScreenshot(true);  // Turn in to 'false' -- To take full page screenshot 
 		DriverScript.eyes.setStitchMode(StitchMode.CSS);
 		eyes.setBatch(batchInfo);
 		eyes.setIgnoreCaret(true);

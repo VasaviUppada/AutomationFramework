@@ -2,6 +2,7 @@ package com.SunBasket.Pages;
 
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -10,9 +11,9 @@ import com.SunBasket.Utility.SBUtil;
 
 public class SunBasketTheSunTimesPage extends BasePage{
 
-	public SunBasketTheSunTimesPage() {
-		super(threadDriver);
-	}	
+	public SunBasketTheSunTimesPage(WebDriver driver) {
+		super(driver);
+	}
 
 	@FindBy(xpath = "//*[@href]|//a")
 	public List<WebElement> link_allLinks;

@@ -10,8 +10,8 @@ import com.SunBasket.Utility.BasePage;
 
 public class SunBasketJoinConfirmationPage extends BasePage{
 
-	public SunBasketJoinConfirmationPage() {
-		super(threadDriver);
+	public SunBasketJoinConfirmationPage(WebDriver driver) {
+		super(driver);
 	}
 
 	/*** Web Elements ***/

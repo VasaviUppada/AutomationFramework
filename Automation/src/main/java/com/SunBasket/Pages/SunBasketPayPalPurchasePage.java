@@ -8,11 +8,10 @@ import com.SunBasket.Utility.BasePage;
 
 public class SunBasketPayPalPurchasePage extends BasePage{
 
-	public SunBasketPayPalPurchasePage() {
-		super(threadDriver);
+	public SunBasketPayPalPurchasePage(WebDriver driver) {
+		super(driver);
 	}
 
-	
 	@FindBy(xpath = "//*[@id='return_url']")
 	public WebElement button_ProceedWithSandboxPurchase;
 

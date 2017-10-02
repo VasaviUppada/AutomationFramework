@@ -12,16 +12,17 @@ import org.openqa.selenium.support.PageFactory;
 
 public class BasePage extends DriverScript {
 
-/*	public BasePage(WebDriver driver){
+	public BasePage(WebDriver driver){
 		DriverScript.driver = driver; 
         PageFactory.initElements(driver, this);
 	}
-*/
-	public BasePage(ThreadLocal<WebDriver> driver){
+
+/*	public BasePage(ThreadLocal<WebDriver> driver){
 		DriverScript.driver = getDriver(); 
         PageFactory.initElements(getDriver(), this);
 	}
-
+*/
+	
 	//*** Default wait time of 30sec. ***//* 
 	public void waitForPageToLoad() {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);

@@ -34,9 +34,9 @@
     </dependency>
 
 	<dependency>
-    	<groupId>org.testng</groupId>
-    	<artifactId>testng</artifactId>
-    	<version>6.11</version>
+    		<groupId>org.testng</groupId>
+    		<artifactId>testng</artifactId>
+    		<version>6.11</version>
 	</dependency>
 	
 	<dependency>
@@ -48,9 +48,15 @@
 	 
 	<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
 	<dependency>
-    	<groupId>com.aventstack</groupId>
-    	<artifactId>extentreports</artifactId>
-    	<version>3.0.6</version>
+    		<groupId>com.aventstack</groupId>
+    		<artifactId>extentreports</artifactId>
+    		<version>3.0.6</version>
+	</dependency>
+	
+	<dependency>
+    		<groupId>com.applitools</groupId>
+    		<artifactId>eyes-selenium-java3</artifactId>
+    		<version>RELEASE</version>
 	</dependency>
 	
     <dependency>
@@ -62,17 +68,17 @@
 	
 	<!-- https://mvnrepository.com/artifact/commons-configuration/commons-configuration -->
 	<dependency>
-    	<groupId>commons-configuration</groupId>
-    	<artifactId>commons-configuration</artifactId>
-    	<version>1.6</version>
+    		<groupId>commons-configuration</groupId>
+    		<artifactId>commons-configuration</artifactId>
+    		<version>1.6</version>
 	</dependency>
 
 	<!-- Include Saucelabs dependencies -->
 	<!-- https://mvnrepository.com/artifact/com.saucelabs/sauce_testng -->
 	<dependency>
-    	<groupId>com.saucelabs</groupId>
-    	<artifactId>sauce_testng</artifactId>
-    	<version>2.1.23</version>
+    		<groupId>com.saucelabs</groupId>
+    		<artifactId>sauce_testng</artifactId>
+    		<version>2.1.23</version>
 	</dependency>
   </dependencies>
 

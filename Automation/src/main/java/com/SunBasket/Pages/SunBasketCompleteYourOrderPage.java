@@ -19,8 +19,8 @@ import com.aventstack.extentreports.Status;
 
 public class SunBasketCompleteYourOrderPage extends BasePage{
 
-	public SunBasketCompleteYourOrderPage() {
-		super(threadDriver);
+public SunBasketCompleteYourOrderPage(WebDriver driver) {
+		super(driver);
 	}
 
 	/*** Web Elements ***/
@@ -59,7 +59,7 @@ public class SunBasketCompleteYourOrderPage extends BasePage{
 	public WebElement dropdown_Year;
 	
 	@FindBy(xpath = "//*[@id='securityCode']")
-	public WebElement textField_CVC;
+	public WebElement textField_CVV;
 	
 	@FindBy(xpath = "//*[@id='sameAddress']")
 	public WebElement checkbox_SameAsDeliveryAddress;	
@@ -113,19 +113,19 @@ public class SunBasketCompleteYourOrderPage extends BasePage{
 		logger.log(Status.INFO, "Enter Year");
 		SBUtil.selectOptionByIndex(dropdown_Year, 4);
 		logger.log(Status.INFO, "Enter CVV");
-		textField_CVC.sendKeys("925");
+		textField_CVV.sendKeys("925");
 		getScreentShotForExtentReport("JoinPaymentPage");
 		action_ClickOnButton(button_SubmitOrder);
 	}
 	
 	public void action_checkOutWithPayPal(String parentWindowHandler){
 		SBUtil.getWindowToHandle();
-		SunBasketPayPalPurchasePage sunBasketPayPalPurchasePage = new SunBasketPayPalPurchasePage();
+		SunBasketPayPalPurchasePage sunBasketPayPalPurchasePage = new SunBasketPayPalPurchasePage(driver);
 		SBUtil.waitForUrlContains(Config.Url.url_Paypal);
 //		sunBasketPayPalPurchasePage.waitForPageToLoad();
 		logger.log(Status.INFO, "Click on Proceed with Sandbox button");
 		sunBasketPayPalPurchasePage.button_ProceedWithSandboxPurchase.click();
-		getDriver().switchTo().window(parentWindowHandler);
+		driver.switchTo().window(parentWindowHandler);
 //		SBUtil.waitForPageTitle(Config.PageTitle.pageTitle_CompleteYourOrderPage);
 		SBUtil.waitForUrlToBe(Config.Url.url_JoinPayment);
 		logger.log(Status.INFO, "Enter Promocode : QA-MW403010");

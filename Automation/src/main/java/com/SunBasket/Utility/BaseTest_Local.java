@@ -15,6 +15,7 @@ import org.testng.annotations.Parameters;
 
 import com.SunBasket.Config.Config;
 import com.SunBasket.Config.Config.Browser;
+import com.applitools.eyes.RectangleSize;
 import com.aventstack.extentreports.Status;
 
 @Listeners(com.SunBasket.Utility.SBListeners.class)
@@ -30,7 +31,8 @@ public class BaseTest_Local extends DriverScript{
 		logger = parent_logger.createNode(method.getName());
 		extent.setSystemInfo("Test Name", method.getName());
 		initializeBrowser(browser);
-		getDriver().navigate().to(Config.Url.url_Base);
+		setupApplitools();
+		driver.navigate().to(Config.Url.url_Base);
 		logger.log(Status.PASS, "Browser Set Up");
 	}
 
@@ -58,7 +60,9 @@ public class BaseTest_Local extends DriverScript{
 
     @AfterMethod
     public void tearDown(ITestResult result) throws Exception {
+        eyes.close(); 
         quit();
+        eyes.abortIfNotClosed();
     }
 
 

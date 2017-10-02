@@ -30,6 +30,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.SunBasket.Config.Config;
+import com.applitools.eyes.selenium.Eyes;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
@@ -44,14 +45,13 @@ public class BaseTest extends DriverScript{
 		} catch (UnexpectedException | MalformedURLException e) {
 			e.printStackTrace();
 		}
-        WebDriver webDriver = getSauceWebDriver();
         logger.log(Status.INFO,"Remote WebDriver : " +   browser + " / " + version + " / " + os);
         logger.log(Status.INFO, "Session ID : " + getSauceSessionId());
         extent.setSystemInfo("BROWSER", browser);
         extent.setSystemInfo("VERSION", version);
         extent.setSystemInfo("OS", os);
         extent.setSystemInfo("SESSION ID", getSauceSessionId());
-        return webDriver;
+        return driver;
 	}
 
 	/*** We need this to run tests through pom.xml & through Jenkins ***/
@@ -61,8 +61,9 @@ public class BaseTest extends DriverScript{
 //		logger = extent.createTest(method.getName());
 		logger = parent_logger.createNode(method.getName());
 		extent.setSystemInfo("Test Name", method.getName());
-		setDriver(setBrowser(browser, version, os, method));
-		logger.log(Status.PASS, "Browser Set Up");
+		setBrowser(browser, version, os, method);
+//        setupApplitools();
+        logger.log(Status.PASS, "Browser Set Up");
 	}
 		
 /*
@@ -75,14 +76,30 @@ public class BaseTest extends DriverScript{
 		logger.info("Config.Browser.version : " + Config.Browser.version);
 		logger.info("Config.Browser.os : " + Config.Browser.os);
 		logger.log(Status.PASS, "Browser Set Up");
+		setupApplitools();
 	}
 */
 
     @AfterMethod
     public void tearDown(ITestResult result) throws Exception {
-        ((JavascriptExecutor) dr.get()).executeScript("sauce:job-result=" + (result.isSuccess() ? "passed" : "failed"));
+        ((JavascriptExecutor) driver).executeScript("sauce:job-result=" + (result.isSuccess() ? "passed" : "failed"));
         logger.log(Status.INFO, "Quit Browser");
-        dr.get().quit();
+//        eyes.close();
+        driver.quit();
+//        eyes.abortIfNotClosed();
     }
+/*   
+    @AfterClass
+    public void afterClass() {
+        eyes.close();
+        eyes.abortIfNotClosed();
+    }
+*/
+/*    
+	@AfterSuite
+    public void afterSuite() {
+        eyes.close();
+        eyes.abortIfNotClosed();
+    }*/
 
 }

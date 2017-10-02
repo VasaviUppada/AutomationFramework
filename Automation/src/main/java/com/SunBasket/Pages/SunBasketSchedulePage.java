@@ -11,8 +11,8 @@ import com.SunBasket.Utility.SBUtil;
 
 public class SunBasketSchedulePage extends BasePage{
 
-	public SunBasketSchedulePage() {
-		super(threadDriver);
+	public SunBasketSchedulePage(WebDriver driver) {
+		super(driver);
 	}
 
 	@FindBy(xpath = "//*[@href]|//a")

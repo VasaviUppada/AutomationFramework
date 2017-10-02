@@ -17,11 +17,10 @@ import com.aventstack.extentreports.Status;
 
 public class SunBasketGetStartedPage extends BasePage{
 
-	public SunBasketGetStartedPage(){
-		super(threadDriver);
+	public SunBasketGetStartedPage(WebDriver driver) {
+		super(driver);
 	}
-	
-	
+
 	/*** Web Elements ***/
 
 	@FindBy(xpath = "//div[@id='page-content']/div/a[1]")

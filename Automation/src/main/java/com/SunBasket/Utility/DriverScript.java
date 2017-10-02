@@ -22,6 +22,10 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import com.SunBasket.Config.Config;
+import com.applitools.eyes.BatchInfo;
+import com.applitools.eyes.RectangleSize;
+import com.applitools.eyes.selenium.Eyes;
+import com.applitools.eyes.selenium.StitchMode;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
@@ -32,27 +36,24 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 public class DriverScript {
 
 	public static WebDriver driver;
-    public static ThreadLocal<WebDriver> threadDriver = new ThreadLocal<WebDriver>();	
+	public static Eyes eyes;
+	private static BatchInfo batchInfo;	
 	public static String buildTag = System.getenv("BUILD_TAG");
-	public static ThreadLocal<WebDriver> dr = new ThreadLocal<WebDriver>();
 	public static ThreadLocal<String> sessionId = new ThreadLocal<String>();
-
-//    public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/target/ExtentReports/ExtentReport-" + getCurrentTime() + ".html");
     public static ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/target/ExtentReports/ExtentReport" + ".html");
     public static ExtentReports extent = new ExtentReports();
     public static ExtentTest parent_logger;
     public static ExtentTest logger;
-
+    public static String applitoolsApiKey = Config.Applitools.myApiKey;
+    
     protected static void createFolders() {
         try {
             File dir = new File("target/ExtentReports");
-
             if (!dir.exists()) {
                 dir.mkdir();
             }
 
             dir = new File("target/Screenshots_Extent");
-
             if (!dir.exists()) {
                 dir.mkdir();
             }
@@ -68,8 +69,7 @@ public class DriverScript {
     }
 
 	public static void initializeBrowser(String browser){
-//		createBrowserInstance(browser);
-		setDriver(createBrowserInstance(browser));
+		createBrowserInstance(browser);
 	}
 	
 	public static WebDriver createBrowserInstance(String browser){
@@ -120,7 +120,6 @@ public class DriverScript {
 	
 	public static void close(){
 		logger.log(Status.INFO, "Close Browser");
-        WebDriver driver = getDriver();
         if (driver != null) {
             driver.close();
         }
@@ -130,40 +129,42 @@ public class DriverScript {
 
 	public static void quit(){
 		logger.log(Status.INFO, "Quit Browser");
-        WebDriver driver = getDriver();
         if (driver != null) {
             driver.quit();
         }
 //		driver.quit();
 //		driver = null;
 	}
-	
-    public static WebDriver getSauceWebDriver() {
-        return dr.get();
-    }
 
     public static String getSauceSessionId() {
         return sessionId.get();
     }
 
-    protected static void createDriver(String browser, String version, String os, String methodName)
+    protected void createDriver(String browser, String version, String os, String methodName)
             throws MalformedURLException, UnexpectedException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
         capabilities.setCapability(CapabilityType.VERSION, version);
         capabilities.setCapability(CapabilityType.PLATFORM, os);
+        capabilities.setCapability("screenResolution", "1280x1024"); //1430, 700 Added for Applitools viewport size
         capabilities.setCapability("name", methodName);
 
         if (buildTag != null) {
             capabilities.setCapability("build", buildTag);
         }
         URL url = new URL("https://" + Config.SauceLabs.sauceUser + ":" + Config.SauceLabs.sauceKey + "@ondemand.saucelabs.com:443/wd/hub");
-        // Launch remote browser and set it as the current thread
-        dr.set(new RemoteWebDriver(url,capabilities));
-
-        // set current sessionId
-      String id = ((RemoteWebDriver) getSauceWebDriver()).getSessionId().toString();
-      sessionId.set(id);
+        driver = new RemoteWebDriver(url,capabilities);
+        String id = ((RemoteWebDriver) driver).getSessionId().toString();
+        sessionId.set(id);
+    }
+    
+    protected static void setupApplitools() {
+		DriverScript.eyes = new Eyes();
+		DriverScript.eyes.setApiKey(DriverScript.applitoolsApiKey);
+		DriverScript.eyes.setForceFullPageScreenshot(true);
+		DriverScript.eyes.setStitchMode(StitchMode.CSS);
+		eyes.setBatch(batchInfo);
+        eyes.open(driver, "SunBasket", "SaucelabsTest", new RectangleSize(1250, 700));
     }
 
 	public static void getScreentShotForExtentReport(String screenshotName){
@@ -177,13 +178,5 @@ public class DriverScript {
 			e.printStackTrace();
 		}
 	}
-	 
-    public static WebDriver getDriver() {
-        return threadDriver.get();
-    }	 
-	public static void setDriver(WebDriver drv) {
-		threadDriver.set(drv);
-    }	
-
 
 }

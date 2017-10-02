@@ -14,8 +14,8 @@ import com.aventstack.extentreports.Status;
 
 public class SunBasketConfirmYourMealsPage extends BasePage{
 
-	public SunBasketConfirmYourMealsPage() {
-		super(threadDriver);
+	public SunBasketConfirmYourMealsPage(WebDriver driver) {
+		super(driver);
 	}
 
 	/*** Web Elements ***/

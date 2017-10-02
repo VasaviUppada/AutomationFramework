@@ -13,8 +13,8 @@ import com.aventstack.extentreports.Status;
 
 public class SunBasketSignInPage extends BasePage{
 
-	public SunBasketSignInPage(){
-		super(threadDriver);		
+	public SunBasketSignInPage(WebDriver driver) {
+		super(driver);
 	}
 
 	/*** Web Elements ***/

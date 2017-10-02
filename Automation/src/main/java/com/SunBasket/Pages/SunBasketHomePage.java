@@ -14,9 +14,9 @@ import com.SunBasket.Utility.SBUtil;
 import com.aventstack.extentreports.Status;
 
 public class SunBasketHomePage extends BasePage{
-	
-	public SunBasketHomePage() {
-		super(threadDriver);	
+
+	public SunBasketHomePage(WebDriver driver) {
+		super(driver);
 	}
 
 	/*** Web Elements ***/

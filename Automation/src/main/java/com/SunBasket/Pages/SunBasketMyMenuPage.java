@@ -18,8 +18,8 @@ import com.aventstack.extentreports.Status;
 
 public class SunBasketMyMenuPage extends BasePage{
 
-	public SunBasketMyMenuPage(){
-		super(threadDriver);
+	public SunBasketMyMenuPage(WebDriver driver) {
+		super(driver);
 	}
 
 	@FindBy(className = "logo-container")
